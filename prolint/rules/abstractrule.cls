@@ -17,6 +17,17 @@ CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
     
     {proparse/jpnodes.i &ACCESS_MOD="PROTECTED" &REF_MOD="REFERENCE-ONLY"}
     
+    DEFINE PUBLIC ABSTRACT PROPERTY Declaration AS CHARACTER NO-UNDO 
+    GET.     
+
+    DEFINE PUBLIC ABSTRACT PROPERTY IncludeSeverity AS INTEGER NO-UNDO 
+    GET.
+     
+
+    DEFINE PUBLIC ABSTRACT PROPERTY IsComposite AS LOGICAL NO-UNDO 
+    GET.
+     
+
     DEFINE PROTECTED PROPERTY LintInstance AS prolint.linter NO-UNDO 
         GET.
         SET. 
@@ -45,8 +56,6 @@ CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
             ParseFile    = iFileName
             LintInstance = iLintInstance.		
     END CONSTRUCTOR.
-
-
 	
 
     METHOD PUBLIC ABSTRACT VOID ApplyRule( TABLE ttNode BIND  ).

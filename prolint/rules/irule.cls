@@ -14,6 +14,16 @@ USING Progress.Lang.*.
 INTERFACE prolint.rules.irule:
     {proparse/jpnodes.i &REF_MOD="REFERENCE-ONLY"}
   
+    DEFINE PUBLIC PROPERTY Declaration AS CHARACTER NO-UNDO 
+    GET.     
+
+    DEFINE PUBLIC PROPERTY IncludeSeverity AS INTEGER NO-UNDO 
+    GET.     
+
+    DEFINE PUBLIC PROPERTY IsComposite AS LOGICAL NO-UNDO 
+    GET.
+     
+
 	DEFINE PUBLIC PROPERTY RuleId AS CHARACTER NO-UNDO 
 	GET.	 
 

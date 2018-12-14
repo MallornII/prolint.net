@@ -66,7 +66,7 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
 	    DEFINE VARIABLE ruleName AS CHARACTER NO-UNDO.
 	    DEFINE VARIABLE curRule AS prolint.rules.irule NO-UNDO.
 	    
-	    INPUT STREAM sRules FROM VALUE("prolint/rules/rules.d").
+	    INPUT STREAM sRules FROM VALUE("rules.d").
 	    RULE_BLK:
 	    REPEAT:
             IMPORT STREAM sRules ruleName.            

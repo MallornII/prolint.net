@@ -15,7 +15,7 @@ USING com.joanju.proparse.NodeTypes.
 
 ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
-CLASS rules.testrule INHERITS rules.abstractrule: 
+CLASS prolint.rules.testrule INHERITS prolint.rules.abstractrule: 
     
     DEFINE TEMP-TABLE ttSkipNodes NO-UNDO
         FIELD  NodeType AS INTEGER.
@@ -23,6 +23,17 @@ CLASS rules.testrule INHERITS rules.abstractrule:
     DEFINE TEMP-TABLE ttAbbrev NO-UNDO
         FIELD AbbrevName AS CHARACTER
         FIELD FullName AS CHARACTER.
+
+    DEFINE OVERRIDE PUBLIC PROPERTY Declaration AS CHARACTER NO-UNDO 
+    GET():
+        RETURN "Just a test rule".
+    END GET.
+
+    DEFINE OVERRIDE PUBLIC PROPERTY IncludeSeverity AS INTEGER INITIAL 5 NO-UNDO 
+    GET.
+
+    DEFINE OVERRIDE PUBLIC PROPERTY IsComposite AS LOGICAL NO-UNDO 
+    GET.
 
 	DEFINE OVERRIDE PUBLIC PROPERTY RuleId AS CHARACTER INITIAL "test" NO-UNDO 
 	GET.
@@ -38,7 +49,7 @@ CLASS rules.testrule INHERITS rules.abstractrule:
 	CONSTRUCTOR PUBLIC testrule
     (
         INPUT iFileName AS CHARACTER,
-        INPUT iLintInstance AS linter
+        INPUT iLintInstance AS prolint.linter
     ):        
 		SUPER (iFileName, iLintInstance).
 		AddSkipType(ProParserTokenTypes:Program_root).
