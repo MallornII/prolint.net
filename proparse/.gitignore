@@ -5,3 +5,5 @@
 /nodekeys.r
 /nodetypes.r
 /perror.r
+/ischemaloader.r
+/schemaloader.r

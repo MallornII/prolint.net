@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LintProfiles>
+<Profile ProfileName="test">
+<Rule Severity="7" IncludeSeverity="5">rules.testrule</Rule>
+</Profile>
+</LintProfiles>

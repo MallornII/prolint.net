@@ -1,1 +1,0 @@
-prolint.rules.testrule

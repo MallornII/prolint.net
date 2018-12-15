@@ -13,7 +13,7 @@ USING Progress.Lang.*.
 
 ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
-CLASS proparse.dbschema IMPLEMENTS proparse.idbschema FINAL: 
+CLASS proparse.schemaloader IMPLEMENTS proparse.ischemaloader FINAL: 
 
     DEFINE PRIVATE STREAM sSchema.
 

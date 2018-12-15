@@ -19,6 +19,7 @@ USING OpenEdge.Core.Collections.IListIterator.
 
 ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
+
 DEFINE VARIABLE errs AS OpenEdge.Core.Collections.IListIterator NO-UNDO.
 DEFINE VARIABLE mylint AS prolint.linter NO-UNDO.
 /* ********************  Preprocessor Definitions  ******************** */
@@ -28,16 +29,15 @@ DEFINE VARIABLE mylint AS prolint.linter NO-UNDO.
 COMPILE proparse/api.cls SAVE = FALSE LISTING VALUE("C:/temp/api.list") XREF-XML VALUE("C:/temp/api.xref") NO-ERROR.
 COMPILE c:/temp/testide.p SAVE = FALSE LISTING VALUE("C:/temp/api2.list") XREF-XML VALUE("C:/temp/api2.xref")  .
 
-mylint = NEW prolint.linter(). 
+mylint = NEW prolint.linter("test"). 
 
-MESSAGE proparse.api:TestTable("bisquit", "op")
-VIEW-AS ALERT-BOX.
-
-IF NOT mylint:Parse("c:/temp/testide.p") THEN
+IF NOT mylint:Parse("c:/temp/test.cls") THEN
 DO:
-    MESSAGE "errs"
+    MESSAGE "errs1"
     VIEW-AS ALERT-BOX.
     errs = proparse.api:GetErrors().    
+    MESSAGE "ttt"
+    VIEW-AS ALERT-BOX.
     DO WHILE errs:HasNext():
         MESSAGE CAST(errs:Next(), "Progress.Lang.Error"):GetMessage(1)
         VIEW-AS ALERT-BOX.

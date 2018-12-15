@@ -14,18 +14,21 @@
 
 /* ***************************  Definitions  ************************** */
 DEFINE {&ACCESS_MOD} {&STAT_MOD} TEMP-TABLE ttProfile NO-UNDO
-    FIELD ProfileName AS CHARACTER.
+    XML-NODE-NAME "Profile"
+    FIELD ProfileName AS CHARACTER XML-NODE-TYPE "ATTRIBUTE".
     
-DEFINE {&ACCESS_MOD} {&STAT_MOD} TEMP-TABLE ttProfileRule NO-UNDO
-    FIELD ProfileName     AS CHARACTER
-    FIELD RuleId          AS CHARACTER
-    FIELD Severity        AS INTEGER
-    FIELD IncludeSeverity AS INTEGER.
+DEFINE {&ACCESS_MOD} {&STAT_MOD} TEMP-TABLE ttRule NO-UNDO
+    XML-NODE-NAME "Rule"
+    FIELD ProfileName     AS CHARACTER XML-NODE-TYPE "HIDDEN"
+    FIELD RuleClass       AS CHARACTER XML-NODE-TYPE "TEXT"
+    FIELD Severity        AS INTEGER   XML-NODE-TYPE "ATTRIBUTE"
+    FIELD IncludeSeverity AS INTEGER   XML-NODE-TYPE "ATTRIBUTE".
     
-DEFINE DATASET {&ACCESS_MOD} {&STAT_MOD} dsProfile
-FOR ttProfile, ttProfileRule
+DEFINE {&ACCESS_MOD} {&STAT_MOD} DATASET dsProfile
+    XML-NODE-NAME "LintProfiles"
+    FOR ttProfile, ttRule
     DATA-RELATION drRule
-    FOR ttProfile, ttProfileRule
+    FOR ttProfile, ttRule
     RELATION-FIELDS (ProfileName, ProfileName)
     NESTED FOREIGN-KEY-HIDDEN.     
     

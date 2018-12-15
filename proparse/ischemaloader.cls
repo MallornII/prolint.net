@@ -11,7 +11,7 @@
 
 USING Progress.Lang.*.
 
-INTERFACE proparse.idbschema:    
+INTERFACE proparse.ischemaloader:    
 
 	/*------------------------------------------------------------------------------
 	 Purpose:

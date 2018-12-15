@@ -47,7 +47,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         GET.
         SET. 
 
-    DEFINE PUBLIC STATIC PROPERTY LocalSchema AS proparse.idbschema NO-UNDO 
+    DEFINE PUBLIC STATIC PROPERTY SchemaLoader AS proparse.ischemaloader NO-UNDO 
         PRIVATE GET.
         SET.
 
@@ -88,9 +88,13 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         ErrorList = NEW OpenEdge.Core.Collections.List().
         parseSchema = org.prorefactor.core.schema.Schema:getInstance().
         ParseEnv = com.joanju.proparse.Environment:instance().
-        ParseSession = org.prorefactor.refactor.RefactorSession:getInstance().        
+        ParseSession = org.prorefactor.refactor.RefactorSession:getInstance().     
+        TempDir = MakePath(SESSION:TEMP-DIRECTORY, GUID(GENERATE-UUID)).        
+        OS-CREATE-DIR VALUE(TempDir).
+        IF OS-ERROR <> 0 THEN
+            UNDO, THROW NEW Progress.Lang.AppError(SUBSTITUTE("Can't create temp directory. OS error [&1]", OS-ERROR)).   
         
-        ParseSession:setContextDirName(SESSION:TEMP-DIRECTORY + "/").
+        ParseSession:setContextDirName(TempDir + "/").
         ParseEnv:configSet("batch-mode", STRING(SESSION:BATCH-MODE, "true/false")).
         ParseEnv:configSet("opsys", OPSYS).
         ParseEnv:configSet("propath", PROPATH).
@@ -119,15 +123,33 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
  Notes:
 ------------------------------------------------------------------------------*/
 
-    METHOD PRIVATE STATIC VOID CompileUnit(  ):
+    METHOD PRIVATE STATIC LOGICAL CompileUnit(  ):
         DEFINE VARIABLE XrefFile AS CHARACTER NO-UNDO.
         DEFINE VARIABLE cnt      AS INTEGER   NO-UNDO.
+        DEFINE VARIABLE idx      AS INTEGER   NO-UNDO.
+        DEFINE VARIABLE vSuccess AS LOGICAL   NO-UNDO.
+        DEFINE VARIABLE vPass    AS LOGICAL   NO-UNDO.
+        DEFINE VARIABLE warnings AS INTEGER   EXTENT 6 NO-UNDO.
         
+        ASSIGN
+            warnings[1] = 468 /* r-code exists but SAVE was not specified */
+            warnings[1] = 4345 /* &MESSAGE output */
+            warnings[1] = 6430 /* r-code exists but SAVE was not specified */
+            warnings[1] = 14786 /* require-full-name */
+            warnings[1] = 14789 /* require-field-qualifiers */
+            warnings[1] = 18494 /* require-full-keywords */.
+
         EMPTY TEMP-TABLE ttCompileMessage.
         XrefFile = SUBSTITUTE("&1/xref.xml", TempDir).
-        COMPILE VALUE(CurrentFile) OPTIONS "require-full-names,require-field-qualifiersrequire-full-keywords"
-            SAVE INTO TempDir
-            XREF-XML XrefFile NO-ERROR.
+        COMPILE VALUE(CurrentFile) OPTIONS "require-full-names,require-field-qualifiers,require-full-keywords"
+            SAVE = TRUE INTO VALUE(TempDir)
+        XREF-XML VALUE(XrefFile) NO-ERROR.
+     
+        IF ERROR-STATUS:ERROR THEN       
+            UNDO, THROW NEW proparse.perror({&LINE-NUMBER}, ERROR-STATUS:GET-MESSAGE(1), ERROR-STATUS:GET-NUMBER(1)).
+      
+    
+        vSuccess = TRUE.
         DO cnt = 1 TO COMPILER:NUM-MESSAGES:
             CREATE ttCompileMessage.
             ASSIGN
@@ -136,10 +158,18 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
                 ttCompileMessage.ErrorLine    = COMPILER:GET-ROW(cnt)
                 ttCompileMessage.ErrorCode    = COMPILER:GET-NUMBER(cnt)
                 ttCompileMessage.ErrorMessage = COMPILER:GET-MESSAGE(cnt).
+            vPass = FALSE.
+            DO idx = 1 TO EXTENT(warnings):
+                IF ttCompileMessage.ErrorCode = warnings[idx] THEN
+                    vPass = TRUE.
+            END.
+            vSuccess = vSuccess AND (NOT vPass).
         END.
-        DATASET dsXRef:READ-XML("FILE", XrefFile, "EMPTY", ?, FALSE).
-        RETURN.
-
+               
+        IF vSuccess THEN        
+            DATASET dsXRef:READ-XML("FILE", XrefFile, "EMPTY", ?, FALSE).
+        RETURN vSuccess.        
+  
     END METHOD.
 
     /*------------------------------------------------------------------------------
@@ -210,6 +240,65 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
      Notes:
     ------------------------------------------------------------------------------*/
 
+    METHOD PRIVATE STATIC VOID DecorateAccessors
+        (
+        INPUT iTokenType AS INTEGER,
+        INPUT iProUnitType AS UnitType
+        ):       
+         
+        DEFINE BUFFER tNode   FOR ttNode. /* setter or getter */
+        DEFINE BUFFER bttNode FOR ttNode. /* ID node with propety name */
+        DEFINE BUFFER cttNode FOR ttNode. /* define node */
+        DEFINE BUFFER dttNode FOR ttNode. /* Code_block node of accessor */
+        
+        DEFINE VARIABLE nextNum AS INTEGER NO-UNDO.
+        
+        BLK_NODE:
+        FOR EACH ttNode WHERE ttNode.NodeType = iTokenType,
+            FIRST cttNode WHERE cttNode.NodeNum = ttNode.ParentNum,
+            FIRST dttNode WHERE dttNode.ParentNum = ttNode.NodeNum
+            AND dttNode.NodeType = ProParserTokenTypes:Code_block.            
+            FIND FIRST bttNode WHERE bttNode.ParentNum = cttNode.NodeNum
+                AND bttNode.NodeType = ProParserTokenTypes:ID NO-ERROR.
+            IF NOT AVAILABLE(bttNode) THEN
+                NEXT BLK_NODE.
+            CREATE ttProUnit.
+            ASSIGN
+                ttProUnit.UnitType   = iProUnitType:GetValue()
+                ttProUnit.StartNode  = ttNode.JPNode
+                ttProUnit.SourceFile = ttNode.NodeFile
+                ttProUnit.FirstLine  = ttNode.NodeLine
+                ttProUnit.UnitName   = ttNode.NodeText.
+                
+            IF LOOKUP("Interface", ttNode.CodeBlock) > 0 THEN
+            DO:
+                ttProUnit.IsForward = TRUE.
+                NEXT BLK_NODE.
+            END.
+            
+            BLK_NEXT:
+            DO WHILE bttNode.NextSibling <> 0:
+                nextNum = bttNode.NextSibling.
+                FIND FIRST bttNode WHERE bttNode.NodeNum = nextNum.
+                IF bttNode.NodeType = ProParserTokenTypes:EXTERNAL
+                    OR bttNode.NodeType = ProParserTokenTypes:FORWARDS
+                    OR bttNode.NodeType = ProParserTokenTypes:IN_KW
+                    OR bttNode.NodeType = ProParserTokenTypes:ABSTRACT THEN
+                DO:
+                    ttProUnit.IsForward = TRUE.
+                    LEAVE BLK_NEXT.
+                END.
+            END.
+        END.
+        RETURN.
+
+    END METHOD.
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
     METHOD PRIVATE STATIC VOID DecorateCodeBlocks(  ):
         DEFINE BUFFER tNode   FOR ttNode.
         DEFINE BUFFER bttNode FOR ttNode.        
@@ -228,7 +317,10 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         END.	    
         
         RETURN.
-
+        
+        CATCH eErr AS Progress.Lang.Error :
+            ErrorList:Add(eErr).                        
+        END CATCH.
     END METHOD.
 
     /*------------------------------------------------------------------------------
@@ -258,7 +350,8 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
             rulesList = ParseDirective(ttNode.NodeText).       
             bttNode.IngroneRules = rulesList. 
             PopulateDirectives(bttNode.NodeNum, rulesList).             
-        END.     
+        END. 
+            
         RETURN.
     
         CATCH eErr AS Progress.Lang.Error :
@@ -276,6 +369,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
 		
         DecorateCodeBlocks().
         DecorateDirectives().
+        DecorateUnits().
         RETURN.
 
     END METHOD.
@@ -343,9 +437,15 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
 		
         DecorateProcedures(ProParserTokenTypes:PROCEDURE, proparse.UnitType:U_PROCEDURE, ?).
         DecorateProcedures(ProParserTokenTypes:FUNCTION, proparse.UnitType:U_FUNCTION, ?).
-        DecorateProcedures(ProParserTokenTypes:METHOD, proparse.UnitType:U_METHOD, "Interface").
+        DecorateProcedures(ProParserTokenTypes:METHOD, proparse.UnitType:U_METHOD, "Interface").        
+        DecorateAccessors(ProParserTokenTypes:Property_getter, proparse.UnitType:U_GETTER).        
+        DecorateAccessors(ProParserTokenTypes:Property_setter, proparse.UnitType:U_SETTER).
+      
         RETURN.
-
+        
+        CATCH eErr AS Progress.Lang.Error :
+            ErrorList:Add(eErr).                        
+        END CATCH.
     END METHOD.
 
     /*------------------------------------------------------------------------------
@@ -404,13 +504,44 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
      Notes:
     ------------------------------------------------------------------------------*/
 
-    METHOD PUBLIC STATIC LOGICAL Parse( INPUT iFileName AS CHARACTER, OUTPUT TABLE FOR ttNode BIND ):
+    METHOD PUBLIC STATIC CHARACTER MakePath
+        (
+        INPUT iPath AS CHARACTER,
+        INPUT iFileName AS CHARACTER
+        ):
+        
+        iPath = RIGHT-TRIM(REPLACE(iPath, "~\", "/"), "/").
+        iFileName = REPLACE(iFileName, "~\", "/").
+        IF iFileName <> ? AND iFileName <> "" THEN
+            iPath = iPath + "/" + iFileName.         
+
+        RETURN iPath.
+
+    END METHOD.
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    METHOD PUBLIC STATIC LOGICAL Parse
+        (
+        INPUT iFileName AS CHARACTER,
+        OUTPUT TABLE FOR ttNode BIND,
+        OUTPUT TABLE FOR ttProUnit BIND,
+        OUTPUT TABLE FOR ttCompileMessage BIND,
+        OUTPUT DATASET dsXref BIND
+        ):
+     
+        CurrentFile = iFileName.
+        IF NOT CompileUnit() THEN
+            RETURN FALSE.
 
         JavaFile = NEW java.io.File(iFileName).
         ParseUnit = NEW org.prorefactor.treeparser.ParseUnit(JavaFile).	
         ParseUnit:treeParser01().
-        TopNode = CAST(ParseUnit:getTopNode(), JPNode).
-        NodeArray = org.prorefactor.core.TreeUtils:flatList(TopNode).
+        TopNode = CAST(ParseUnit:getTopNode(), JPNode).        
+        NodeArray = org.prorefactor.core.TreeUtils:flatList(TopNode).       
         BuildTree().
         /* implicit delete */
         NodeArray = ?.
@@ -418,7 +549,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         TEMP-TABLE ttNode:WRITE-XML("FILE", "c:/temp/nodes.xml", TRUE,  "utf-8").                
         RETURN TRUE.
 		
-        CATCH eErr AS Progress.Lang.Error :
+        CATCH eErr AS Progress.Lang.Error :            
             ErrorList:Add(eErr).
             RETURN FALSE.                
         END CATCH.
@@ -495,15 +626,15 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
      Notes:
     ------------------------------------------------------------------------------*/
 
-    METHOD PRIVATE STATIC VOID ReadDbSchema(  ):
+    METHOD PUBLIC STATIC VOID ReadDbSchema(  ):
         
         DEFINE VARIABLE vSchemaFile AS CHARACTER NO-UNDO.
 	    
-        IF NOT VALID-OBJECT(LocalSchema) THEN
-            LocalSchema = NEW proparse.dbschema().
+        IF NOT VALID-OBJECT(SchemaLoader) THEN
+            SchemaLoader = NEW proparse.schemaloader().
             
         vSchemaFile = SESSION:TEMP-DIRECTORY + "proparse.schema".
-        LocalSchema:ToFile(vSchemaFile).
+        SchemaLoader:ToFile(vSchemaFile).
         ParseSchema:clear().
         ParseSchema:loadSchema(vSchemaFile).
 		
@@ -512,25 +643,11 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
             ErrorList:Add(eErr).        		
         END CATCH.
 
-    END METHOD.
+    END METHOD.    
     
-    /*------------------------------------------------------------------------------
-    Purpose:
-    Notes:
-    ------------------------------------------------------------------------------*/
-
-    METHOD PUBLIC STATIC LOGICAL TestTable( INPUT iDb AS CHARACTER, INPUT iName AS CHARACTER ):
-        DEFINE VARIABLE parseTable AS org.prorefactor.core.schema.Table NO-UNDO.
-  
-        parseTable = ParseSchema:lookupTable(iDb, iName).       
-        
-
-        RETURN VALID-OBJECT(parseTable).
-
-    END METHOD.
 
     DESTRUCTOR PUBLIC api ( ):
-
+        OS-DELETE VALUE(TempDir) RECURSIVE.
     END DESTRUCTOR.
 
 END CLASS.

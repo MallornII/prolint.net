@@ -31,7 +31,7 @@ DEFINE {&ACCESS_MOD} {&STAT_MOD} TEMP-TABLE ttNode NO-UNDO
     FIELD CodeBlock    AS CHARACTER
     FIELD JPNode       AS Progress.Lang.Object SERIALIZE-HIDDEN
     INDEX iMain IS UNIQUE PRIMARY NodeNum
-    INDEX iParent                 ParentNum
+    INDEX iParent                 ParentNum NodeType
     INDEX iType                   NodeType.
 
 /* ********************  Preprocessor Definitions  ******************** */

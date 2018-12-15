@@ -19,8 +19,7 @@ DEFINE {&ACCESS_MOD} {&STAT_MOD} TEMP-TABLE ttCompileMessage NO-UNDO
     FIELD Severity     AS INTEGER
     FIELD ErrorCode    AS INTEGER
     FIELD ErrorMessage AS CHARACTER
-    FIELD ErrorLine    AS INTEGER. 
-
+    FIELD ErrorLine    AS INTEGER.
 /* ********************  Preprocessor Definitions  ******************** */
 
 
