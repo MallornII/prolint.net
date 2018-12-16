@@ -15,18 +15,7 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
 CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT: 
     
-    {proparse/jpnodes.i &ACCESS_MOD="PROTECTED" &REF_MOD="REFERENCE-ONLY"}
-    
-    DEFINE PUBLIC ABSTRACT PROPERTY Declaration AS CHARACTER NO-UNDO 
-    GET.     
-
-    DEFINE PUBLIC ABSTRACT PROPERTY IncludeSeverity AS INTEGER NO-UNDO 
-    GET.
-     
-
-    DEFINE PUBLIC ABSTRACT PROPERTY IsComposite AS LOGICAL NO-UNDO 
-    GET.
-     
+    {proparse/jpnodes.i &ACCESS_MOD="PROTECTED" &REF_MOD="REFERENCE-ONLY"}     
 
     DEFINE PROTECTED PROPERTY LintInstance AS prolint.linter NO-UNDO 
         GET.
@@ -36,11 +25,8 @@ CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
         GET.
         SET. 
 
-    DEFINE PUBLIC ABSTRACT PROPERTY RuleId AS CHARACTER NO-UNDO 
-        GET.	 
-
-    DEFINE PUBLIC ABSTRACT PROPERTY Severity AS INTEGER NO-UNDO 
-        GET.	
+    DEFINE PROTECTED ABSTRACT PROPERTY RuleId AS CHARACTER NO-UNDO 
+        GET.
 
     /*------------------------------------------------------------------------------
      Purpose:
@@ -56,6 +42,18 @@ CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
             ParseFile    = iFileName
             LintInstance = iLintInstance.		
     END CONSTRUCTOR.
+    
+    METHOD PUBLIC STATIC VOID GetInfo
+    (
+        OUTPUT oRuleId      AS CHARACTER,
+        OUTPUT oSeverity    AS INTEGER,
+        OUTPUT oDescription AS CHARACTER        
+    ):
+        ASSIGN
+            oRuleId = "abstract"
+            oSeverity = -1
+            oDescription = "You need to override this method in actual class".                
+    END METHOD.
 	
 
     METHOD PUBLIC ABSTRACT VOID ApplyRule( TABLE ttNode BIND  ).
@@ -72,7 +70,7 @@ CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
         INPUT iComment AS CHARACTER
         ):
 		
-        LintInstance:PublishResult(RuleId, iFileName, iLine, Severity, iComment).
+        LintInstance:PublishResult(RuleId, iFileName, iLine, 0, iComment).
         RETURN.
 
     END METHOD.	

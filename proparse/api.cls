@@ -22,18 +22,17 @@ USING Progress.Lang.AppError.
 USING OpenEdge.Core.Collections.List.
 USING proparse.UnitType.
 USING com.joanju.proparse.ProParserTokenTypes.
-USING System.*.
 
-ROUTINE-LEVEL ON ERROR UNDO, THROW.
+BLOCK-LEVEL ON ERROR UNDO, THROW.
 
 CLASS proparse.api USE-WIDGET-POOL FINAL: 
     &SCOPED-DEFINE ACCESS_MODE PRIVATE
     &SCOPED-DEFINE STAT_MOD    STATIC
     
-    {proparse/jpnodes.i}
-    {proparse/xref.i}        
-    {proparse/prounit.i}
-    {proparse/compile.i}
+    {proparse/jpnodes.i}            
+    {proparse/prounit.i}    
+    
+    DEFINE PRIVATE STREAM sParse.
 
     DEFINE PRIVATE STATIC PROPERTY CurrentFile AS CHARACTER NO-UNDO 
         GET.
@@ -92,7 +91,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         TempDir = MakePath(SESSION:TEMP-DIRECTORY, GUID(GENERATE-UUID)).        
         OS-CREATE-DIR VALUE(TempDir).
         IF OS-ERROR <> 0 THEN
-            UNDO, THROW NEW Progress.Lang.AppError(SUBSTITUTE("Can't create temp directory. OS error [&1]", OS-ERROR)).   
+            UNDO, THROW NEW proparse.perror({&LINE-NUMBER}, SUBSTITUTE("Can't create temp directory. OS error [&1]", OS-ERROR), OS-ERROR).   
         
         ParseSession:setContextDirName(TempDir + "/").
         ParseEnv:configSet("batch-mode", STRING(SESSION:BATCH-MODE, "true/false")).
@@ -112,65 +111,13 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
 
     METHOD PRIVATE STATIC CHARACTER AddEntry
         (
-        INPUT iFirst AS CHARACTER,
+        INPUT iFirst  AS CHARACTER,
         INPUT iSecond AS CHARACTER
         ):		
         RETURN iFirst + (IF iFirst = "" THEN  "" ELSE ",") + iSecond.
-    END METHOD.
+    END METHOD.   
+ 
     
-    /*------------------------------------------------------------------------------
- Purpose:
- Notes:
-------------------------------------------------------------------------------*/
-
-    METHOD PRIVATE STATIC LOGICAL CompileUnit(  ):
-        DEFINE VARIABLE XrefFile AS CHARACTER NO-UNDO.
-        DEFINE VARIABLE cnt      AS INTEGER   NO-UNDO.
-        DEFINE VARIABLE idx      AS INTEGER   NO-UNDO.
-        DEFINE VARIABLE vSuccess AS LOGICAL   NO-UNDO.
-        DEFINE VARIABLE vPass    AS LOGICAL   NO-UNDO.
-        DEFINE VARIABLE warnings AS INTEGER   EXTENT 6 NO-UNDO.
-        
-        ASSIGN
-            warnings[1] = 468 /* r-code exists but SAVE was not specified */
-            warnings[1] = 4345 /* &MESSAGE output */
-            warnings[1] = 6430 /* r-code exists but SAVE was not specified */
-            warnings[1] = 14786 /* require-full-name */
-            warnings[1] = 14789 /* require-field-qualifiers */
-            warnings[1] = 18494 /* require-full-keywords */.
-
-        EMPTY TEMP-TABLE ttCompileMessage.
-        XrefFile = SUBSTITUTE("&1/xref.xml", TempDir).
-        COMPILE VALUE(CurrentFile) OPTIONS "require-full-names,require-field-qualifiers,require-full-keywords"
-            SAVE = TRUE INTO VALUE(TempDir)
-        XREF-XML VALUE(XrefFile) NO-ERROR.
-     
-        IF ERROR-STATUS:ERROR THEN       
-            UNDO, THROW NEW proparse.perror({&LINE-NUMBER}, ERROR-STATUS:GET-MESSAGE(1), ERROR-STATUS:GET-NUMBER(1)).
-      
-    
-        vSuccess = TRUE.
-        DO cnt = 1 TO COMPILER:NUM-MESSAGES:
-            CREATE ttCompileMessage.
-            ASSIGN
-                ttCompileMessage.SourceFile   = COMPILER:GET-FILE-NAME(cnt)
-                ttCompileMessage.Severity     = COMPILER:GET-MESSAGE-TYPE(cnt)
-                ttCompileMessage.ErrorLine    = COMPILER:GET-ROW(cnt)
-                ttCompileMessage.ErrorCode    = COMPILER:GET-NUMBER(cnt)
-                ttCompileMessage.ErrorMessage = COMPILER:GET-MESSAGE(cnt).
-            vPass = FALSE.
-            DO idx = 1 TO EXTENT(warnings):
-                IF ttCompileMessage.ErrorCode = warnings[idx] THEN
-                    vPass = TRUE.
-            END.
-            vSuccess = vSuccess AND (NOT vPass).
-        END.
-               
-        IF vSuccess THEN        
-            DATASET dsXRef:READ-XML("FILE", XrefFile, "EMPTY", ?, FALSE).
-        RETURN vSuccess.        
-  
-    END METHOD.
 
     /*------------------------------------------------------------------------------
      Purpose:
@@ -242,7 +189,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
 
     METHOD PRIVATE STATIC VOID DecorateAccessors
         (
-        INPUT iTokenType AS INTEGER,
+        INPUT iTokenType   AS INTEGER,
         INPUT iProUnitType AS UnitType
         ):       
          
@@ -381,8 +328,8 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
 
     METHOD PRIVATE STATIC VOID DecorateProcedures
         (
-        INPUT iTokenType AS INTEGER,
-        INPUT iProUnitType AS UnitType,
+        INPUT iTokenType     AS INTEGER,
+        INPUT iProUnitType   AS UnitType,
         INPUT iAbstractBlock AS CHARACTER
         ):
 	    
@@ -446,6 +393,17 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         CATCH eErr AS Progress.Lang.Error :
             ErrorList:Add(eErr).                        
         END CATCH.
+    END METHOD.
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    METHOD PUBLIC STATIC LOGICAL ErrorStatus(  ):
+        
+        RETURN NOT ErrorList:IsEmpty().
+
     END METHOD.
 
     /*------------------------------------------------------------------------------
@@ -528,14 +486,11 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         (
         INPUT iFileName AS CHARACTER,
         OUTPUT TABLE FOR ttNode BIND,
-        OUTPUT TABLE FOR ttProUnit BIND,
-        OUTPUT TABLE FOR ttCompileMessage BIND,
-        OUTPUT DATASET dsXref BIND
+        OUTPUT TABLE FOR ttProUnit BIND
         ):
      
-        CurrentFile = iFileName.
-        IF NOT CompileUnit() THEN
-            RETURN FALSE.
+        ErrorList:Clear().
+        CurrentFile = iFileName.        
 
         JavaFile = NEW java.io.File(iFileName).
         ParseUnit = NEW org.prorefactor.treeparser.ParseUnit(JavaFile).	
@@ -644,7 +599,35 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         END CATCH.
 
     END METHOD.    
-    
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    METHOD PUBLIC STATIC VOID ReleaseNodes(  ):
+        
+        ErrorList:Clear().
+        CurrentFile = MakePath(TempDir, "parse_dummy.p":U).
+        OUTPUT STREAM sParse TO VALUE(CurrentFile).
+        OUTPUT STREAM sParse CLOSE.        
+
+        JavaFile = NEW java.io.File(CurrentFile).
+        ParseUnit = NEW org.prorefactor.treeparser.ParseUnit(JavaFile). 
+        ParseUnit:treeParser01().
+        TopNode = CAST(ParseUnit:getTopNode(), JPNode).        
+        NodeArray = org.prorefactor.core.TreeUtils:flatList(TopNode).       
+        
+        /* implicit delete */
+        NodeArray = ?.                        
+        RETURN.
+        
+        CATCH eErr AS Progress.Lang.Error :            
+            ErrorList:Add(eErr).
+            RETURN.                
+        END CATCH.
+
+    END METHOD.    
 
     DESTRUCTOR PUBLIC api ( ):
         OS-DELETE VALUE(TempDir) RECURSIVE.

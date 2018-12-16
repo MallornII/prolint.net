@@ -33,11 +33,9 @@ mylint = NEW prolint.linter("test").
 
 IF NOT mylint:Parse("c:/temp/test.cls") THEN
 DO:
-    MESSAGE "errs1"
+    MESSAGE "errs"
     VIEW-AS ALERT-BOX.
-    errs = proparse.api:GetErrors().    
-    MESSAGE "ttt"
-    VIEW-AS ALERT-BOX.
+    errs = proparse.api:GetErrors().
     DO WHILE errs:HasNext():
         MESSAGE CAST(errs:Next(), "Progress.Lang.Error"):GetMessage(1)
         VIEW-AS ALERT-BOX.

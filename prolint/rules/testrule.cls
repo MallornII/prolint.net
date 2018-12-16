@@ -17,6 +17,8 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
 CLASS prolint.rules.testrule INHERITS prolint.rules.abstractrule: 
     
+    DEFINE PRIVATE STATIC VARIABLE localId AS CHARACTER INITIAL "test" NO-UNDO. 
+    
     DEFINE TEMP-TABLE ttSkipNodes NO-UNDO
         FIELD  NodeType AS INTEGER.
         
@@ -24,22 +26,11 @@ CLASS prolint.rules.testrule INHERITS prolint.rules.abstractrule:
         FIELD AbbrevName AS CHARACTER
         FIELD FullName AS CHARACTER.
 
-    DEFINE OVERRIDE PUBLIC PROPERTY Declaration AS CHARACTER NO-UNDO 
+    DEFINE OVERRIDE PROTECTED PROPERTY RuleId AS CHARACTER NO-UNDO 
     GET():
-        RETURN "Just a test rule".
+        RETURN localId.
     END GET.
-
-    DEFINE OVERRIDE PUBLIC PROPERTY IncludeSeverity AS INTEGER INITIAL 5 NO-UNDO 
-    GET.
-
-    DEFINE OVERRIDE PUBLIC PROPERTY IsComposite AS LOGICAL NO-UNDO 
-    GET.
-
-	DEFINE OVERRIDE PUBLIC PROPERTY RuleId AS CHARACTER INITIAL "test" NO-UNDO 
-	GET.
-
-	DEFINE OVERRIDE PUBLIC PROPERTY Severity AS INTEGER INITIAL 7 NO-UNDO 
-	GET.	 
+     
 
 	/*------------------------------------------------------------------------------
 	 Purpose:
@@ -114,6 +105,19 @@ CLASS prolint.rules.testrule INHERITS prolint.rules.abstractrule:
 	    END.
 
 	END METHOD.
+
+    METHOD OVERRIDE PUBLIC STATIC VOID GetInfo        
+    (
+        OUTPUT oRuleId AS CHARACTER,
+        OUTPUT oSeverity AS INTEGER,
+        OUTPUT oDescription AS CHARACTER        
+    ):
+        ASSIGN
+            oRuleId = localId
+            oSeverity = 7
+            oDescription = "Just a test rule".
+
+    END METHOD.
 
 	/*------------------------------------------------------------------------------
 	 Purpose:
