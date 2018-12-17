@@ -19,8 +19,8 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     {proparse/prounit.i}
     
     &UNDEFINE REF_MOD
-    {proparse/compile.i}    
-    {proparse/xref.i}
+    {prolint/compile.i}    
+    {prolint/xref.i}
     {prolint/profile.i}
     
     DEFINE PRIVATE TEMP-TABLE ttResult NO-UNDO
@@ -191,7 +191,7 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         DO cnt = 1 TO COMPILER:NUM-MESSAGES:
             CREATE ttCompileMessage.
             ASSIGN
-                ttCompileMessage.SourceFile   = COMPILER:GET-FILE-NAME(cnt)
+                ttCompileMessage.SourceFile   = proparse.api:MakePath(COMPILER:GET-FILE-NAME(cnt), ?)
                 ttCompileMessage.Severity     = COMPILER:GET-MESSAGE-TYPE(cnt)
                 ttCompileMessage.ErrorLine    = COMPILER:GET-ROW(cnt)
                 ttCompileMessage.ErrorCode    = COMPILER:GET-NUMBER(cnt)
@@ -199,6 +199,10 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         END.
            
         DATASET dsXRef:READ-XML("FILE", XrefFile, "EMPTY", ?, FALSE).
+        FOR EACH ttSource:
+            ttSource.SourceFile = proparse.api:MakePath(ttSource.SourceFile, ?).
+        END.       
+         
         RETURN TRUE.        
   
     END METHOD.

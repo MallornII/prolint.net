@@ -13,9 +13,14 @@ USING Progress.Lang.*.
 
 ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
-CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT: 
+CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
     
-    {proparse/jpnodes.i &ACCESS_MOD="PROTECTED" &REF_MOD="REFERENCE-ONLY"}     
+    &SCOPED-DEFINE ACCESS_MOD PROTECTED
+    &SCOPED-DEFINE REF_MOD    REFERENCE-ONLY
+    
+    {proparse/jpnodes.i}     
+    {prolint/xref.i}
+    {prolint/compile.i}
 
     DEFINE PROTECTED PROPERTY LintInstance AS prolint.linter NO-UNDO 
         GET.

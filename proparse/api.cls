@@ -9,7 +9,6 @@
    Notes       : 
  ----------------------------------------------------------------------*/
 
-USING Progress.Lang.*.
 USING com.joanju.proparse.ProToken.
 USING com.joanju.proparse.ProParserTokenTypes.
 USING org.prorefactor.core.JPNode.
@@ -26,8 +25,8 @@ USING com.joanju.proparse.ProParserTokenTypes.
 BLOCK-LEVEL ON ERROR UNDO, THROW.
 
 CLASS proparse.api USE-WIDGET-POOL FINAL: 
-    &SCOPED-DEFINE ACCESS_MODE PRIVATE
-    &SCOPED-DEFINE STAT_MOD    STATIC
+    &SCOPED-DEFINE ACCESS_MOD PRIVATE
+    &SCOPED-DEFINE STAT_MOD   STATIC
     
     {proparse/jpnodes.i}            
     {proparse/prounit.i}    
@@ -147,7 +146,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
             
             ASSIGN                
                 ttNode.NodeNum     = curNode:getNodeNum()
-                ttNode.NodeFile    = curNode:getFilename()
+                ttNode.NodeFile    = MakePath(curNode:getFilename(), ?)
                 ttNode.NodeLine    = curNode:getLine()
                 ttNode.NodeColumn  = curNode:getColumn()
                 ttNode.NodeText    = curNode:getText()
