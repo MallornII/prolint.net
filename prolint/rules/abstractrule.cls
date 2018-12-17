@@ -52,7 +52,7 @@ CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
         ASSIGN
             oRuleId = "abstract"
             oSeverity = -1
-            oDescription = "You need to override this method in actual class".                
+            oDescription = "You need to override this method in an actual class".                
     END METHOD.
 	
 
