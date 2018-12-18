@@ -26,7 +26,7 @@ CLASS prolint.rules.testrule INHERITS prolint.rules.abstractrule:
         FIELD AbbrevName AS CHARACTER
         FIELD FullName AS CHARACTER.
 
-    DEFINE OVERRIDE PROTECTED PROPERTY RuleId AS CHARACTER NO-UNDO 
+    DEFINE OVERRIDE PUBLIC PROPERTY RuleId AS CHARACTER NO-UNDO 
     GET():
         RETURN localId.
     END GET.

@@ -10,7 +10,7 @@
 USING Progress.Windows.Form.
   
 BLOCK-LEVEL ON ERROR UNDO, THROW.
-CLASS editrule INHERITS Form  FINAL: 
+CLASS profiles.ruleform INHERITS Form  FINAL: 
 
     DEFINE PRIVATE VARIABLE components         AS System.ComponentModel.IContainer   NO-UNDO.
     DEFINE PRIVATE VARIABLE buttonOk           AS System.Windows.Forms.Button        NO-UNDO.
@@ -40,7 +40,7 @@ CLASS editrule INHERITS Form  FINAL:
         GET.
         SET. 
 
-    CONSTRUCTOR PUBLIC editrule( ):
+    CONSTRUCTOR PUBLIC ruleform( ):
     
         SUPER().
         InitializeComponent ( ).
@@ -50,7 +50,7 @@ CLASS editrule INHERITS Form  FINAL:
 
     END CONSTRUCTOR.
 
-    DESTRUCTOR PUBLIC editrule( ):
+    DESTRUCTOR PUBLIC ruleform( ):
 
         IF VALID-OBJECT(components) THEN 
         DO:

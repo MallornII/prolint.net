@@ -10,7 +10,7 @@
 USING Progress.Windows.Form.
   
 BLOCK-LEVEL ON ERROR UNDO, THROW.
-CLASS newprofile INHERITS Form  FINAL: 
+CLASS profiles.baseform INHERITS Form  FINAL: 
 
     DEFINE PRIVATE VARIABLE components AS System.ComponentModel.IContainer NO-UNDO.
     DEFINE PRIVATE VARIABLE buttonOk AS System.Windows.Forms.Button NO-UNDO.
@@ -22,7 +22,7 @@ CLASS newprofile INHERITS Form  FINAL:
     GET.
     PRIVATE SET. 
 
-    CONSTRUCTOR PUBLIC newprofile( ):
+    CONSTRUCTOR PUBLIC baseform( ):
     
         SUPER().
         InitializeComponent ( ).
@@ -32,7 +32,7 @@ CLASS newprofile INHERITS Form  FINAL:
 
     END CONSTRUCTOR.
 
-    DESTRUCTOR PUBLIC newprofile( ):
+    DESTRUCTOR PUBLIC baseform( ):
 
         IF VALID-OBJECT(components) THEN DO:
             CAST(components, System.IDisposable):Dispose().

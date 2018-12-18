@@ -22,16 +22,22 @@ ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
 DEFINE VARIABLE errs AS OpenEdge.Core.Collections.IListIterator NO-UNDO.
 DEFINE VARIABLE mylint AS prolint.linter NO-UNDO.
+DEFINE VARIABLE myres AS prolint.lintresult NO-UNDO.
 /* ********************  Preprocessor Definitions  ******************** */
 
 
 /* ***************************  Main Block  *************************** */
-COMPILE proparse/api.cls SAVE = FALSE LISTING VALUE("C:/temp/api.list") XREF-XML VALUE("C:/temp/api.xref") NO-ERROR.
-COMPILE c:/temp/testide.p SAVE = FALSE LISTING VALUE("C:/temp/api2.list") XREF-XML VALUE("C:/temp/api2.xref")  .
+//COMPILE proparse/api.cls SAVE = FALSE LISTING VALUE("C:/temp/api.list") XREF-XML VALUE("C:/temp/api.xref") NO-ERROR.
+//COMPILE c:/temp/testide.p SAVE = FALSE LISTING VALUE("C:/temp/api2.list") XREF-XML VALUE("C:/temp/api2.xref")  .
 
-mylint = NEW prolint.linter("test"). 
+mylint = NEW prolint.linter("default"). 
+mylint:IsDebug = TRUE.
+myres = mylint:Lint("c:/temp/testide.p").
 
-IF NOT mylint:Parse("c:/temp/test.cls") THEN
+MESSAGE myres:ToString()
+VIEW-AS ALERT-BOX.
+/*CASE 
+ THEN
 DO:
     MESSAGE "errs"
     VIEW-AS ALERT-BOX.
@@ -43,4 +49,4 @@ DO:
 END.
 ELSE 
 MESSAGE "parsed ok!"
-VIEW-AS ALERT-BOX.
+VIEW-AS ALERT-BOX.*/

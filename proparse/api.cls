@@ -41,6 +41,10 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         GET.
         SET. 
 
+    DEFINE PUBLIC STATIC PROPERTY IsDebug AS LOGICAL NO-UNDO 
+        GET.
+        SET. 
+
     DEFINE PRIVATE STATIC PROPERTY JavaFile AS java.io.File NO-UNDO 
         GET.
         SET. 
@@ -69,9 +73,12 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         GET.
         SET. 
 
-    DEFINE PRIVATE STATIC PROPERTY TempDir AS CHARACTER NO-UNDO 
+    DEFINE PUBLIC STATIC PROPERTY TempDir AS CHARACTER NO-UNDO 
         GET.
-        SET. 
+        SET(INPUT iTempDir AS CHARACTER):
+            TempDir = iTempDir.        
+            ParseSession:setContextDirName(TempDir + "/":U).
+        END SET. 
 
     DEFINE PRIVATE STATIC PROPERTY TopNode AS org.prorefactor.core.JPNode NO-UNDO 
         GET.
@@ -87,17 +94,12 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         parseSchema = org.prorefactor.core.schema.Schema:getInstance().
         ParseEnv = com.joanju.proparse.Environment:instance().
         ParseSession = org.prorefactor.refactor.RefactorSession:getInstance().     
-        TempDir = MakePath(SESSION:TEMP-DIRECTORY, GUID(GENERATE-UUID)).        
-        OS-CREATE-DIR VALUE(TempDir).
-        IF OS-ERROR <> 0 THEN
-            UNDO, THROW NEW proparse.perror({&LINE-NUMBER}, SUBSTITUTE("Can't create temp directory. OS error [&1]", OS-ERROR), OS-ERROR).   
         
-        ParseSession:setContextDirName(TempDir + "/").
-        ParseEnv:configSet("batch-mode", STRING(SESSION:BATCH-MODE, "true/false")).
-        ParseEnv:configSet("opsys", OPSYS).
-        ParseEnv:configSet("propath", PROPATH).
-        ParseEnv:configSet("proversion", PROVERSION).
-        ParseEnv:configSet("window-system", SESSION:WINDOW-SYSTEM).
+        ParseEnv:configSet("batch-mode", STRING(SESSION:BATCH-MODE, "true/false":U)).
+        ParseEnv:configSet("opsys":U, OPSYS).
+        ParseEnv:configSet("propath":U, PROPATH).
+        ParseEnv:configSet("proversion":U, PROVERSION).
+        ParseEnv:configSet("window-system":U, SESSION:WINDOW-SYSTEM).
         
         ReadDbSchema().
 		
@@ -113,7 +115,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         INPUT iFirst  AS CHARACTER,
         INPUT iSecond AS CHARACTER
         ):		
-        RETURN iFirst + (IF iFirst = "" THEN  "" ELSE ",") + iSecond.
+        RETURN iFirst + (IF iFirst = "":U THEN "":U ELSE ",":U) + iSecond.
     END METHOD.   
  
     
@@ -151,10 +153,10 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
                 ttNode.NodeColumn  = curNode:getColumn()
                 ttNode.NodeText    = curNode:getText()
                 WHEN ttNode.NodeType <> ProParserTokenTypes:PROPARSEDIRECTIVE
-                ttNode.NodeText    = curNode:attrGetS("proparsedirective")
+                ttNode.NodeText    = curNode:attrGetS("proparsedirective":U)
                 WHEN ttNode.NodeType = ProParserTokenTypes:PROPARSEDIRECTIVE                
                 ttNode.IsStateHead = curNode:isStateHead()
-                ttNode.StoreType   = curNode:attrGetS("storetype")                        
+                ttNode.StoreType   = curNode:attrGetS("storetype":U)                        
                 ttNode.ParentNum   = parentNode:getNodeNum()                 
                 WHEN VALID-OBJECT(parentNode)
                 ttNode.FirstChild  = childNode:getNodeNum()                 
@@ -216,7 +218,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
                 ttProUnit.FirstLine  = ttNode.NodeLine
                 ttProUnit.UnitName   = ttNode.NodeText.
                 
-            IF LOOKUP("Interface", ttNode.CodeBlock) > 0 THEN
+            IF LOOKUP("Interface":U, ttNode.CodeBlock) > 0 THEN
             DO:
                 ttProUnit.IsForward = TRUE.
                 NEXT BLK_NODE.
@@ -383,7 +385,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
 		
         DecorateProcedures(ProParserTokenTypes:PROCEDURE, proparse.UnitType:U_PROCEDURE, ?).
         DecorateProcedures(ProParserTokenTypes:FUNCTION, proparse.UnitType:U_FUNCTION, ?).
-        DecorateProcedures(ProParserTokenTypes:METHOD, proparse.UnitType:U_METHOD, "Interface").        
+        DecorateProcedures(ProParserTokenTypes:METHOD, proparse.UnitType:U_METHOD, "Interface":U).        
         DecorateAccessors(ProParserTokenTypes:Property_getter, proparse.UnitType:U_GETTER).        
         DecorateAccessors(ProParserTokenTypes:Property_setter, proparse.UnitType:U_SETTER).
       
@@ -467,10 +469,10 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         INPUT iFileName AS CHARACTER
         ):
         
-        iPath = RIGHT-TRIM(REPLACE(iPath, "~\", "/"), "/").
-        iFileName = REPLACE(iFileName, "~\", "/").
-        IF iFileName <> ? AND iFileName <> "" THEN
-            iPath = iPath + "/" + iFileName.         
+        iPath = RIGHT-TRIM(REPLACE(iPath, "~\":U, "/":U), "/":U).
+        iFileName = REPLACE(iFileName, "~\":U, "/":U).
+        IF iFileName <> ? AND iFileName <> "":U THEN
+            iPath = iPath + "/":U + iFileName.         
 
         RETURN iPath.
 
@@ -500,7 +502,8 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         /* implicit delete */
         NodeArray = ?.
         DecorateTree().
-        TEMP-TABLE ttNode:WRITE-XML("FILE", "c:/temp/nodes.xml", TRUE,  "utf-8").                
+        IF IsDebug THEN
+            TEMP-TABLE ttNode:WRITE-XML("FILE":U, SUBSTITUTE("&1/nodes.xml":U, TempDir), TRUE,  "utf-8":U).                
         RETURN TRUE.
 		
         CATCH eErr AS Progress.Lang.Error :            
@@ -587,7 +590,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         IF NOT VALID-OBJECT(SchemaLoader) THEN
             SchemaLoader = NEW proparse.schemaloader().
             
-        vSchemaFile = SESSION:TEMP-DIRECTORY + "proparse.schema".
+        vSchemaFile = SESSION:TEMP-DIRECTORY + "proparse.schema":U.
         SchemaLoader:ToFile(vSchemaFile).
         ParseSchema:clear().
         ParseSchema:loadSchema(vSchemaFile).

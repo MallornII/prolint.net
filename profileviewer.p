@@ -14,12 +14,12 @@
 
 BLOCK-LEVEL ON ERROR UNDO, THROW.
 /* ***************************  Definitions  ************************** */
-DEFINE VARIABLE profileEditor AS lintprof NO-UNDO.
+DEFINE VARIABLE profileViewer AS profiles.viewer NO-UNDO.
 
 /* ********************  Preprocessor Definitions  ******************** */
 
 
 /* ***************************  Main Block  *************************** */
-profileEditor = NEW lintprof().
-WAIT-FOR System.Windows.Forms.Application:Run(profileEditor).
-profileEditor:Dispose().
+profileViewer = NEW profiles.viewer().
+WAIT-FOR System.Windows.Forms.Application:Run(profileViewer).
+profileViewer:Dispose().

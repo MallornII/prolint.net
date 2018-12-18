@@ -1,4 +1,3 @@
- 
 /*------------------------------------------------------------------------
    File        : linter
    Purpose     : 
@@ -31,6 +30,17 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         FIELD Severity   AS INTEGER
         FIELD Comment    AS CHARACTER.
     
+    DEFINE PUBLIC EVENT PublishResult  SIGNATURE VOID 
+        (
+        INPUT iRuleId   AS CHARACTER,
+        INPUT iFileName AS CHARACTER,
+        INPUT iLine     AS INTEGER,
+        INPUT iSeverity AS INTEGER,
+        INPUT iComment  AS CHARACTER
+        ).
+
+    DEFINE PUBLIC EVENT PublishStatus  SIGNATURE VOID (INPUT iStatus AS CHARACTER).
+
     DEFINE PUBLIC PROPERTY CurrentProfile AS CHARACTER NO-UNDO 
         GET.
         PRIVATE SET. 
@@ -43,6 +53,10 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         GET.
         SET. 
     
+    DEFINE PUBLIC PROPERTY IsDebug AS LOGICAL NO-UNDO 
+        GET.
+        SET. 
+
     DEFINE PRIVATE PROPERTY LintRules AS OpenEdge.Core.Collections.List NO-UNDO 
         GET.
         SET.
@@ -50,6 +64,14 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     DEFINE PRIVATE PROPERTY TempDir AS CHARACTER NO-UNDO 
         GET.
         SET. 
+
+    DEFINE PUBLIC PROPERTY CompileWarningSeverity AS INTEGER INITIAL 3 NO-UNDO 
+        GET.
+        SET.
+        
+    DEFINE PUBLIC PROPERTY CompileErrorSeverity AS INTEGER INITIAL 9 NO-UNDO 
+        GET.
+        SET.  
 
     /*------------------------------------------------------------------------------
      Purpose:
@@ -61,11 +83,17 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         CurrentProfile = iProfile.
         ErrorList = NEW OpenEdge.Core.Collections.List().
         LintRules = NEW OpenEdge.Core.Collections.List().
+        
+        TempDir = proparse.api:MakePath(SESSION:TEMP-DIRECTORY, GUID(GENERATE-UUID)).        
+        OS-CREATE-DIR VALUE(TempDir).
+        IF OS-ERROR <> 0 THEN
+            UNDO, THROW NEW proparse.perror({&LINE-NUMBER}, SUBSTITUTE("Can't create temp directory. OS error [&1]":T, OS-ERROR), OS-ERROR).
+        proparse.api:TempDir = TempDir.        
                
         LoadProfiles().     
         FIND FIRST ttProfile WHERE ttProfile.ProfileName = CurrentProfile NO-ERROR.
         IF NOT AVAILABLE(ttProfile) THEN
-            UNDO, THROW NEW Progress.Lang.AppError(SUBSTITUTE("Profile <&1> doesn't exist", CurrentProfile)).
+            UNDO, THROW NEW Progress.Lang.AppError(SUBSTITUTE("Profile <&1> doesn't exist":T, CurrentProfile)).
         LoadRules().     
 		
     END CONSTRUCTOR.
@@ -90,9 +118,36 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         
         DEFINE VARIABLE vExt AS CHARACTER NO-UNDO.
         
-        vExt = ENTRY(NUM-ENTRIES(iFileName, "/"), iFileName).
-        vExt = ENTRY(NUM-ENTRIES(vExt, "."), vExt).
+        vExt = ENTRY(NUM-ENTRIES(iFileName, "/":U), iFileName, "/":U).
+        vExt = ENTRY(NUM-ENTRIES(vExt, ".":U), vExt, ".":U).
         RETURN vExt.
+
+    END METHOD.
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    METHOD PRIVATE INTEGER GetMessageSeverity( INPUT iCode AS INTEGER ):
+        DEFINE VARIABLE warnings AS INTEGER EXTENT 7 NO-UNDO.
+        DEFINE VARIABLE cnt      AS INTEGER NO-UNDO.
+        
+        ASSIGN
+            warnings[1] = 468 /* r-code exists but SAVE was not specified */
+            warnings[2] = 4345 /* &MESSAGE output */
+            warnings[3] = 6430 /* r-code exists but SAVE was not specified */
+            warnings[4] = 14786 /* require-full-name */
+            warnings[5] = 14789 /* require-field-qualifiers */
+            warnings[6] = 18494 /* require-full-keywords */
+            warnings[7] = 198. /* Could not understand line */
+        
+        DO cnt = 1 TO EXTENT(warnings):
+            IF iCode = warnings[cnt] THEN
+                RETURN 0.
+        END.
+
+        RETURN 1.
 
     END METHOD.
 
@@ -127,11 +182,11 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
 	    
         DEFINE VARIABLE vProfilesPath AS CHARACTER NO-UNDO.
 	    
-        vProfilesPath = SEARCH("profiles.xml").
+        vProfilesPath = SEARCH("profiles.xml":U).
         IF vProfilesPath = ? THEN
-            UNDO, THROW NEW Progress.Lang.AppError("Can't find <profiles.xml>").
+            UNDO, THROW NEW Progress.Lang.AppError("Can't find <profiles.xml>":T).
 	       
-        DATASET dsProfile:READ-XML( "FILE", vProfilesPath, "EMPTY", ?, FALSE).        	    
+        DATASET dsProfile:READ-XML("FILE":U, vProfilesPath, "EMPTY":U, ?, FALSE).        	    
 		
         RETURN.
 
@@ -167,44 +222,80 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     ------------------------------------------------------------------------------*/
 
     METHOD PRIVATE LOGICAL CompileUnit(  ):
-        DEFINE VARIABLE XrefFile AS CHARACTER NO-UNDO.
-        DEFINE VARIABLE cnt      AS INTEGER   NO-UNDO.
+        DEFINE VARIABLE XrefFile        AS CHARACTER NO-UNDO.
+        DEFINE VARIABLE cnt             AS INTEGER   NO-UNDO.
+        DEFINE VARIABLE messageSeverity AS INTEGER   NO-UNDO.
 
         EMPTY TEMP-TABLE ttCompileMessage.
         DATASET dsXref:EMPTY-DATASET().
-        
+
         /* We can't compile it, so return TRUE */
         IF LOOKUP(GetFileExt(CurrentUnit), "p,w,cls":U) = 0 THEN
             RETURN TRUE.
-        
-        XrefFile = SUBSTITUTE("&1/xref.xml", TempDir).
-        COMPILE VALUE(CurrentUnit) OPTIONS "require-full-names,require-field-qualifiers,require-full-keywords"
-            SAVE = TRUE INTO TempDir
-        XREF-XML XrefFile NO-ERROR.
-     
-        IF ERROR-STATUS:ERROR THEN       
-            UNDO, THROW NEW proparse.perror({&LINE-NUMBER}, ERROR-STATUS:GET-MESSAGE(1), ERROR-STATUS:GET-NUMBER(1)).
-      
-        IF COMPILER:STOPPED THEN
-            RETURN FALSE.   
+
+        XrefFile = SUBSTITUTE("&1/xref.xml":U, TempDir).
+
+        COMPILE VALUE(CurrentUnit) OPTIONS "require-full-names,require-field-qualifiers,require-full-keywords":U
+            SAVE = TRUE INTO VALUE(TempDir)
+        XREF-XML VALUE(XrefFile) NO-ERROR.         
        
         DO cnt = 1 TO COMPILER:NUM-MESSAGES:
             CREATE ttCompileMessage.
             ASSIGN
-                ttCompileMessage.SourceFile   = proparse.api:MakePath(COMPILER:GET-FILE-NAME(cnt), ?)
-                ttCompileMessage.Severity     = COMPILER:GET-MESSAGE-TYPE(cnt)
+                ttCompileMessage.SourceFile   = proparse.api:MakePath(COMPILER:GET-FILE-NAME(cnt), ?)                
                 ttCompileMessage.ErrorLine    = COMPILER:GET-ROW(cnt)
                 ttCompileMessage.ErrorCode    = COMPILER:GET-NUMBER(cnt)
+                ttCompileMessage.Severity     = GetMessageSeverity(ttCompileMessage.ErrorCode)
                 ttCompileMessage.ErrorMessage = COMPILER:GET-MESSAGE(cnt).          
         END.
-           
-        DATASET dsXRef:READ-XML("FILE", XrefFile, "EMPTY", ?, FALSE).
-        FOR EACH ttSource:
-            ttSource.SourceFile = proparse.api:MakePath(ttSource.SourceFile, ?).
+        
+        FOR EACH ttCompileMessage:
+            messageSeverity = (IF ttCompileMessage.Severity = 0 THEN CompileWarningSeverity ELSE CompileErrorSeverity).
+            PublishResult("Compile":U, ttCompileMessage.SourceFile, ttCompileMessage.ErrorLine, messageSeverity, ttCompileMessage.ErrorMessage).
+        END.
+        
+        IF IsDebug THEN
+        DO:
+            FIND FIRST ttCompileMessage NO-ERROR.
+            IF AVAILABLE(ttCompileMessage) THEN
+                TEMP-TABLE ttCompileMessage:WRITE-XML("FILE":U, SUBSTITUTE("&1./messages.xml":U, TempDir), TRUE, "utf-8":U) NO-ERROR.
+        END.
+        
+        FIND FIRST ttCompileMessage WHERE ttCompileMessage.Severity > 0 NO-ERROR.
+        IF AVAILABLE(ttCompileMessage) THEN
+            RETURN FALSE.  
+        
+        IF SEARCH(XrefFile) <> ? THEN
+        DO:
+            DATASET dsXRef:READ-XML("FILE":U, XrefFile, "EMPTY":U, ?, FALSE).
+            FOR EACH ttSource:
+                ttSource.SourceFile = proparse.api:MakePath(ttSource.SourceFile, ?).
+            END.
         END.       
          
         RETURN TRUE.        
   
+    END METHOD.
+    
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    METHOD PUBLIC prolint.lintresult EXTENT Lint( INPUT iFileList AS OpenEdge.Core.Collections.StringCollection ):
+        DEFINE VARIABLE fileIterator AS OpenEdge.Core.Collections.IIterator NO-UNDO.
+        DEFINE VARIABLE resultSet    AS prolint.lintresult                  EXTENT NO-UNDO.
+        DEFINE VARIABLE cnt          AS INTEGER                             NO-UNDO.
+        
+        EXTENT(resultSet) = iFileList:Size.
+        fileIterator = iFileList:Iterator().
+        
+        DO WHILE fileIterator:HasNext():
+            cnt = cnt + 1.
+            resultSet[cnt] = Lint(fileIterator:Next():ToString()).
+        END.
+        
+        RETURN resultSet.
     END METHOD.
   
     /*------------------------------------------------------------------------------
@@ -212,45 +303,52 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
      Notes:
     ------------------------------------------------------------------------------*/
 
-    METHOD PUBLIC LOGICAL Parse( INPUT iFileName AS CHARACTER ):
+    METHOD PUBLIC prolint.lintresult Lint( INPUT iFileName AS CHARACTER ):
 	    
         DEFINE VARIABLE rulesIter   AS OpenEdge.Core.Collections.IIterator NO-UNDO.
-        DEFINE VARIABLE curRule     AS prolint.rules.irule                 NO-UNDO.
-        DEFINE VARIABLE parseResult AS LOGICAL                             NO-UNDO.
-				
+        DEFINE VARIABLE curRule     AS prolint.rules.abstractrule          NO-UNDO.
+        DEFINE VARIABLE parseResult AS LOGICAL                             NO-UNDO.        
+        
         CurrentUnit = proparse.api:MakePath(iFileName, ?).
+        PublishStatus:Publish(SUBSTITUTE("Linting &1":T, CurrentUnit)).
         IF NOT CompileUnit() THEN
-            RETURN FALSE.
-                
+            RETURN prolint.lintresult:COMPILE_ERROR.
+        
+        PublishStatus:Publish(SUBSTITUTE("Parsing &1":T, CurrentUnit)).
         parseResult = proparse.api:Parse(iFileName,
             OUTPUT TABLE ttNode BIND,
             OUTPUT TABLE ttProUnit BIND).   
         IF NOT parseResult THEN
-            RETURN FALSE.
+            RETURN prolint.lintresult:PARSE_ERROR.
             
         IF proparse.api:ErrorStatus() THEN
-            RETURN FALSE.            
+            RETURN prolint.lintresult:PROPARSE_ERROR.            
                                              
         rulesIter = LintRules:ListIterator().
-        DO WHILE rulesIter:HasNext():		    
-            curRule = CAST(rulesIter:Next(), prolint.rules.irule).
+        DO WHILE rulesIter:HasNext():	    
+            curRule = CAST(rulesIter:Next(), prolint.rules.abstractrule).
+            PublishStatus:Publish(SUBSTITUTE("Applying rule &1":T, curRule:RuleId)).
             curRule:ApplyRule(INPUT TABLE ttNode BIND).
         END.
-        FIND FIRST ttResult NO-ERROR.
-        IF AVAILABLE(ttResult) THEN
-            TEMP-TABLE ttResult:WRITE-XML("FILE", "c:/temp/results.xml", TRUE, "utf-8") NO-ERROR.
-            
-        FIND FIRST ttCompileMessage NO-ERROR.
-        IF AVAILABLE(ttCompileMessage) THEN
-            TEMP-TABLE ttCompileMessage:WRITE-XML("FILE", "c:/temp/cmes.xml", TRUE, "utf-8") NO-ERROR.
         
-        proparse.api:ReleaseNodes().
-        RETURN TRUE.
+        IF IsDebug THEN
+        DO:
+            FIND FIRST ttResult NO-ERROR.
+            IF AVAILABLE(ttResult) THEN
+                TEMP-TABLE ttResult:WRITE-XML("FILE":U, SUBSTITUTE("&1./results.xml":U, TempDir), TRUE, "utf-8":U) NO-ERROR.
+        END.        
+        
+        RETURN prolint.lintresult:LINT_OK.
 		
         CATCH eErr AS Progress.Lang.Error :            
             ErrorList:Add(eErr).
-            RETURN FALSE.                
+            RETURN prolint.lintresult:UNKNOWN_ERROR.               
         END CATCH.
+        
+        FINALLY:
+            PublishStatus:Publish(SUBSTITUTE("Finished &1":T, CurrentUnit)).
+            proparse.api:ReleaseNodes().
+        END FINALLY.
 
     END METHOD.	 
 
@@ -267,6 +365,10 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         INPUT iSeverity AS INTEGER,
         INPUT iComment  AS CHARACTER
         ):
+            
+        FIND FIRST ttRule WHERE ttRule.RuleId = iRuleId NO-ERROR.
+        IF AVAILABLE(ttRule) THEN
+            iSeverity = MIN(99, MAX(1, ttRule.Severity + iSeverity)).
        
         CREATE ttResult.
         ASSIGN
@@ -275,8 +377,9 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
             ttResult.SourceFile = iFileName
             ttResult.LineNumber = iLine
             ttResult.Severity   = iSeverity
-            ttResult.Comment    = iComment. 
-		
+            ttResult.Comment    = iComment.        
+            
+        PublishResult:Publish(iRuleId, iFileName, iLine, iSeverity, iComment).
         RETURN.
 
     END METHOD.
@@ -289,11 +392,20 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     METHOD PUBLIC VOID SetDbSchema( INPUT iLoader AS proparse.ischemaloader ):
         
         IF NOT VALID-OBJECT(iLoader) THEN
-            UNDO, THROW NEW Progress.Lang.AppError("Invalid schema loader instance").
+            UNDO, THROW NEW Progress.Lang.AppError("Invalid schema loader instance":T).
         proparse.api:SchemaLoader = iLoader.
         proparse.api:ReadDbSchema().
         RETURN.
 
     END METHOD.
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+    DESTRUCTOR PUBLIC linter ( ):
+        IF NOT IsDebug THEN 
+            OS-DELETE VALUE(TempDir) RECURSIVE.
+    END DESTRUCTOR.
 
 END CLASS.

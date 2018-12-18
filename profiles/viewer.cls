@@ -14,7 +14,7 @@ USING Progress.Windows.Form.
 
 BLOCK-LEVEL ON ERROR UNDO, THROW.
 
-CLASS lintprof INHERITS Form USE-WIDGET-POOL FINAL:
+CLASS profiles.viewer INHERITS Form USE-WIDGET-POOL FINAL:
     
     {prolint/profile.i &ACCESS_MOD="PRIVATE"} 
     
@@ -40,7 +40,7 @@ CLASS lintprof INHERITS Form USE-WIDGET-POOL FINAL:
     DEFINE PRIVATE VARIABLE queryRules                         AS HANDLE                                         NO-UNDO.
 
         
-    CONSTRUCTOR PUBLIC lintprof (  ):       
+    CONSTRUCTOR PUBLIC viewer (  ):       
         
         SUPER().
         InitializeComponent().
@@ -89,9 +89,9 @@ CLASS lintprof INHERITS Form USE-WIDGET-POOL FINAL:
     METHOD PRIVATE VOID btnAddProfile_Click( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):
 		
         DEFINE VARIABLE newProfileName AS CHARACTER  NO-UNDO.
-        DEFINE VARIABLE profileDialog  AS newprofile NO-UNDO.
+        DEFINE VARIABLE profileDialog  AS profiles.baseform NO-UNDO.
 		
-        profileDialog = NEW newprofile().		
+        profileDialog = NEW profiles.baseform().		
         profileDialog:ShowModalDialog().
         IF profileDialog:DialogResult = System.Windows.Forms.DialogResult:OK THEN
         DO:
@@ -111,9 +111,9 @@ CLASS lintprof INHERITS Form USE-WIDGET-POOL FINAL:
     ------------------------------------------------------------------------------*/
     @VisualDesigner.
     METHOD PRIVATE VOID btnAddRule_Click( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):
-        DEFINE VARIABLE ruleDialog AS editrule NO-UNDO.
+        DEFINE VARIABLE ruleDialog AS profiles.ruleform NO-UNDO.
         
-        ruleDialog = NEW editrule().
+        ruleDialog = NEW profiles.ruleform().
         ruleDialog:Text = "Add new rule".
         ruleDialog:ShowModalDialog().
         IF ruleDialog:DialogResult = System.Windows.Forms.DialogResult:OK THEN
@@ -139,14 +139,14 @@ CLASS lintprof INHERITS Form USE-WIDGET-POOL FINAL:
     ------------------------------------------------------------------------------*/
     @VisualDesigner.
     METHOD PRIVATE VOID btnEditRule_Click( INPUT sender AS System.Object, INPUT e AS System.EventArgs ):
-        DEFINE VARIABLE ruleDialog   AS editrule  NO-UNDO.
+        DEFINE VARIABLE ruleDialog   AS profiles.ruleform  NO-UNDO.
         DEFINE VARIABLE currentClass AS CHARACTER NO-UNDO.
         
         IF VALID-OBJECT(RulesGrid:CurrentRow) THEN
         DO:
             currentClass = RulesGrid:CurrentRow:Cells:Item[1]:Value:ToString().
             FIND FIRST ttRule WHERE ttRule.RuleClass = currentClass.
-            ruleDialog = NEW editrule().       
+            ruleDialog = NEW profiles.ruleform().       
             ASSIGN     
                 ruleDialog:Text            = "Edit rule"            
                 ruleDialog:ruleId          = ttRule.RuleId
@@ -564,7 +564,7 @@ CLASS lintprof INHERITS Form USE-WIDGET-POOL FINAL:
 
     END METHOD.
 
-    DESTRUCTOR PUBLIC lintprof ( ):
+    DESTRUCTOR PUBLIC viewer ( ):
 
     END DESTRUCTOR.
 

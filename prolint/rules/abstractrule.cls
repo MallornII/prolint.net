@@ -30,8 +30,8 @@ CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
         GET.
         SET. 
 
-    DEFINE PROTECTED ABSTRACT PROPERTY RuleId AS CHARACTER NO-UNDO 
-        GET.
+    DEFINE PUBLIC ABSTRACT PROPERTY RuleId AS CHARACTER NO-UNDO 
+        GET.        
 
     /*------------------------------------------------------------------------------
      Purpose:
