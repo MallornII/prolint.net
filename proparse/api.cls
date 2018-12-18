@@ -491,6 +491,8 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         ):
      
         ErrorList:Clear().
+        EMPTY TEMP-TABLE ttNode.
+        EMPTY TEMP-TABLE ttProUnit.
         CurrentFile = iFileName.        
 
         JavaFile = NEW java.io.File(iFileName).
@@ -610,6 +612,8 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     METHOD PUBLIC STATIC VOID ReleaseNodes(  ):
         
         ErrorList:Clear().
+        EMPTY TEMP-TABLE ttNode.
+        EMPTY TEMP-TABLE ttProUnit.
         CurrentFile = MakePath(TempDir, "parse_dummy.p":U).
         OUTPUT STREAM sParse TO VALUE(CurrentFile).
         OUTPUT STREAM sParse CLOSE.        
@@ -621,7 +625,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         NodeArray = org.prorefactor.core.TreeUtils:flatList(TopNode).       
         
         /* implicit delete */
-        NodeArray = ?.                        
+        NodeArray = ?.
         RETURN.
         
         CATCH eErr AS Progress.Lang.Error :            

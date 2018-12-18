@@ -21,25 +21,23 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     {prolint/compile.i}    
     {prolint/xref.i}
     {prolint/profile.i}
-    
-    DEFINE PRIVATE TEMP-TABLE ttResult NO-UNDO
-        FIELD RuleId     AS CHARACTER
-        FIELD Unit       AS CHARACTER
-        FIELD SourceFile AS CHARACTER
-        FIELD LineNumber AS INTEGER
-        FIELD Severity   AS INTEGER
-        FIELD Comment    AS CHARACTER.
+    {prolint/results.i}  
     
     DEFINE PUBLIC EVENT PublishResult  SIGNATURE VOID 
         (
         INPUT iRuleId   AS CHARACTER,
+        INPUT iUnit     AS CHARACTER,
         INPUT iFileName AS CHARACTER,
         INPUT iLine     AS INTEGER,
         INPUT iSeverity AS INTEGER,
         INPUT iComment  AS CHARACTER
         ).
 
-    DEFINE PUBLIC EVENT PublishStatus  SIGNATURE VOID (INPUT iStatus AS CHARACTER).
+    DEFINE PUBLIC EVENT PublishStatus  SIGNATURE VOID
+    (
+        INPUT iUnit AS CHARACTER,
+        INPUT iStatus AS CHARACTER
+    ).
 
     DEFINE PUBLIC PROPERTY CurrentProfile AS CHARACTER NO-UNDO 
         GET.
@@ -93,7 +91,7 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         LoadProfiles().     
         FIND FIRST ttProfile WHERE ttProfile.ProfileName = CurrentProfile NO-ERROR.
         IF NOT AVAILABLE(ttProfile) THEN
-            UNDO, THROW NEW Progress.Lang.AppError(SUBSTITUTE("Profile <&1> doesn't exist":T, CurrentProfile)).
+            UNDO, THROW NEW Progress.Lang.AppError(SUBSTITUTE("Profile <&1> doesn't exist":T, CurrentProfile), 0).
         LoadRules().     
 		
     END CONSTRUCTOR.
@@ -310,11 +308,13 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         DEFINE VARIABLE parseResult AS LOGICAL                             NO-UNDO.        
         
         CurrentUnit = proparse.api:MakePath(iFileName, ?).
-        PublishStatus:Publish(SUBSTITUTE("Linting &1":T, CurrentUnit)).
+        PublishStatus:Publish("Linting...":T, CurrentUnit).
+        PROCESS EVENTS.
         IF NOT CompileUnit() THEN
             RETURN prolint.lintresult:COMPILE_ERROR.
         
-        PublishStatus:Publish(SUBSTITUTE("Parsing &1":T, CurrentUnit)).
+        PublishStatus:Publish("Parsing":T, CurrentUnit).
+        PROCESS EVENTS.
         parseResult = proparse.api:Parse(iFileName,
             OUTPUT TABLE ttNode BIND,
             OUTPUT TABLE ttProUnit BIND).   
@@ -327,7 +327,8 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         rulesIter = LintRules:ListIterator().
         DO WHILE rulesIter:HasNext():	    
             curRule = CAST(rulesIter:Next(), prolint.rules.abstractrule).
-            PublishStatus:Publish(SUBSTITUTE("Applying rule &1":T, curRule:RuleId)).
+            PublishStatus:Publish(SUBSTITUTE("Applying rule &1":T, curRule:RuleId), CurrentUnit).
+            PROCESS EVENTS.
             curRule:ApplyRule(INPUT TABLE ttNode BIND).
         END.
         
@@ -346,7 +347,7 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         END CATCH.
         
         FINALLY:
-            PublishStatus:Publish(SUBSTITUTE("Finished &1":T, CurrentUnit)).
+            PublishStatus:Publish("Finished":T, CurrentUnit).
             proparse.api:ReleaseNodes().
         END FINALLY.
 
@@ -379,7 +380,8 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
             ttResult.Severity   = iSeverity
             ttResult.Comment    = iComment.        
             
-        PublishResult:Publish(iRuleId, iFileName, iLine, iSeverity, iComment).
+        PublishResult:Publish(iRuleId, CurrentUnit, iFileName, iLine, iSeverity, iComment).
+        PROCESS EVENTS.
         RETURN.
 
     END METHOD.
