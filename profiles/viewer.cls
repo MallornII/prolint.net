@@ -1,11 +1,11 @@
  
 /*------------------------------------------------------------------------
-   File        : lintprof
-   Purpose     : 
+   File        : viewer
+   Purpose     : Main form of profile editor
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Mon Dec 17 11:54:42 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 17.12.2018 11:54:42 ALMT
    Notes       : 
  ----------------------------------------------------------------------*/
 

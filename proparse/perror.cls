@@ -1,15 +1,14 @@
  
 /*------------------------------------------------------------------------
    File        : perror
-   Purpose     : 
+   Purpose     : Error class that provides actual line in file where error occured
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Wed Dec 05 22:29:20 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 05.12.2018 22:29:20
    Notes       : 
  ----------------------------------------------------------------------*/
 
-USING Progress.Lang.*.
 USING Progress.Lang.AppError.
 
 ROUTINE-LEVEL ON ERROR UNDO, THROW.
@@ -21,7 +20,7 @@ CLASS proparse.perror INHERITS AppError FINAL:
         PRIVATE SET.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Default constructor
      Notes:
     ------------------------------------------------------------------------------*/
 		
@@ -37,7 +36,7 @@ CLASS proparse.perror INHERITS AppError FINAL:
 
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Constructor with error severity
      Notes:
     ------------------------------------------------------------------------------*/
 		

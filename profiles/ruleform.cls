@@ -1,10 +1,10 @@
 /*------------------------------------------------------------------------
-   File        : editrule
-   Purpose     : 
+   File        : ruleform
+   Purpose     : Add/Edit rule form
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Mon Dec 17 13:14:28 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 17.12.2018 13:14:28
    Notes       : 
  ----------------------------------------------------------------------*/
 USING Progress.Windows.Form.

@@ -1,17 +1,13 @@
  
 /*------------------------------------------------------------------------
    File        : nodetypes
-   Purpose     : 
+   Purpose     : Enum for node type in temp-table ttNode
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Sat Dec 08 13:28:31 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 08.12.2018 13:28:31
    Notes       : 
  ----------------------------------------------------------------------*/
-
-USING Progress.Lang.*.
-
-ROUTINE-LEVEL ON ERROR UNDO, THROW.
 
 ENUM proparse.nodetypes: 
     DEFINE ENUM

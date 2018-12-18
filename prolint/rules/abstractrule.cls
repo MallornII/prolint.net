@@ -1,17 +1,17 @@
  
 /*------------------------------------------------------------------------
    File        : abstractrule
-   Purpose     : 
+   Purpose     : Abstract class from which all actual rules should be derived
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Sun Dec 09 15:45:47 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 09.12.2018 15:45:47
    Notes       : 
  ----------------------------------------------------------------------*/
 
 USING Progress.Lang.*.
 
-ROUTINE-LEVEL ON ERROR UNDO, THROW.
+BLOCK-LEVEL ON ERROR UNDO, THROW.
 
 CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
     
@@ -21,6 +21,15 @@ CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
     {proparse/jpnodes.i}     
     {prolint/xref.i}
     {prolint/compile.i}
+
+    DEFINE PUBLIC EVENT PublishRuleResult  SIGNATURE VOID 
+    (
+        INPUT iRuleId   AS CHARACTER,
+        INPUT iFileName AS CHARACTER,
+        INPUT iLine     AS INTEGER,
+        INPUT iSeverity AS INTEGER,
+        INPUT iComment  AS CHARACTER
+    ).
 
     DEFINE PROTECTED PROPERTY LintInstance AS prolint.linter NO-UNDO 
         GET.
@@ -34,7 +43,7 @@ CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
         GET.        
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Basic constructor
      Notes:
     ------------------------------------------------------------------------------*/
 		
@@ -48,6 +57,11 @@ CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
             LintInstance = iLintInstance.		
     END CONSTRUCTOR.
     
+    /*------------------------------------------------------------------------------
+     Purpose: Return info about class. Should be overriden in actual class!
+     Notes:
+    ------------------------------------------------------------------------------*/
+    
     METHOD PUBLIC STATIC VOID GetInfo
     (
         OUTPUT oRuleId      AS CHARACTER,
@@ -59,12 +73,17 @@ CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
             oSeverity = -1
             oDescription = "You need to override this method in an actual class".                
     END METHOD.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Runs rule's main code
+     Notes:
+    ------------------------------------------------------------------------------*/
 	
 
     METHOD PUBLIC ABSTRACT VOID ApplyRule( TABLE ttNode BIND  ).
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Publish current's rule result
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -75,7 +94,8 @@ CLASS prolint.rules.abstractrule IMPLEMENTS prolint.rules.irule ABSTRACT:
         INPUT iComment AS CHARACTER
         ):
 		
-        LintInstance:PublishResult(RuleId, iFileName, iLine, 0, iComment).
+        PublishRuleResult:Publish(RuleId, iFileName, iLine, 0, iComment).
+        PROCESS EVENTS.
         RETURN.
 
     END METHOD.	

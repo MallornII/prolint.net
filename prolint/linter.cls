@@ -34,10 +34,10 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         ).
 
     DEFINE PUBLIC EVENT PublishStatus  SIGNATURE VOID
-    (
+        (
         INPUT iUnit AS CHARACTER,
         INPUT iStatus AS CHARACTER
-    ).
+        ).
 
     DEFINE PUBLIC PROPERTY CurrentProfile AS CHARACTER NO-UNDO 
         GET.
@@ -50,7 +50,8 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     DEFINE PRIVATE PROPERTY ErrorList AS OpenEdge.Core.Collections.List NO-UNDO 
         GET.
         SET. 
-    
+        
+    /* If set true will save temp-tables into TempDir in XML format and will not delete TempDir */ 
     DEFINE PUBLIC PROPERTY IsDebug AS LOGICAL NO-UNDO 
         GET.
         SET. 
@@ -72,7 +73,7 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         SET.  
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Default constructor
      Notes:
     ------------------------------------------------------------------------------*/
 		
@@ -97,7 +98,7 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     END CONSTRUCTOR.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Return temp-table with compiler messages
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -150,7 +151,7 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Return temp-table ttProUnit with procedrues, methods e.t.c.
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -161,7 +162,7 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Return temp-table with compiled file's Xref 
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -196,18 +197,33 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     ------------------------------------------------------------------------------*/
     METHOD PRIVATE VOID LoadRules(  ):
         
-        DEFINE VARIABLE curRule AS prolint.rules.irule NO-UNDO.
+        DEFINE VARIABLE curRule  AS prolint.rules.abstractrule NO-UNDO.
+        DEFINE VARIABLE curClass AS Progress.Lang.Class        NO-UNDO.
         
         RULE_BLK:
-        FOR EACH ttRule WHERE ttRule.ProfileName = CurrentProfile:            
+        FOR EACH ttRule WHERE ttRule.ProfileName = CurrentProfile:
+            curClass = Progress.Lang.Class:GetClass(ttRule.RuleClass) NO-ERROR.
+            IF curClass = ? THEN
+            DO:
+                ErrorList:Add(NEW proparse.perror({&LINE-NUMBER}, "Not a valid OE class":T, 0, 1)).
+                NEXT RULE_BLK. 
+            END.
+            IF NOT curClass:IsA("prolint.rules.abstractrule":U) THEN
+            DO:
+                ErrorList:Add(NEW proparse.perror({&LINE-NUMBER}, "Class not inherited from prolint.rules.abtractrule":T, 0, 1)).
+                NEXT RULE_BLK.              
+            END.            
             curRule = DYNAMIC-NEW ttRule.RuleClass(CurrentUnit, THIS-OBJECT) NO-ERROR.
             IF ERROR-STATUS:ERROR THEN
             DO:
                 ErrorList:Add(NEW proparse.perror({&LINE-NUMBER}, ERROR-STATUS:GET-MESSAGE(1), ERROR-STATUS:GET-NUMBER(1), 1)).
                 NEXT RULE_BLK. 
             END. 
-            ELSE            
-                LintRules:Add(curRule).                        
+            ELSE
+            DO:
+                curRule:PublishRuleResult:Subscribe(PublishRuleResult).            
+                LintRules:Add(curRule).
+            END.                        
         END.              
         
         RETURN.
@@ -249,7 +265,7 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
         
         FOR EACH ttCompileMessage:
             messageSeverity = (IF ttCompileMessage.Severity = 0 THEN CompileWarningSeverity ELSE CompileErrorSeverity).
-            PublishResult("Compile":U, ttCompileMessage.SourceFile, ttCompileMessage.ErrorLine, messageSeverity, ttCompileMessage.ErrorMessage).
+            PublishResult:Publish("Compile":U, CurrentUnit, ttCompileMessage.SourceFile, ttCompileMessage.ErrorLine, messageSeverity, ttCompileMessage.ErrorMessage).
         END.
         
         IF IsDebug THEN
@@ -276,7 +292,7 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     END METHOD.
     
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Lints all files in collection
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -297,7 +313,7 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     END METHOD.
   
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Lints one file
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -354,11 +370,11 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     END METHOD.	 
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: 
      Notes:
     ------------------------------------------------------------------------------*/
 
-    METHOD PUBLIC VOID PublishResult
+    METHOD PRIVATE VOID PublishRuleResult
         (
         INPUT iRuleId   AS CHARACTER,
         INPUT iFileName AS CHARACTER,
@@ -387,7 +403,7 @@ CLASS prolint.linter USE-WIDGET-POOL FINAL:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Set's class for reading Db schema
      Notes:
     ------------------------------------------------------------------------------*/
 

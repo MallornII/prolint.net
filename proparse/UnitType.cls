@@ -1,11 +1,11 @@
  
  /*------------------------------------------------------------------------
     File        : UnitType
-    Purpose     : 
+    Purpose     : Enum for unit types in temp-table ttProUnit
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Tue Dec 11 21:13:45 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 11.12.2018 21:13:45 ALMT 2018
     Notes       : 
   ----------------------------------------------------------------------*/
 

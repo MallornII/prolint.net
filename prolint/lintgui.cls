@@ -1,20 +1,19 @@
  
 /*------------------------------------------------------------------------
-   File        : lintgui
-   Purpose     : 
+   File        : prolint.lintgui
+   Purpose     : Main form for prolint
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Tue Dec 18 15:10:41 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 18.12.2018 15:10:41
    Notes       : 
  ----------------------------------------------------------------------*/
 
-USING Progress.Lang.*.
 USING Progress.Windows.Form.
 
 BLOCK-LEVEL ON ERROR UNDO, THROW.
 
-CLASS lintgui INHERITS Form FINAL: 
+CLASS prolint.lintgui INHERITS Form FINAL: 
     &SCOPED-DEFINE ACCESS_MOD PRIVATE
     
     {prolint/profile.i}

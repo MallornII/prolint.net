@@ -1,7 +1,7 @@
 
 /*------------------------------------------------------------------------
     File        : jpnodes.i
-    Purpose     : 
+    Purpose     : Temp-table for storing node from proparse.net.dll
 
     Syntax      :
 

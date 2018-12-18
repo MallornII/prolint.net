@@ -1,18 +1,32 @@
 
 /*------------------------------------------------------------------------
     File        : irule
-    Purpose     : 
+    Purpose     : Basic interface for rules
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Sun Dec 09 15:33:42 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 09.12.2018 15:33:42
     Notes       : 
   ----------------------------------------------------------------------*/
 
 USING Progress.Lang.*.
 
 INTERFACE prolint.rules.irule:
-    {proparse/jpnodes.i &REF_MOD="REFERENCE-ONLY"}     
+    {proparse/jpnodes.i &REF_MOD="REFERENCE-ONLY"}
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Publish current's rule result
+     Notes:
+    ------------------------------------------------------------------------------*/     
+
+    DEFINE PUBLIC EVENT PublishRuleResult  SIGNATURE VOID
+    (   
+        INPUT iRuleId   AS CHARACTER,
+        INPUT iFileName AS CHARACTER,
+        INPUT iLine     AS INTEGER,
+        INPUT iSeverity AS INTEGER,
+        INPUT iComment  AS CHARACTER
+    ).
 
 	/*------------------------------------------------------------------------------
 	 Purpose:

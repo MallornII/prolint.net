@@ -1,11 +1,11 @@
  
 /*------------------------------------------------------------------------
-   File        : dbschema
-   Purpose     : 
+   File        : schemaloader
+   Purpose     : Reads schemas of all currently connected DB's
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Thu Dec 06 07:34:09 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 06.12.2018 07:34:09
    Notes       : 
  ----------------------------------------------------------------------*/
 
@@ -105,6 +105,11 @@ CLASS proparse.schemaloader IMPLEMENTS proparse.ischemaloader FINAL:
         END FINALLY.
 
     END METHOD.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Save current DB schema into file (proparse.net.dll can only get DB schema from file)
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     METHOD PUBLIC VOID ToFile( INPUT iFileName AS CHARACTER ):
 		

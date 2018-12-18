@@ -1,25 +1,24 @@
 
 /*------------------------------------------------------------------------
-    File        : profileviewer.p
-    Purpose     : Launches main form for ProfileViewer
+    File        : prolint.p
+    Purpose     : Laucnhes main from for prolint.net
 
     Syntax      :
 
     Description : 
 
     Author(s)   : Andrew Ni
-    Created     : 17.12.2018 15:08:20
+    Created     : 18.12.2018 21:25:29
     Notes       :
   ----------------------------------------------------------------------*/
-
 BLOCK-LEVEL ON ERROR UNDO, THROW.
 /* ***************************  Definitions  ************************** */
-DEFINE VARIABLE profileViewer AS profiles.viewer NO-UNDO.
+DEFINE VARIABLE lingGUI AS prolint.lintgui NO-UNDO.
 
 /* ********************  Preprocessor Definitions  ******************** */
 
 
 /* ***************************  Main Block  *************************** */
-profileViewer = NEW profiles.viewer().
-WAIT-FOR System.Windows.Forms.Application:Run(profileViewer).
-profileViewer:Dispose().
+lingGUI = NEW prolint.lintgui().
+WAIT-FOR System.Windows.Forms.Application:Run(lingGUI).
+lingGUI:Dispose().

@@ -1,15 +1,13 @@
  
 /*------------------------------------------------------------------------
    File        : nodekeys
-   Purpose     : 
+   Purpose     : I don't remember what it was for :(
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Fri Dec 07 22:08:40 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 07.12.2018 22:08:40
    Notes       : 
  ----------------------------------------------------------------------*/
-
-USING Progress.Lang.*.
 
 ENUM proparse.nodekeys: 
     DEFINE ENUM

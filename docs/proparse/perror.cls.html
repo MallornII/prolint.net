@@ -1,0 +1,299 @@
+<!DOCTYPE html >
+<html xml:lang="en" lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<title>perror.cls</title>
+
+<link rel="StyleSheet" href="../css/stylesheet.css"
+	type="text/css" media="all">
+
+</head>
+<body>
+
+	<!-- package name  and class name-->
+	<div class="pkg_class_name">
+		 <a href="package.html">proparse</a>: perror CLASS 
+	</div>
+	<br>
+	<!--Class Name -->
+	<div  class="title_name">
+	perror 
+	
+			FINAL
+		CLASS</div>
+
+	<!-- class comment should go here -->
+	<div class="paragraph">
+	<span class="detail_field_title" width="50px">Purpose</span>:
+	  										Error class that provides actual line in file where error occured
+						<br>
+	  <span class="detail_field_title" width="50px">Description</span>:
+	  										
+						<br>
+	  <span class="detail_field_title" width="50px">Author(s)</span>:
+	  										Andrew Ni
+						<br>
+	  <span class="detail_field_title" width="50px">Notes</span>:
+	  										
+						<br>
+	  <span class="detail_field_title" width="50px">Created</span>:
+	  										05.12.2018 22:29:20
+						<br>
+	</div>
+	
+					<!-- Abstract modifier  -->
+	<div class="paragraph">
+	<span class="detail_field_title" style="font-size: 15px" width="50px">Modifiers</span>:&nbsp 
+		FINAL
+	</div>
+		
+		
+		
+	<!-- extends section-->
+				<div  class="section">Super Class</div>
+		<div  class="paragraph">
+		<span class="code">
+						Progress.Lang.AppError			
+			</span>
+	</div>
+	
+	<!-- inherits section-->
+		
+
+	<!-- CONSTRUCTOR SUMMARY SECTION -->
+		
+	<div class="title_name">
+		Constructors<br>
+	</div>
+		
+		<table class="table_summary" cellspacing="0" summary="">
+			
+				 
+																	<tr>
+										<td class="table_data">
+						<div class="cell_data">
+							 <a
+								href="perror.cls.html#perror_Constructor"
+								title="perror">perror(INPUT:integer,INPUT:character,INPUT:integer)</a>
+						</div>
+					</td> 
+																								<td class="table_data">
+						<div class="cell_data">
+							 <a
+								href="perror.cls.html#perror_Constructor"
+								title="perror">perror(INPUT:integer,INPUT:character,INPUT:integer,INPUT:integer)</a>
+						</div>
+					</td> 
+														</tr>
+															</table>
+
+		<!-- CONSTRUCTOR SUMMARY SECTION END -->
+
+	<!-- methods summary section -->
+		<!-- method summary section end -->
+
+
+	<!-- EVENT SUMMARY SECTION -->
+		<!-- EVENT SUMMARY SECTION END -->
+
+	<!-- PROPERTY SUMMARY SECTION -->
+		<div class="title_name">
+		Properties<br>
+	</div>
+
+	<table class="table_summary" cellspacing="0" summary="">
+			
+		 
+										<tr>
+							<td class="table_data">
+					<div class="cell_data">
+						<a href="perror.cls.html#LineNumber_Property"
+								title="LineNumber">LineNumber</a>
+					</div>
+				</td> 
+													</tr>
+			</table>
+	
+		<!-- PROPERTY SUMMARY SECTION END -->
+
+	
+<!-- VARIABLE SUMMARY SECTION -->
+<!-- VARIABLE SUMMARY SECTION END -->
+
+
+<!-- BUFFER SUMMARY SECTION -->
+<!-- BUFFER SUMMARY SECTION END -->
+
+<!-- DATASET SUMMARY SECTION -->
+<!-- DATASET SUMMARY SECTION END -->
+
+
+<!-- DATA-SOURCE SUMMARY SECTION -->
+<!-- DATA-SOURCE SUMMARY SECTION END -->
+
+<!-- QUERY SUMMARY SECTION -->
+<!-- QUERY SUMMARY SECTION END -->
+
+<!-- TEMP-TABLE SUMMARY SECTION -->
+<!-- TEMP-TABLE SUMMARY SECTION END -->
+	
+	<!-- ============ CONSTRUCTOR DETAIL ========== --> 
+		<div class="title_name">Constructor Detail<br></div>
+	
+		<hr/> 
+	<a name="perror_Constructor"></a>
+	<div class="section">perror constructor</div>
+	<div class="paragraph">
+		<!-- tags should go here -->
+			<span class="detail_field_title" width="50px">Purpose</span>:
+	  										Default constructor
+						<br>
+	  <span class="detail_field_title" width="50px">Description</span>:
+	  										
+						<br>
+
+	</div>
+	
+	<div class="detail_field">
+		<span class="detail_field_title" >Modifiers </span>:&nbsp;
+									PUBLIC &nbsp
+											</div>
+	
+	
+	<table class="table_syntax" cellspacing="0" summary="">
+		<caption class="syntax-title">
+				<span>Syntax</span>&nbsp;
+		</caption>
+		<tr>
+			<td class="element_detail">
+				<span class="element_detail_code">perror(INPUT:integer,INPUT:character,INPUT:integer) </span>
+			</td>
+		</tr>
+	</table>
+	
+			<div class="syntax-title">
+		<span>Parameters</span>&nbsp;
+	</div>
+														<div class="parameter">
+					<span class="parameter_code">iLine</span>&nbsp;
+										INTEGER			
+					</div>
+															<div class="parameter">
+					<span class="parameter_code">iMessage</span>&nbsp;
+										CHARACTER			
+					</div>
+															<div class="parameter">
+					<span class="parameter_code">iCode</span>&nbsp;
+										INTEGER			
+					</div>
+								
+	
+	
+		<hr/> 
+	<a name="perror_Constructor"></a>
+	<div class="section">perror constructor</div>
+	<div class="paragraph">
+		<!-- tags should go here -->
+			<span class="detail_field_title" width="50px">Purpose</span>:
+	  										Constructor with error severity
+						<br>
+	  <span class="detail_field_title" width="50px">Description</span>:
+	  										
+						<br>
+
+	</div>
+	
+	<div class="detail_field">
+		<span class="detail_field_title" >Modifiers </span>:&nbsp;
+									PUBLIC &nbsp
+											</div>
+	
+	
+	<table class="table_syntax" cellspacing="0" summary="">
+		<caption class="syntax-title">
+				<span>Syntax</span>&nbsp;
+		</caption>
+		<tr>
+			<td class="element_detail">
+				<span class="element_detail_code">perror(INPUT:integer,INPUT:character,INPUT:integer,INPUT:integer) </span>
+			</td>
+		</tr>
+	</table>
+	
+			<div class="syntax-title">
+		<span>Parameters</span>&nbsp;
+	</div>
+														<div class="parameter">
+					<span class="parameter_code">iLine</span>&nbsp;
+										INTEGER			
+					</div>
+															<div class="parameter">
+					<span class="parameter_code">iMessage</span>&nbsp;
+										CHARACTER			
+					</div>
+															<div class="parameter">
+					<span class="parameter_code">iCode</span>&nbsp;
+										INTEGER			
+					</div>
+															<div class="parameter">
+					<span class="parameter_code">iSeverity</span>&nbsp;
+										INTEGER			
+					</div>
+								
+	
+	
+			
+	<!-- ============ END CONSTRUCTOR DETAIL ========== --> 
+	<!-- ============ METHOD DETAIL ========== -->
+	
+		
+	<!-- ============ END METHOD DETAIL ========== --> 
+	<!-- ============ EVENT DETAIL ========== -->
+		<!-- ============ END EVENT DETAIL ========== -->
+	<!-- ============ PROPERTY DETAIL ========== -->
+		<div class="title_name">
+		Property Detail<br>
+	</div>
+	
+		<hr/> 
+	<a name="LineNumber_Property"></a>
+	
+	<div class="section">LineNumber property</div>
+	<div class="paragraph">
+		 										
+								<!-- tags should go here -->
+	</div>
+	<div class="detail_field">
+		<span class="detail_field_title" width="50px">Data type</span>:&nbsp;				INTEGER			
+		</div>
+			<div class="detail_field">
+		<span class="detail_field_title" >Modifiers </span>:&nbsp;
+					PUBLIC &nbsp
+			</div>
+	
+							 
+				
+		<!-- ============ END PROPERTY DETAIL ========== -->
+
+	<!-- ============ VARIABLE DETAIL ========== -->
+<!-- ============ END VARIABLE DETAIL ========== -->
+
+<!-- ============ BUFFER DETAIL ========== -->
+<!-- ============ END BUFFER DETAIL ========== -->
+
+<!-- ============ DATASET DETAIL ========== -->
+<!-- ============ END DATASET DETAIL ========== -->
+<!-- ============ DATA-SOURCE DETAIL ========== -->
+<!-- ============ END DATA-SOURCE DETAIL ========== -->
+<!-- ============ QUERY DETAIL ========== -->
+<!-- ============ END QUERY DETAIL ========== -->
+<!-- ============ TEMP-TABLE DETAIL ========== -->
+<!-- ============ END TEMP-TABLE DETAIL ========== -->
+	<!-- copyright content placed here will be shown in all the output pages -->
+<footer>
+		<br>
+		<div class="copyright_style">
+			<p><!-- put your copyright here --></p>
+		</div>
+</footer></body>
+</html>

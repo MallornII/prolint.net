@@ -1,10 +1,10 @@
  /*------------------------------------------------------------------------
-    File        : newprofile
-    Purpose     : 
+    File        : baseform
+    Purpose     : Add profile form
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Mon Dec 17 12:59:29 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 17.12.2018 12:59:29
     Notes       : 
   ----------------------------------------------------------------------*/
 USING Progress.Windows.Form.

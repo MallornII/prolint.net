@@ -1,19 +1,18 @@
  
  /*------------------------------------------------------------------------
     File        : testrule
-    Purpose     : 
+    Purpose     : Demo rule
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Sun Dec 09 15:46:45 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 09.12.2018 15:46:45
     Notes       : 
   ----------------------------------------------------------------------*/
 
-USING Progress.Lang.*.
 USING com.joanju.proparse.ProParserTokenTypes.
 USING com.joanju.proparse.NodeTypes.
 
-ROUTINE-LEVEL ON ERROR UNDO, THROW.
+BLOCK-LEVEL ON ERROR UNDO, THROW.
 
 CLASS prolint.rules.testrule INHERITS prolint.rules.abstractrule: 
     
@@ -33,7 +32,7 @@ CLASS prolint.rules.testrule INHERITS prolint.rules.abstractrule:
      
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Basic constructor
 	 Notes:
 	------------------------------------------------------------------------------*/
 		
@@ -89,6 +88,11 @@ CLASS prolint.rules.testrule INHERITS prolint.rules.abstractrule:
 		RETURN.
 
 	END METHOD.
+	
+    /*------------------------------------------------------------------------------
+     Purpose: Runs rule's main code
+     Notes:
+    ------------------------------------------------------------------------------*/	
 
 	METHOD OVERRIDE PUBLIC VOID ApplyRule( INPUT TABLE FOR ttNode BIND ):
 		DEFINE VARIABLE unAbbrevName AS CHARACTER NO-UNDO.
@@ -105,6 +109,11 @@ CLASS prolint.rules.testrule INHERITS prolint.rules.abstractrule:
 	    END.
 
 	END METHOD.
+	
+    /*------------------------------------------------------------------------------
+     Purpose: Return info about class
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     METHOD OVERRIDE PUBLIC STATIC VOID GetInfo        
     (

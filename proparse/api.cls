@@ -1,14 +1,13 @@
- 
-/*------------------------------------------------------------------------
-   File        : api
-   Purpose     : 
-   Syntax      : 
-   Description : 
-   Author(s)   : niand
-   Created     : Wed Dec 05 21:33:21 ALMT 2018
-   Notes       : 
+ /*------------------------------------------------------------------------
+    File        : api
+    Purpose     : Additional API over proparse.net dll
+    Syntax      : 
+    Description : 
+    Author(s)   : Andrew Ni
+    Created     : 05.12.2018 21:33:21
+    Notes       : Calls org.prorefactor.treeparser.ParseUnit(JavaFile):ParseUnit:treeParser01()
+                  from proparse.net.dll, then fills OpenEdge temp-tables with parsed nodes and decorates them  with additional properties.
  ----------------------------------------------------------------------*/
-
 USING com.joanju.proparse.ProToken.
 USING com.joanju.proparse.ProParserTokenTypes.
 USING org.prorefactor.core.JPNode.
@@ -24,7 +23,8 @@ USING com.joanju.proparse.ProParserTokenTypes.
 
 BLOCK-LEVEL ON ERROR UNDO, THROW.
 
-CLASS proparse.api USE-WIDGET-POOL FINAL: 
+CLASS proparse.api USE-WIDGET-POOL FINAL:
+     
     &SCOPED-DEFINE ACCESS_MOD PRIVATE
     &SCOPED-DEFINE STAT_MOD   STATIC
     
@@ -40,6 +40,8 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     DEFINE PRIVATE STATIC PROPERTY ErrorList AS OpenEdge.Core.Collections.List NO-UNDO 
         GET.
         SET. 
+        
+    /* If set true will save temp-tables into TempDir in XML format */    
 
     DEFINE PUBLIC STATIC PROPERTY IsDebug AS LOGICAL NO-UNDO 
         GET.
@@ -49,6 +51,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         GET.
         SET. 
 
+    /* This class will be used to load DB schema */    
     DEFINE PUBLIC STATIC PROPERTY SchemaLoader AS proparse.ischemaloader NO-UNDO 
         PRIVATE GET.
         SET.
@@ -85,8 +88,8 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         SET. 
 
     /*------------------------------------------------------------------------------
-     Purpose:
-     Notes:
+     Purpose: Sets environment variables for proparse.net.dll
+     Notes: 
     ------------------------------------------------------------------------------*/
 		
     CONSTRUCTOR STATIC api (  ):
@@ -106,8 +109,8 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     END CONSTRUCTOR.
 
     /*------------------------------------------------------------------------------
-     Purpose:
-     Notes:
+     Purpose: Adds entry to the list (empty or not)
+     Notes: 
     ------------------------------------------------------------------------------*/
 
     METHOD PRIVATE STATIC CHARACTER AddEntry
@@ -121,7 +124,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Fills temp-table with tree nodes built by proparse.net.ndll
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -171,12 +174,15 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Cleans temp-tables, deletes old objects
      Notes:
     ------------------------------------------------------------------------------*/
 
     METHOD PRIVATE STATIC VOID CleanUp(  ):
 		
+		EMPTY TEMP-TABLE ttNode.
+        EMPTY TEMP-TABLE ttProUnit.
+        ErrorList:Clear().
         IF VALID-OBJECT(ParseUnit) THEN
             DELETE OBJECT ParseUnit.
         RETURN.
@@ -184,7 +190,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: 
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -397,8 +403,8 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
-     Notes:
+     Purpose: Return TRUE if there errors during class' work
+     Notes: 
     ------------------------------------------------------------------------------*/
 
     METHOD PUBLIC STATIC LOGICAL ErrorStatus(  ):
@@ -408,8 +414,8 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
-     Notes:
+     Purpose: Returns IIterator class with errors that were raised during class' work
+     Notes: Use ErrorStatus() method to determine whenever there were any errors
     ------------------------------------------------------------------------------*/
 
     METHOD PUBLIC STATIC FINAL OpenEdge.Core.Collections.IListIterator GetErrors(  ):
@@ -419,7 +425,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Returns JPNode that is a statement head for given node
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -442,7 +448,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Returns NodeType for node that is a statement head for given node
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -459,8 +465,10 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
-     Notes:
+     Purpose: Creates FullPath from directory and file. Alos changes all "\" to "/"
+     Notes: Second paramater can be ?. In that way it's just converts the path delimiters
+     @param iPath Directory path. Can end with "/" or not
+     @param iFileName Name of the file. Can be null
     ------------------------------------------------------------------------------*/
 
     METHOD PUBLIC STATIC CHARACTER MakePath
@@ -479,7 +487,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Parses file, returns temp-tables for Nodes nd ProUnits (methods, functions e.t.c.) 
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -490,9 +498,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
         OUTPUT TABLE FOR ttProUnit BIND
         ):
      
-        ErrorList:Clear().
-        EMPTY TEMP-TABLE ttNode.
-        EMPTY TEMP-TABLE ttProUnit.
+        CleanUp().                
         CurrentFile = iFileName.        
 
         JavaFile = NEW java.io.File(iFileName).
@@ -581,7 +587,7 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     END METHOD.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Gets DB schema via SchemaLoader class and passes it to proparse.net.dll
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -605,15 +611,13 @@ CLASS proparse.api USE-WIDGET-POOL FINAL:
     END METHOD.    
 
     /*------------------------------------------------------------------------------
-     Purpose:
-     Notes:
+     Purpose: Releases recources used by proparse.net.dll (nodes and files)
+     Notes: As there is now way to free them directly it's just parses dummy file
     ------------------------------------------------------------------------------*/
 
     METHOD PUBLIC STATIC VOID ReleaseNodes(  ):
         
-        ErrorList:Clear().
-        EMPTY TEMP-TABLE ttNode.
-        EMPTY TEMP-TABLE ttProUnit.
+        CleanUp().
         CurrentFile = MakePath(TempDir, "parse_dummy.p":U).
         OUTPUT STREAM sParse TO VALUE(CurrentFile).
         OUTPUT STREAM sParse CLOSE.        

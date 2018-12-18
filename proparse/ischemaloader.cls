@@ -1,11 +1,11 @@
 
 /*------------------------------------------------------------------------
-    File        : idbschema
-    Purpose     : 
+    File        : ischemaloader
+    Purpose     : Interface for loading DB schema
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Thu Dec 06 07:31:34 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 06.12.2018 07:31:34
     Notes       : 
   ----------------------------------------------------------------------*/
 
@@ -14,7 +14,7 @@ USING Progress.Lang.*.
 INTERFACE proparse.ischemaloader:    
 
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Save current DB schema into file (proparse.net.dll can only get DB schema from file)
 	 Notes:
 	------------------------------------------------------------------------------*/
 
