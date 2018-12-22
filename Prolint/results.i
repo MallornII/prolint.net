@@ -1,25 +1,27 @@
 
 /*------------------------------------------------------------------------
-    File        : profileviewer.p
-    Purpose     : Launches main form for ProfileViewer
+    File        : results.i
+    Purpose     : 
 
     Syntax      :
 
     Description : 
 
-    Author(s)   : Andrew Ni
-    Created     : 17.12.2018 15:08:20
+    Author(s)   : 
+    Created     : Tue Dec 18 15:13:13 ALMT 2018
     Notes       :
   ----------------------------------------------------------------------*/
 
-block-level on error undo, throw.
 /* ***************************  Definitions  ************************** */
-define variable profileViewer as profiles.viewer no-undo.
+define {&ACCESS_MOD} temp-table ttResult no-undo
+        field RuleId     as character
+        field Unit       as character
+        field SourceFile as character
+        field LineNumber as integer
+        field Severity   as integer
+        field Comment    as character.
 
 /* ********************  Preprocessor Definitions  ******************** */
 
 
 /* ***************************  Main Block  *************************** */
-profileViewer = new profiles.viewer().
-wait-for System.Windows.Forms.Application:Run(profileViewer).
-profileViewer:Dispose().

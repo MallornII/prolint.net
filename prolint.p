@@ -11,14 +11,14 @@
     Created     : 18.12.2018 21:25:29
     Notes       :
   ----------------------------------------------------------------------*/
-BLOCK-LEVEL ON ERROR UNDO, THROW.
+block-level on error undo, throw.
 /* ***************************  Definitions  ************************** */
-DEFINE VARIABLE lingGUI AS prolint.lintgui NO-UNDO.
+define variable lingGUI as prolint.lintgui no-undo.
 
 /* ********************  Preprocessor Definitions  ******************** */
 
 
 /* ***************************  Main Block  *************************** */
-lingGUI = NEW prolint.lintgui().
-WAIT-FOR System.Windows.Forms.Application:Run(lingGUI).
+lingGUI = new prolint.lintgui().
+wait-for System.Windows.Forms.Application:Run(lingGUI).
 lingGUI:Dispose().
