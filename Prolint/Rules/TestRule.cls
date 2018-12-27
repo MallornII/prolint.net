@@ -1,98 +1,95 @@
  
- /*------------------------------------------------------------------------
-    File        : testrule
-    Purpose     : Demo rule
-    Syntax      : 
-    Description : 
-    Author(s)   : Andrew Ni
-    Created     : 09.12.2018 15:46:45
-    Notes       : 
-  ----------------------------------------------------------------------*/
+/*------------------------------------------------------------------------
+   File        : testrule
+   Purpose     : Demo rule
+   Syntax      : 
+   Description : 
+   Author(s)   : Andrew Ni
+   Created     : 09.12.2018 15:46:45
+   Notes       : 
+ ----------------------------------------------------------------------*/
 
 using com.joanju.proparse.ProParserTokenTypes.
 using com.joanju.proparse.NodeTypes.
 
 block-level on error undo, throw.
 
-class Prolint.Rules.TestRule inherits Prolint.Rules.AbstractRule final: 
+class Prolint.Rules.TestRule inherits Prolint.Rules.AbstractRule serializable final:
+   
     
     define private temp-table ttSkipNodes no-undo
-        field  NodeType as integer.
+        field NodeType as integer.
         
     define private temp-table ttAbbrev no-undo
         field AbbrevName as character
-        field FullName as character.
+        field FullName   as character.
 
-    define override public property RuleDescription as character initial "Just a test rule" no-undo 
-    get.     
-
-    define override public property RuleId as character initial "test" no-undo 
-    get.
-
-    define override public property Severity as integer initial 7 no-undo 
-    get.
-          
-
-	/*------------------------------------------------------------------------------
-	 Purpose: Basic constructor
-	 Notes:
-	------------------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------------
+     Purpose: Basic constructor
+     Notes:
+    ------------------------------------------------------------------------------*/
 		
-	constructor public TestRule ():        
-		super ().
-		AddSkipType(ProParserTokenTypes:Program_root).
-		AddSkipType(ProParserTokenTypes:QSTRING).
-		AddSkipType(ProParserTokenTypes:NUMBER).
-		AddSkipType(ProParserTokenTypes:PERIOD).
-		AddSkipType(ProParserTokenTypes:COMMA).
-		AddSkipType(ProParserTokenTypes:LEXCOLON).
-		AddSkipType(ProParserTokenTypes:OBJCOLON).
-		AddSkipType(ProParserTokenTypes:LEFTPAREN).
-		AddSkipType(ProParserTokenTypes:RIGHTPAREN).
+    constructor public TestRule ():        
+        super ().
 		
-		AddAbbrev("FILE-INFO", "FILE-INFO").
-		AddAbbrev("COL", "COLUMNS").
-	end constructor.
-
-
-	/*------------------------------------------------------------------------------
-	 Purpose:
-	 Notes:
-	------------------------------------------------------------------------------*/
-
-	method private void AddAbbrev
-	(
-	   input abbrevName as character,
-	   input fullName as character
-    ):
+        assign
+            RuleDescription = "Just a test rule":T
+            RuleId          = "test":U
+            Severity        = 7.
 		
-		create ttAbbrev.
-		assign
+        AddSkipType(ProParserTokenTypes:Program_root).
+        AddSkipType(ProParserTokenTypes:QSTRING).
+        AddSkipType(ProParserTokenTypes:NUMBER).
+        AddSkipType(ProParserTokenTypes:PERIOD).
+        AddSkipType(ProParserTokenTypes:COMMA).
+        AddSkipType(ProParserTokenTypes:LEXCOLON).
+        AddSkipType(ProParserTokenTypes:OBJCOLON).
+        AddSkipType(ProParserTokenTypes:LEFTPAREN).
+        AddSkipType(ProParserTokenTypes:RIGHTPAREN).
+		
+        AddAbbrev("FILE-INFO", "FILE-INFO").
+        AddAbbrev("COL", "COLUMNS").
+    end constructor.
+
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    method private void AddAbbrev
+        (
+        input abbrevName as character,
+        input fullName as character
+        ):
+		
+        create ttAbbrev.
+        assign
             ttAbbrev.AbbrevName = abbrevName
-            ttAbbrev.FullName = fullName.
-		return.
+            ttAbbrev.FullName   = fullName.
+        return.
 
-	end method.
+    end method.
 
-	/*------------------------------------------------------------------------------
-	 Purpose:
-	 Notes:
-	------------------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
 
-	method private void AddSkipType( input nodeType as integer ):
+    method private void AddSkipType( input nodeType as integer ):
 		
-		create ttSkipNodes.
-		ttSkipNodes.NodeType = nodeType.
-		return.
+        create ttSkipNodes.
+        ttSkipNodes.NodeType = nodeType.
+        return.
 
-	end method.
+    end method.
 
-	/*------------------------------------------------------------------------------
-	 Purpose:
-	 Notes:
-	------------------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
 
-	method private character UnAbbrev( input abbrevName as character ):
+    method private character UnAbbrev( input abbrevName as character ):
 		
         find first ttAbbrev where ttAbbrev.AbbrevName = abbrevName no-error.
         if available(ttAbbrev) then
@@ -100,21 +97,21 @@ class Prolint.Rules.TestRule inherits Prolint.Rules.AbstractRule final:
         else  
             return keyword-all(abbrevName).
 
-	end method.
+    end method.
 
     method override public void Visit
-    (
-       input currentUnit as Prolint.ILintUnit,
-       input dataset dsProparse,
-       input dataset dsXref
-    ):
+        (
+        input currentUnit as Prolint.ILintUnit,
+        input dataset dsProparse,
+        input dataset dsXref
+        ):
         
         define variable unAbbrevName as character no-undo.
         
         BLK_NODE:
         for each ttNode where ttNode.NodeText <> "":
             if ttNode.NodeText = NodeTypes:getTypeName(ttNode.NodeType) then
-              next.
+                next.
             if can-find(first ttSkipNodes where ttSkipNodes.NodeType = ttNode.NodeType) then
                 next BLK_NODE.
             unAbbrevName = unAbbrev(ttNode.NodeText).

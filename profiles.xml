@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LintProfiles xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Profile ProfileName="default">
-    <Rule RuleId="test" Severity="6">
+    <Rule>
       <RuleClass>prolint.rules.testrule</RuleClass>
-      <RuleDescription>Just a test rule</RuleDescription>
     </Rule>
   </Profile>
   <Profile ProfileName="test2">

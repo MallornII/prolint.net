@@ -251,7 +251,10 @@ class Proparse.Wrapper use-widget-pool final:
         JavaFile = new java.io.File(dummyFile).
         ParseUnit = new org.prorefactor.treeparser.ParseUnit(JavaFile). 
         ParseUnit:treeParser01().
-      
+        JavaFile:deleteOnExit().
+        ParseUnit = ?.
+        JavaFile = ?.        
+        
         return.
         
         catch e as Progress.Lang.Error :            

@@ -1,6 +1,6 @@
  
 /*------------------------------------------------------------------------
-   File        : prolint.lintgui
+   File        : prolint.MainForm
    Purpose     : Main form for prolint
    Syntax      : 
    Description : 
@@ -13,7 +13,7 @@ using Progress.Windows.Form.
 
 block-level on error undo, throw.
 
-class Prolint.LintGUI inherits Form final: 
+class Prolint.Forms.MainForm inherits Form final: 
     &SCOPED-DEFINE ACCESS_MOD PRIVATE
     
     {prolint/profile.i}
@@ -21,6 +21,7 @@ class Prolint.LintGUI inherits Form final:
     
     define private variable bsProfiles                          as Progress.Data.BindingSource                    no-undo.
     define private variable bsResults                           as Progress.Data.BindingSource                    no-undo.
+    define private variable btnProfiles as System.Windows.Forms.Button no-undo.
     define private variable comboProfile                        as System.Windows.Forms.ComboBox                  no-undo.
     define private variable checkDebug                          as System.Windows.Forms.CheckBox                  no-undo.
     define private variable btnLint                             as System.Windows.Forms.Button                    no-undo.
@@ -43,7 +44,7 @@ class Prolint.LintGUI inherits Form final:
     define private variable unitDataGridViewTextBoxColumn       as System.Windows.Forms.DataGridViewTextBoxColumn no-undo.
 
         
-    constructor public LintGUI (  ):
+    constructor public MainForm (  ):
         
         
         super().
@@ -72,8 +73,8 @@ class Prolint.LintGUI inherits Form final:
         create query queryResults.
         queryResults:add-buffer(buffer ttResult:HANDLE).
         RefreshResults().        
-        bsResults:HANDLE = queryResults.
-        
+        bsResults:HANDLE = queryResults.        
+       
         catch e as Progress.Lang.Error:
             undo, throw e.
         end catch.
@@ -131,6 +132,22 @@ class Prolint.LintGUI inherits Form final:
     end method.
 
 
+	/*------------------------------------------------------------------------------
+	 Purpose:
+	 Notes:
+	------------------------------------------------------------------------------*/
+	@VisualDesigner.
+	method private void btnProfiles_Click( input sender as System.Object, input e as System.EventArgs ):
+		define variable profileEditorDialog as Prolint.Forms.ProfileEditor no-undo.
+		
+		profileEditorDialog = new Prolint.Forms.ProfileEditor().
+	    profileEditorDialog:ShowModalDialog().
+	    queryProfiles:query-close().
+	    queryProfiles:query-open().
+		return.
+
+	end method.
+
     method private void InitializeComponent(  ):
         
         /* NOTE: The following method is automatically generated.
@@ -141,27 +158,31 @@ class Prolint.LintGUI inherits Form final:
         Modifying the contents of this method using a code editor will invalidate any support for this file. */
         this-object:components = new System.ComponentModel.Container().
         @VisualDesigner.FormMember (NeedsInitialize="true":U).
-        define variable tableDesc13 as Progress.Data.TableDesc no-undo.
-        tableDesc13 = new Progress.Data.TableDesc("ttResult":U).
+        define variable tableDesc1 as Progress.Data.TableDesc no-undo.
+        tableDesc1 = new Progress.Data.TableDesc("ttResult":U).
         @VisualDesigner.FormMember (NeedsInitialize="true":U).
-        define variable tableDesc14 as Progress.Data.TableDesc no-undo.
-        tableDesc14 = new Progress.Data.TableDesc("ttProfile":U).
+        define variable tableDesc2 as Progress.Data.TableDesc no-undo.
+        tableDesc2 = new Progress.Data.TableDesc("ttProfile":U).
+        @VisualDesigner.FormMember (NeedsInitialize="true":U).
+        define variable resources as Progress.Util.ResourceManager no-undo.
+        resources = new Progress.Util.ResourceManager("Prolint.Forms.MainForm":U).
         this-object:bsResults = new Progress.Data.BindingSource(this-object:components).
         this-object:lintDialog = new System.Windows.Forms.OpenFileDialog().
         this-object:bsProfiles = new Progress.Data.BindingSource(this-object:components).
         this-object:resultsView = new System.Windows.Forms.DataGridView().
-        this-object:btnLint = new System.Windows.Forms.Button().
-        this-object:comboProfile = new System.Windows.Forms.ComboBox().
-        this-object:checkDebug = new System.Windows.Forms.CheckBox().
-        this-object:statusLint = new System.Windows.Forms.StatusStrip().
-        this-object:statusLabelAction = new System.Windows.Forms.ToolStripStatusLabel().
-        this-object:statusLabelFile = new System.Windows.Forms.ToolStripStatusLabel().
         this-object:ruleIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn().
         this-object:severityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn().
         this-object:sourceFileDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn().
         this-object:lineNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn().
         this-object:unitDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn().
         this-object:commentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn().
+        this-object:btnLint = new System.Windows.Forms.Button().
+        this-object:comboProfile = new System.Windows.Forms.ComboBox().
+        this-object:checkDebug = new System.Windows.Forms.CheckBox().
+        this-object:statusLint = new System.Windows.Forms.StatusStrip().
+        this-object:statusLabelAction = new System.Windows.Forms.ToolStripStatusLabel().
+        this-object:statusLabelFile = new System.Windows.Forms.ToolStripStatusLabel().
+        this-object:btnProfiles = new System.Windows.Forms.Button().
         cast(this-object:bsResults, System.ComponentModel.ISupportInitialize):BeginInit().
         cast(this-object:bsProfiles, System.ComponentModel.ISupportInitialize):BeginInit().
         cast(this-object:resultsView, System.ComponentModel.ISupportInitialize):BeginInit().
@@ -176,7 +197,7 @@ class Prolint.LintGUI inherits Form final:
         @VisualDesigner.FormMember (NeedsInitialize="false":U, InitializeArray="true":U).
         define variable arrayvar0 as "Progress.Data.TableDesc[]" no-undo.
         arrayvar0 = new "Progress.Data.TableDesc[]"(0).
-        tableDesc13:ChildTables = arrayvar0.
+        tableDesc1:ChildTables = arrayvar0.
         @VisualDesigner.FormMember (NeedsInitialize="false":U, InitializeArray="true":U).
         define variable arrayvar1 as Progress.Data.ColumnPropDesc extent 6 no-undo.
         arrayvar1[1] = new Progress.Data.ColumnPropDesc("RuleId":U, "RuleId":U, Progress.Data.DataType:CHARACTER).
@@ -185,8 +206,8 @@ class Prolint.LintGUI inherits Form final:
         arrayvar1[4] = new Progress.Data.ColumnPropDesc("Severity":U, "Severity":U, Progress.Data.DataType:INTEGER).
         arrayvar1[5] = new Progress.Data.ColumnPropDesc("Comment":U, "Comment":U, Progress.Data.DataType:CHARACTER).
         arrayvar1[6] = new Progress.Data.ColumnPropDesc("LineNumber":U, "Line number":U, Progress.Data.DataType:INTEGER).
-        tableDesc13:Columns = arrayvar1.
-        this-object:bsResults:TableSchema = tableDesc13.
+        tableDesc1:Columns = arrayvar1.
+        this-object:bsResults:TableSchema = tableDesc1.
         /*  */
         /* lintDialog */
         /*  */
@@ -200,12 +221,12 @@ class Prolint.LintGUI inherits Form final:
         @VisualDesigner.FormMember (NeedsInitialize="false":U, InitializeArray="true":U).
         define variable arrayvar2 as "Progress.Data.TableDesc[]" no-undo.
         arrayvar2 = new "Progress.Data.TableDesc[]"(0).
-        tableDesc14:ChildTables = arrayvar2.
+        tableDesc2:ChildTables = arrayvar2.
         @VisualDesigner.FormMember (NeedsInitialize="false":U, InitializeArray="true":U).
         define variable arrayvar3 as Progress.Data.ColumnPropDesc extent 1 no-undo.
         arrayvar3[1] = new Progress.Data.ColumnPropDesc("ProfileName":U, "ProfileName":U, Progress.Data.DataType:CHARACTER).
-        tableDesc14:Columns = arrayvar3.
-        this-object:bsProfiles:TableSchema = tableDesc14.
+        tableDesc2:Columns = arrayvar3.
+        this-object:bsProfiles:TableSchema = tableDesc2.
         /*  */
         /* resultsView */
         /*  */
@@ -227,76 +248,14 @@ class Prolint.LintGUI inherits Form final:
         arrayvar4[6] = this-object:commentDataGridViewTextBoxColumn.
         this-object:resultsView:Columns:AddRange(arrayvar4).
         this-object:resultsView:DataSource = this-object:bsResults.
-        this-object:resultsView:Location = new System.Drawing.Point(0, 45).
+        this-object:resultsView:Location = new System.Drawing.Point(0, 48).
         this-object:resultsView:Name = "resultsView":U.
         this-object:resultsView:ReadOnly = true.
         this-object:resultsView:ScrollBars = System.Windows.Forms.ScrollBars:Vertical.
         this-object:resultsView:SelectionMode = System.Windows.Forms.DataGridViewSelectionMode:FullRowSelect.
-        this-object:resultsView:Size = new System.Drawing.Size(1389, 460).
+        this-object:resultsView:Size = new System.Drawing.Size(1389, 457).
         this-object:resultsView:TabIndex = 0.
         this-object:resultsView:Sorted:Subscribe(this-object:resultsView_Sorted).
-        /*  */
-        /* btnLint */
-        /*  */
-        this-object:btnLint:Location = new System.Drawing.Point(0, 12).
-        this-object:btnLint:Name = "btnLint":U.
-        this-object:btnLint:Size = new System.Drawing.Size(131, 27).
-        this-object:btnLint:TabIndex = 1.
-        this-object:btnLint:Text = "Lint...":U.
-        this-object:btnLint:UseCompatibleTextRendering = true.
-        this-object:btnLint:UseVisualStyleBackColor = true.
-        this-object:btnLint:Click:Subscribe(this-object:btnLint_Click).
-        /*  */
-        /* comboProfile */
-        /*  */
-        this-object:comboProfile:DataSource = this-object:bsProfiles.
-        this-object:comboProfile:DisplayMember = "ProfileName":U.
-        this-object:comboProfile:DropDownStyle = System.Windows.Forms.ComboBoxStyle:DropDownList.
-        this-object:comboProfile:FormattingEnabled = true.
-        this-object:comboProfile:Location = new System.Drawing.Point(137, 14).
-        this-object:comboProfile:Name = "comboProfile":U.
-        this-object:comboProfile:Size = new System.Drawing.Size(142, 21).
-        this-object:comboProfile:TabIndex = 2.
-        this-object:comboProfile:ValueMember = "ProfileName":U.
-        /*  */
-        /* checkDebug */
-        /*  */
-        this-object:checkDebug:Location = new System.Drawing.Point(285, 12).
-        this-object:checkDebug:Name = "checkDebug":U.
-        this-object:checkDebug:Size = new System.Drawing.Size(104, 24).
-        this-object:checkDebug:TabIndex = 3.
-        this-object:checkDebug:Text = "Debug":U.
-        this-object:checkDebug:UseCompatibleTextRendering = true.
-        this-object:checkDebug:UseVisualStyleBackColor = true.
-        /*  */
-        /* statusLint */
-        /*  */
-        @VisualDesigner.FormMember (NeedsInitialize="false":U, InitializeArray="true":U).
-        define variable arrayvar5 as System.Windows.Forms.ToolStripItem extent 2 no-undo.
-        arrayvar5[1] = this-object:statusLabelAction.
-        arrayvar5[2] = this-object:statusLabelFile.
-        this-object:statusLint:Items:AddRange(arrayvar5).
-        this-object:statusLint:Location = new System.Drawing.Point(0, 518).
-        this-object:statusLint:Name = "statusLint":U.
-        this-object:statusLint:Size = new System.Drawing.Size(1389, 22).
-        this-object:statusLint:TabIndex = 4.
-        this-object:statusLint:Text = "statusStrip1":U.
-        /*  */
-        /* statusLabelAction */
-        /*  */
-        this-object:statusLabelAction:AutoSize = false.
-        this-object:statusLabelAction:DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle:Text.
-        this-object:statusLabelAction:Name = "statusLabelAction":U.
-        this-object:statusLabelAction:Overflow = System.Windows.Forms.ToolStripItemOverflow:Never.
-        this-object:statusLabelAction:Size = new System.Drawing.Size(200, 17).
-        this-object:statusLabelAction:TextAlign = System.Drawing.ContentAlignment:MiddleLeft.
-        /*  */
-        /* statusLabelFile */
-        /*  */
-        this-object:statusLabelFile:Name = "statusLabelFile":U.
-        this-object:statusLabelFile:Size = new System.Drawing.Size(1174, 17).
-        this-object:statusLabelFile:Spring = true.
-        this-object:statusLabelFile:TextAlign = System.Drawing.ContentAlignment:MiddleLeft.
         /*  */
         /* ruleIdDataGridViewTextBoxColumn */
         /*  */
@@ -356,16 +315,90 @@ class Prolint.LintGUI inherits Form final:
         this-object:commentDataGridViewTextBoxColumn:Name = "commentDataGridViewTextBoxColumn":U.
         this-object:commentDataGridViewTextBoxColumn:ReadOnly = true.
         /*  */
-        /* LintGUI */
+        /* btnLint */
+        /*  */
+        this-object:btnLint:Image = cast(resources:GetObject("btnLint.Image":U), System.Drawing.Image).
+        this-object:btnLint:Location = new System.Drawing.Point(0, 4).
+        this-object:btnLint:Name = "btnLint":U.
+        this-object:btnLint:Size = new System.Drawing.Size(38, 38).
+        this-object:btnLint:TabIndex = 1.
+        this-object:btnLint:UseCompatibleTextRendering = true.
+        this-object:btnLint:UseVisualStyleBackColor = true.
+        this-object:btnLint:Click:Subscribe(this-object:btnLint_Click).
+        /*  */
+        /* comboProfile */
+        /*  */
+        this-object:comboProfile:DataSource = this-object:bsProfiles.
+        this-object:comboProfile:DisplayMember = "ProfileName":U.
+        this-object:comboProfile:DropDownStyle = System.Windows.Forms.ComboBoxStyle:DropDownList.
+        this-object:comboProfile:FormattingEnabled = true.
+        this-object:comboProfile:Location = new System.Drawing.Point(110, 12).
+        this-object:comboProfile:Name = "comboProfile":U.
+        this-object:comboProfile:Size = new System.Drawing.Size(142, 21).
+        this-object:comboProfile:TabIndex = 2.
+        this-object:comboProfile:ValueMember = "ProfileName":U.
+        /*  */
+        /* checkDebug */
+        /*  */
+        this-object:checkDebug:Location = new System.Drawing.Point(44, 14).
+        this-object:checkDebug:Name = "checkDebug":U.
+        this-object:checkDebug:Size = new System.Drawing.Size(60, 21).
+        this-object:checkDebug:TabIndex = 3.
+        this-object:checkDebug:Text = "Debug":U.
+        this-object:checkDebug:UseCompatibleTextRendering = true.
+        this-object:checkDebug:UseVisualStyleBackColor = true.
+        /*  */
+        /* statusLint */
+        /*  */
+        @VisualDesigner.FormMember (NeedsInitialize="false":U, InitializeArray="true":U).
+        define variable arrayvar5 as System.Windows.Forms.ToolStripItem extent 2 no-undo.
+        arrayvar5[1] = this-object:statusLabelAction.
+        arrayvar5[2] = this-object:statusLabelFile.
+        this-object:statusLint:Items:AddRange(arrayvar5).
+        this-object:statusLint:Location = new System.Drawing.Point(0, 518).
+        this-object:statusLint:Name = "statusLint":U.
+        this-object:statusLint:Size = new System.Drawing.Size(1389, 22).
+        this-object:statusLint:TabIndex = 4.
+        this-object:statusLint:Text = "statusStrip1":U.
+        /*  */
+        /* statusLabelAction */
+        /*  */
+        this-object:statusLabelAction:AutoSize = false.
+        this-object:statusLabelAction:DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle:Text.
+        this-object:statusLabelAction:Name = "statusLabelAction":U.
+        this-object:statusLabelAction:Overflow = System.Windows.Forms.ToolStripItemOverflow:Never.
+        this-object:statusLabelAction:Size = new System.Drawing.Size(200, 17).
+        this-object:statusLabelAction:TextAlign = System.Drawing.ContentAlignment:MiddleLeft.
+        /*  */
+        /* statusLabelFile */
+        /*  */
+        this-object:statusLabelFile:Name = "statusLabelFile":U.
+        this-object:statusLabelFile:Size = new System.Drawing.Size(1174, 17).
+        this-object:statusLabelFile:Spring = true.
+        this-object:statusLabelFile:TextAlign = System.Drawing.ContentAlignment:MiddleLeft.
+        /*  */
+        /* btnProfiles */
+        /*  */
+        this-object:btnProfiles:Image = cast(resources:GetObject("btnProfiles.Image":U), System.Drawing.Image).
+        this-object:btnProfiles:Location = new System.Drawing.Point(258, 4).
+        this-object:btnProfiles:Name = "btnProfiles":U.
+        this-object:btnProfiles:Size = new System.Drawing.Size(38, 38).
+        this-object:btnProfiles:TabIndex = 5.
+        this-object:btnProfiles:UseCompatibleTextRendering = true.
+        this-object:btnProfiles:UseVisualStyleBackColor = true.
+        this-object:btnProfiles:Click:Subscribe(this-object:btnProfiles_Click).
+        /*  */
+        /* MainForm */
         /*  */
         this-object:ClientSize = new System.Drawing.Size(1389, 540).
+        this-object:Controls:Add(this-object:btnProfiles).
         this-object:Controls:Add(this-object:statusLint).
         this-object:Controls:Add(this-object:checkDebug).
         this-object:Controls:Add(this-object:comboProfile).
         this-object:Controls:Add(this-object:btnLint).
         this-object:Controls:Add(this-object:resultsView).
         this-object:FormBorderStyle = System.Windows.Forms.FormBorderStyle:FixedSingle.
-        this-object:Name = "LintGUI":U.
+        this-object:Name = "MainForm":U.
         this-object:StartPosition = System.Windows.Forms.FormStartPosition:CenterScreen.
         this-object:Text = "Prolint.Net GUI":U.
         cast(this-object:bsResults, System.ComponentModel.ISupportInitialize):EndInit().
@@ -456,7 +489,7 @@ class Prolint.LintGUI inherits Form final:
 
     end method.
 
-    destructor public LintGUI ( ):
+    destructor public MainForm ( ):
 
     end destructor.
 

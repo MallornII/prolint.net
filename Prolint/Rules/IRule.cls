@@ -39,8 +39,8 @@ interface Prolint.Rules.IRule:
 
     define public property Severity as integer no-undo 
     get.
-          
-
+    set.
+    
 	/*------------------------------------------------------------------------------
 	 Purpose:
 	 Notes:

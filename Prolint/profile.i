@@ -20,11 +20,11 @@ define {&ACCESS_MOD} {&STAT_MOD} temp-table ttProfile no-undo
 define {&ACCESS_MOD} {&STAT_MOD} temp-table ttRule no-undo
     xml-node-name "Rule"
     field ProfileName     as character
-    field RuleId          as character xml-node-type "ATTRIBUTE"
+    field RuleId          as character serialize-hidden
     field RuleClass       as character
-    field Severity        as integer   xml-node-type "ATTRIBUTE"
-    field RuleDescription as character
-    index iMain is unique primary RuleClass.
+    field Severity        as integer   serialize-hidden
+    field RuleDescription as character serialize-hidden
+    index iMain is unique primary ProfileName RuleClass.
     
 define {&ACCESS_MOD} {&STAT_MOD} dataset dsProfile
     xml-node-name "LintProfiles"

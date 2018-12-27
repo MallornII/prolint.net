@@ -13,12 +13,12 @@
   ----------------------------------------------------------------------*/
 block-level on error undo, throw.
 /* ***************************  Definitions  ************************** */
-define variable lingGUI as prolint.lintgui no-undo.
+define variable lintForm as Prolint.Forms.MainForm no-undo.
 
 /* ********************  Preprocessor Definitions  ******************** */
 
 
 /* ***************************  Main Block  *************************** */
-lingGUI = new prolint.lintgui().
-wait-for System.Windows.Forms.Application:Run(lingGUI).
-lingGUI:Dispose().
+lintForm = new Prolint.Forms.MainForm().
+wait-for System.Windows.Forms.Application:Run(lintForm).
+lintForm:Dispose().

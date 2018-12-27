@@ -1,5 +1,5 @@
  /*------------------------------------------------------------------------
-    File        : baseform
+    File        : Profile
     Purpose     : Add profile form
     Syntax      : 
     Description : 
@@ -10,7 +10,7 @@
 using Progress.Windows.Form.
   
 block-level on error undo, throw.
-class profiles.baseform inherits Form  final: 
+class Prolint.Forms.Profile inherits Form  final: 
 
     define private variable components as System.ComponentModel.IContainer no-undo.
     define private variable buttonOk as System.Windows.Forms.Button no-undo.
@@ -22,7 +22,7 @@ class profiles.baseform inherits Form  final:
     get.
     private set. 
 
-    constructor public baseform( ):
+    constructor public Profile( ):
     
         super().
         InitializeComponent ( ).
@@ -32,7 +32,7 @@ class profiles.baseform inherits Form  final:
 
     end constructor.
 
-    destructor public baseform( ):
+    destructor public Profile( ):
 
         if valid-object(components) then do:
             cast(components, System.IDisposable):Dispose().
@@ -71,11 +71,11 @@ class profiles.baseform inherits Form  final:
         define variable nestedvar0 as System.Windows.Forms.AnchorStyles no-undo.
         nestedvar0 = System.Windows.Forms.AnchorStyles:Bottom.
         this-object:buttonOk:Anchor = cast(Progress.Util.EnumHelper:Or(nestedvar0, System.Windows.Forms.AnchorStyles:Right), System.Windows.Forms.AnchorStyles).
-        this-object:buttonOk:Location = new System.Drawing.Point(89, 35).
-        this-object:buttonOk:Name = "buttonOk".
+        this-object:buttonOk:Location = new System.Drawing.Point(78, 35).
+        this-object:buttonOk:Name = "buttonOk":U.
         this-object:buttonOk:Size = new System.Drawing.Size(75, 23).
         this-object:buttonOk:TabIndex = 0.
-        this-object:buttonOk:Text = "OK".
+        this-object:buttonOk:Text = "OK":U.
         this-object:buttonOk:UseCompatibleTextRendering = true.
         this-object:buttonOk:Click:Subscribe(this-object:okButton_Click).
         /*  */
@@ -85,11 +85,11 @@ class profiles.baseform inherits Form  final:
         nestedvar1 = System.Windows.Forms.AnchorStyles:Bottom.
         this-object:buttonCancel:Anchor = cast(Progress.Util.EnumHelper:Or(nestedvar1, System.Windows.Forms.AnchorStyles:Right), System.Windows.Forms.AnchorStyles).
         this-object:buttonCancel:DialogResult = System.Windows.Forms.DialogResult:Cancel.
-        this-object:buttonCancel:Location = new System.Drawing.Point(170, 35).
-        this-object:buttonCancel:Name = "buttonCancel".
+        this-object:buttonCancel:Location = new System.Drawing.Point(159, 35).
+        this-object:buttonCancel:Name = "buttonCancel":U.
         this-object:buttonCancel:Size = new System.Drawing.Size(75, 23).
         this-object:buttonCancel:TabIndex = 1.
-        this-object:buttonCancel:Text = "Cancel".
+        this-object:buttonCancel:Text = "Cancel":U.
         this-object:buttonCancel:UseCompatibleTextRendering = true.
         this-object:buttonCancel:Click:Subscribe(this-object:cancelButton_Click).
         /*  */
@@ -97,20 +97,20 @@ class profiles.baseform inherits Form  final:
         /*  */
         this-object:textProfile:Location = new System.Drawing.Point(63, 6).
         this-object:textProfile:MaxLength = 30.
-        this-object:textProfile:Name = "textProfile".
+        this-object:textProfile:Name = "textProfile":U.
         this-object:textProfile:Size = new System.Drawing.Size(219, 20).
         this-object:textProfile:TabIndex = 2.
         /*  */
         /* lblName */
         /*  */
         this-object:lblName:Location = new System.Drawing.Point(12, 9).
-        this-object:lblName:Name = "lblName".
+        this-object:lblName:Name = "lblName":U.
         this-object:lblName:Size = new System.Drawing.Size(45, 16).
         this-object:lblName:TabIndex = 3.
-        this-object:lblName:Text = "Name:".
+        this-object:lblName:Text = "Name:":U.
         this-object:lblName:UseCompatibleTextRendering = true.
         /*  */
-        /* newprofile */
+        /* Profile */
         /*  */
         this-object:AcceptButton = this-object:buttonOk.
         this-object:CancelButton = this-object:buttonCancel.
@@ -122,10 +122,10 @@ class profiles.baseform inherits Form  final:
         this-object:FormBorderStyle = System.Windows.Forms.FormBorderStyle:FixedDialog.
         this-object:MaximizeBox = false.
         this-object:MinimizeBox = false.
-        this-object:Name = "newprofile".
+        this-object:Name = "Profile":U.
         this-object:ShowInTaskbar = false.
         this-object:StartPosition = System.Windows.Forms.FormStartPosition:CenterParent.
-        this-object:Text = "New profile name".
+        this-object:Text = "New profile name":U.
         this-object:ResumeLayout(false).
         this-object:PerformLayout().
         catch e as Progress.Lang.Error:

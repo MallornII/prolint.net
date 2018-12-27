@@ -13,13 +13,16 @@ using Progress.Lang.*.
 
 block-level on error undo, throw.
 
-class Prolint.Rules.AbstractRule implements Prolint.Rules.IRule abstract:
+class Prolint.Rules.AbstractRule  implements Prolint.Rules.IRule serializable abstract:
     
-    &SCOPED-DEFINE ACCESS_MOD protected
-    &SCOPED-DEFINE REF_MOD    reference-only
+    &scoped-define ACCESS_MOD   protected
+    &scoped-define REF_MOD      reference-only
+    &scoped-define MIN_SEVERITY 1
+    &scoped-define MAX_SEVERITY 99 
+    
     
     {proparse/parsedata.i}
-    {prolint/lintdata.i} 
+    {prolint/lintdata.i}    
 
     define public event PublishRuleResult  signature void 
         (
@@ -31,15 +34,28 @@ class Prolint.Rules.AbstractRule implements Prolint.Rules.IRule abstract:
         input iComment  as character
         ).   
 
-    define public abstract property RuleDescription as character no-undo 
-        get.     
-
-    define public abstract property RuleId as character no-undo 
-        get.        
-
-    define public abstract property Severity as integer no-undo 
+    define public property RuleDescription as character no-undo 
         get.
+        protected set (input newValue as character):
+            if newValue <> ? and newValue <> "" then
+                RuleDescription = newValue.
+        end set.  
      
+
+    define public property RuleId as character no-undo 
+        get.
+        protected set (input newValue as character):
+            if newValue <> ? and length(newValue) > 3 then
+                RuleId = newValue.
+        end set.
+
+    define public property Severity as integer no-undo 
+        get.
+        set (input newValue as integer):
+            if newValue >= {&MIN_SEVERITY} and newValue <= {&MAX_SEVERITY} then
+                Severity = newValue.                
+        end set.
+          
 
     /*------------------------------------------------------------------------------
      Purpose: Basic constructor
@@ -47,25 +63,11 @@ class Prolint.Rules.AbstractRule implements Prolint.Rules.IRule abstract:
     ------------------------------------------------------------------------------*/
 		
     constructor public AbstractRule ( ):
-   	
-    end constructor.
-    
-    /*------------------------------------------------------------------------------
-     Purpose: Return info about class. Should be overriden in actual class!
-     Notes:
-    ------------------------------------------------------------------------------*/
-    
-    method public static void GetInfo
-        (
-        output oRuleId      as character,
-        output oSeverity    as integer,
-        output oDescription as character        
-        ):
         assign
-            oRuleId      = "abstract"
-            oSeverity    = -1
-            oDescription = "You need to override this method in an actual class".                
-    end method.
+            RuleDescription = "Auto generated description. Set value in child class!":T
+            RuleId          = this-object:GetClass():TypeName
+            Severity        = {&MIN_SEVERITY}.
+    end constructor.
    
 
     /*------------------------------------------------------------------------------
@@ -81,17 +83,17 @@ class Prolint.Rules.AbstractRule implements Prolint.Rules.IRule abstract:
         input iComment as character
         ):
 		
-        PublishRuleResult:Publish(RuleId, iUnit, iFileName, iLine, 0, iComment).
+        PublishRuleResult:Publish(RuleId, iUnit, iFileName, iLine, Severity, iComment).
         process events.
         return.
 
     end method.	
 
     method public abstract void Visit
-    (
-       input unitInst as Prolint.ILintUnit,
-       input dataset dsProparse,       
-       input dataset dsXref
-    ).
+        (
+        input unitInst as Prolint.ILintUnit,
+        input dataset dsProparse,       
+        input dataset dsXref
+        ).
 
 end class.

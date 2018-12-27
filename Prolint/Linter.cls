@@ -181,7 +181,7 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
        
         RULE_BLK:
         for each ttRule where ttRule.ProfileName = CurrentProfile:          
-            LintRules:Add(Prolint.Rules.Factory:GetInstance(ttRule.RuleClass)).
+            LintRules:Add(Prolint.Rules.Factory:GetInstance(CurrentProfile, ttRule.RuleClass)).
           
             catch e as Progress.Lang.Error:                
                 ErrorList:Add(e). 
