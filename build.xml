@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="main" basedir=".">
+
+ <property environment="env" />
+ <taskdef resource="PCT.properties" />
+ <typedef resource="types.properties" />
+
+<target name="main">
+<DlcHome value="c:/progress/openedge" />
+<path id="compilation.propath">
+  <pathelement path="." />
+</path>
+
+<echo message="building Proparse"/>    
+<PCTCompile destDir="bin" relativePaths="false" inputChars="32000" token="5000">
+    <fileset dir="Proparse" includes="**/*.cls" />
+    <propath refid="compilation.propath" />
+</PCTCompile>
+
+<echo message="building Prolint"/>
+<PCTCompile destDir="bin" relativePaths="false">
+    <fileset dir="Prolint" includes="**/*.cls" />
+    <propath refid="compilation.propath" />
+</PCTCompile>
+
+<echo message="building Misc"/>
+<PCTCompile destDir="bin" relativePaths="false">
+    <fileset dir="" includes="*.p" />
+    <propath refid="compilation.propath" />
+</PCTCompile>
+<PCTLibrary destfile="bin/Prolint.pl">
+    <fileset dir="bin">
+        <include name="**/*.r" />
+        <exclude name="Prolint.pl" />
+    </fileset>
+</PCTLibrary>
+</target>
+
+  
+</project>
