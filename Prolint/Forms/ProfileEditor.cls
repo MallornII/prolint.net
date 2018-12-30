@@ -69,7 +69,11 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
             assign                    
                 ttRule.Severity        = ruleInstance:Severity
                 ttRule.RuleId          = ruleInstance:RuleId
-                ttRule.RuleDescription = ruleInstance:RuleDescription.     
+                ttRule.RuleDescription = ruleInstance:RuleDescription.
+                
+            catch e as Progress.Lang.Error :
+                delete ttRule.                    
+            end catch.     
         end.
         
         create query queryProfiles.

@@ -30,19 +30,17 @@ class Proparse.ProUnitsParser implements IParser final:
         input tokenType     as integer,
         input proUnitType   as UnitType
     ):
-        define buffer tNode   for ttNode.
+        define buffer ttNode  for ttNode.
         define buffer bttNode for ttNode.
+        define buffer cttNode for ttNode.
+        define buffer dttNode for ttNode.       
         
-        define variable nextNum as integer no-undo.        
-        define variable isReturns as logical no-undo.
         
         BLK_NODE:
         for each ttNode where ttNode.NodeType = tokenType
-            and ttNode.IsStateHead = false.            
-            find first bttNode where bttNode.NodeNum = ttNode.ParentNum
-            and bttNode.NodeType = ProParserTokenTypes:DEFINE no-error.
-            if not available(bttNode) then
-                next.
+            and ttNode.IsStateHead = false,            
+            first bttNode where bttNode.NodeNum = ttNode.ParentNum
+            and bttNode.NodeType = ProParserTokenTypes:DEFINE:
                 
             create ttProUnit.
             assign
@@ -53,10 +51,8 @@ class Proparse.ProUnitsParser implements IParser final:
                 ttProUnit.AccessMode = "PUBLIC".                
                         
             BLK_NEXT:
-            do while bttNode.NextSibling <> 0:
-                nextNum = bttNode.NextSibling.
-                find first bttNode where bttNode.NodeNum = nextNum.
-                case bttNode.NodeType:
+            for each cttNode where cttNode.ParentNum = bttNode.NodeNum:    
+                case cttNode.NodeType:
                     when ProParserTokenTypes:ABSTRACT then
                         ttProUnit.IsForward = true.
                     when ProParserTokenTypes:PUBLIC then
@@ -67,16 +63,22 @@ class Proparse.ProUnitsParser implements IParser final:
                         ttProUnit.AccessMode = "PRIVATE":U.
                     when ProParserTokenTypes:STATIC then
                         ttProUnit.IsStatic = true.
+                    when ProParserTokenTypes:NOUNDO then
+                        ttProUnit.IsNoUndo = true.
                     when ProParserTokenTypes:AS then
-                        isReturns = true.
-                    when ProParserTokenTypes:ID then
-                        ttProUnit.UnitName = bttNode.NodeText.
-                    otherwise
                     do:
-                        if isReturns then
-                            ttProUnit.ReturnType = bttNode.NodeText.                        
-                        isReturns = false.                        
-                    end.                        
+                        /* In variables definition DataType is child for 'AS'
+                           and won't appear as child of 'DEFINE'
+                           In properties however DataType is child for 'DEFINE'
+                           and next-sibling for 'AS'. Mre interesting in variables 
+                           DataType is also next-sibling for 'AS' 
+                           TODO: Correct g4 grammar to make DataType child of 'DEFINE' everywhere */
+                        find first dttNode where dttNode.NodeNum = cttNode.NextSibling no-error.
+                        if available(dttNode) then
+                            ttProUnit.ReturnType = dttNode.NodeText.
+                    end.
+                    when ProParserTokenTypes:ID then
+                        ttProUnit.UnitName = cttNode.NodeText.                                            
                 end case.
             end.
         end.
@@ -124,7 +126,9 @@ class Proparse.ProUnitsParser implements IParser final:
                     when ProParserTokenTypes:PRIVATE then
                         ttProUnit.AccessMode = "PRIVATE":U.
                     when ProParserTokenTypes:STATIC then
-                        ttProUnit.IsStatic = true.                    
+                        ttProUnit.IsStatic = true.      
+                    when ProParserTokenTypes:NOUNDO then
+                        ttProUnit.IsNoUndo = true.              
                     when ProParserTokenTypes:ID then
                         ttProUnit.UnitName = bttNode.NodeText.
                     when ProParserTokenTypes:FIELD then

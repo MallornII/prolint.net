@@ -2,9 +2,10 @@
 <LintProfiles xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Profile ProfileName="default">
     <Rule>
-      <RuleClass>prolint.rules.testrule</RuleClass>
+      <RuleClass>Prolint.Rules.AbbrevKwd</RuleClass>
     </Rule>
-  </Profile>
-  <Profile ProfileName="test2">
+    <Rule>
+      <RuleClass>Prolint.Rules.AbbrevTable</RuleClass>
+    </Rule>
   </Profile>
 </LintProfiles>

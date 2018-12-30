@@ -11,9 +11,23 @@
 
 block-level on error undo, throw.
 
-class Proparse.SchemaLoader implements Proparse.ISchemaLoader final: 
+class Proparse.ProDbSchema inherits Proparse.AbstractDbSchema final: 
 
-    define private stream sSchema.
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+        
+    constructor public ProDbSchema (  ):
+        define variable dbNum as integer no-undo.
+        
+        super ().
+        do dbNum = 1 to num-dbs:
+            if dbtype(dbNum) <> "PROGRESS":U then next.
+            ParseDatabase(dbNum).
+        end.        
+    end constructor.
+
 
     /*------------------------------------------------------------------------------
      Purpose:
@@ -22,28 +36,34 @@ class Proparse.SchemaLoader implements Proparse.ISchemaLoader final:
 
     method private void ParseDatabase( input dbNum as integer ):
 		
-        define variable bufferFile  as handle    no-undo.
-        define variable bufferField as handle    no-undo.
-        define variable queryFile   as handle    no-undo.
-        define variable thisDb      as character no-undo.        
-        define variable isOk        as logical   no-undo.     
+        define variable bufferFile  as handle  no-undo.
+        define variable bufferField as handle  no-undo.
+        define variable queryFile   as handle  no-undo.                
+        define variable isOk        as logical no-undo.
         
-        thisDb = ldbname(dbNum).
-        put stream sSchema unformatted substitute(":: &1 &2":U, thisDb, dbNum) skip.
+        create ttProDb.
+        assign
+            ttProDb.id           = dbNum
+            ttProDb.DatabaseName = ldbname(dbNum).
         
-        create buffer bufferFile for table substitute("&1._file", thisDb).
-        create buffer bufferField for table substitute("&1._field", thisDb).
-        
-        create query queryFile.        
+        create buffer bufferFile for table substitute("&1._file", ttProDb.DatabaseName).
+        create buffer bufferField for table substitute("&1._field", ttProDb.DatabaseName).
+            
+        create query queryFile.  
         queryFile:add-buffer (bufferFile).
-        isOk = queryFile:query-prepare(substitute("FOR EACH _file WHERE _file._tbl-type = &1":U, quoter("T":U))).
+        isOk = queryFile:query-prepare("FOR EACH _file":U).
         if not isOk then
             undo, throw new proparse.perror({&LINE-NUMBER}, error-status:get-message(1) , error-status:get-number(1), 1).
         queryFile:query-open().
         queryFile:get-first().
         do while not queryFile:query-off-end:
-            put stream sSchema unformatted substitute(": &1 &2":U, bufferFile::_file-name, bufferFile:recid) skip.             
-            ParseFile(bufferField, bufferFile:recid).
+            create ttProTable.
+            assign
+                ttProTable.id           = int64(bufferFile:recid)
+                ttProTable.DatabaseName = ttProDb.DatabaseName
+                ttProTable.TableName    = bufferFile::_file-name.            
+                         
+            ParseFile(bufferField, bufferFile:recid, ttProDb.DatabaseName, ttProTable.TableName).
             queryFile:get-next().
         end.
         queryFile:query-close().
@@ -69,25 +89,35 @@ class Proparse.SchemaLoader implements Proparse.ISchemaLoader final:
      Notes:
     ------------------------------------------------------------------------------*/
 
-    method private void ParseFile( input iBufferField as handle, iRecID as recid ):
+    method private void ParseFile
+        (
+        input bufferField as handle,
+        input fileRecID as recid,
+        input databaseName as character,
+        input tableName as character
+        ):
         define variable isOk       as logical no-undo.
         define variable queryField as handle  no-undo.
 	    
         create query queryField.
-        queryField:add-buffer (iBufferField).  
+        queryField:add-buffer (bufferField).  
              
-        isOk = queryField:query-prepare(substitute("FOR EACH _field WHERE _field._File-Recid = &1":U, iRecID)).
+        isOk = queryField:query-prepare(substitute("FOR EACH _field WHERE _field._File-Recid = &1":U, fileRecID)).
         if not isOk then
             undo, throw new proparse.perror({&LINE-NUMBER}, error-status:get-message(1) , error-status:get-number(1), 1).
                 
         queryField:query-open().
         queryField:get-first().           
         do while not queryField:query-off-end:
-            put stream sSchema unformatted substitute("&1 &2 &3 &4":U,
-                iBufferField::_field-name,
-                iRecID,
-                caps(iBufferField::_data-type),
-                iBufferField::_extent) skip.             
+            create ttProField.
+            assign
+                ttProField.id           = int64(bufferField:recid)
+                ttProField.DatabaseName = databaseName
+                ttProField.TableName    = tableName
+                ttProField.FieldName    = bufferField::_field-name
+                ttProField.DataType     = caps(bufferField::_data-type)
+                ttproField.Ext          = bufferField::_extent.                
+                      
             queryField:get-next().
         end.
         queryField:query-close().
@@ -102,28 +132,7 @@ class Proparse.SchemaLoader implements Proparse.ISchemaLoader final:
             end.         
         end finally.
 
-    end method.
-    
-    /*------------------------------------------------------------------------------
-     Purpose: Save current DB schema into file (proparse.net.dll can only get DB schema from file)
-     Notes:
-    ------------------------------------------------------------------------------*/
+    end method.    
 
-    method public void ToFile( input schemaFile as character ):
-		
-        define variable dbNum as integer no-undo.
-
-        output stream sSchema TO VALUE(schemaFile).  
-        do dbNum = 1 to num-dbs:
-            if dbtype(dbNum) <> "PROGRESS":U then next.
-            ParseDatabase(dbNum).
-        end.
-        
-        return.
-        finally:
-            output stream sSchema close. 	
-        end finally.
-
-    end method.
 
 end class.

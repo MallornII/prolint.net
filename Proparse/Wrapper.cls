@@ -1,13 +1,13 @@
- /*------------------------------------------------------------------------
-    File        : api
-    Purpose     : Additional API over proparse.net dll
-    Syntax      : 
-    Description : 
-    Author(s)   : Andrew Ni
-    Created     : 05.12.2018 21:33:21
-    Notes       : Calls org.prorefactor.treeparser.ParseUnit(JavaFile):ParseUnit:treeParser01()
-                  from proparse.net.dll, then fills OpenEdge temp-tables with parsed nodes and decorates them  with additional properties.
- ----------------------------------------------------------------------*/
+/*------------------------------------------------------------------------
+   File        : api
+   Purpose     : Additional API over proparse.net dll
+   Syntax      : 
+   Description : 
+   Author(s)   : Andrew Ni
+   Created     : 05.12.2018 21:33:21
+   Notes       : Calls org.prorefactor.treeparser.ParseUnit(JavaFile):ParseUnit:treeParser01()
+                 from proparse.net.dll, then fills OpenEdge temp-tables with parsed nodes and decorates them  with additional properties.
+----------------------------------------------------------------------*/
 using com.joanju.proparse.ProToken.
 using com.joanju.proparse.ProParserTokenTypes.
 using org.prorefactor.core.JPNode.
@@ -36,12 +36,12 @@ class Proparse.Wrapper use-widget-pool final:
         set. 
 
     define private static property ParserCollection as OpenEdge.Core.Collections.Collection no-undo 
-    get.
-    set. 
+        get.
+        set. 
 
     /* This class will be used to load DB schema */    
-    define public static property SchemaLoader as proparse.ischemaloader no-undo 
-        private get.
+    define public static property DbSchema as Proparse.IDbSchema no-undo 
+        get.
         set.
 
     define private static property ParseEnv as com.joanju.proparse.Environment no-undo 
@@ -219,11 +219,11 @@ class Proparse.Wrapper use-widget-pool final:
         
         define variable vSchemaFile as character no-undo.
 	    
-        if not valid-object(SchemaLoader) then
-            SchemaLoader = new proparse.schemaloader().
+        if not valid-object(DbSchema) then
+            DbSchema = new Proparse.ProDbSchema().
             
         vSchemaFile = session:temp-directory + "proparse.schema":U.
-        SchemaLoader:ToFile(vSchemaFile).
+        DbSchema:ToFile(vSchemaFile).
         ParseSchema:clear().
         ParseSchema:loadSchema(vSchemaFile).
 		
@@ -261,6 +261,9 @@ class Proparse.Wrapper use-widget-pool final:
             ErrorList:Add(e).
             return.                
         end catch.
+        finally:
+            os-delete value(dummyFile).  
+        end finally.
 
     end method.    
 

@@ -14,7 +14,7 @@ using com.joanju.proparse.NodeTypes.
 
 block-level on error undo, throw.
 
-class Prolint.Rules.TestRule inherits Prolint.Rules.AbstractRule serializable final:
+class Prolint.Rules.AbbrevKwd inherits Prolint.Rules.AbstractRule serializable final:
    
     
     define private temp-table ttSkipNodes no-undo
@@ -29,12 +29,12 @@ class Prolint.Rules.TestRule inherits Prolint.Rules.AbstractRule serializable fi
      Notes:
     ------------------------------------------------------------------------------*/
 		
-    constructor public TestRule ():        
+    constructor public AbbrevKwd ():        
         super ().
 		
         assign
-            RuleDescription = "Just a test rule":T
-            RuleId          = "test":U
+            RuleDescription = "Finds abbreviated keywords":T
+            RuleId          = "AbbrevKwd":U
             Severity        = 7.
 		
         AddSkipType(ProParserTokenTypes:Program_root).

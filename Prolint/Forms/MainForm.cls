@@ -55,11 +55,11 @@ class Prolint.Forms.MainForm inherits Form final:
         if profileFile <> ? then        
             dataset dsProfile:read-xml( "FILE":U, profileFile, "EMPTY":U, ?, false).
         else
-            undo, throw new Progress.Lang.AppError("<profiles.xml> not found":T).    
+            undo, throw new Progress.Lang.AppError("<profiles.xml> not found":T, 1).    
                 
         find first ttProfile no-error.
         if not available(ttProfile) then
-            undo, throw new Progress.Lang.AppError("No profiles found":T).
+            undo, throw new Progress.Lang.AppError("No profiles found":T, 1).
         
         create query queryProfiles.
         queryProfiles:add-buffer(buffer ttProfile:HANDLE).
@@ -76,6 +76,8 @@ class Prolint.Forms.MainForm inherits Form final:
         bsResults:HANDLE = queryResults.        
        
         catch e as Progress.Lang.Error:
+            log-manager:write-message(e:CallStack).
+            log-manager:write-message(e:GetMessage(1)).
             undo, throw e.
         end catch.
 
@@ -95,8 +97,7 @@ class Prolint.Forms.MainForm inherits Form final:
         
         wait-for lintDialog:ShowDialog() set dialogResult.
         if dialogResult = System.Windows.Forms.DialogResult:OK then
-        do:
-            session:error-stack-trace = true.
+        do:            
             empty temp-table ttResult.            
             lintInstance = new prolint.linter(comboProfile:SelectedValue:ToString()) no-error.
             if error-status:error then
@@ -125,8 +126,7 @@ class Prolint.Forms.MainForm inherits Form final:
         return.
         
         finally:
-            delete object lintInstance no-error.
-            session:error-stack-trace = false.    
+            delete object lintInstance no-error.                
         end finally.
 
     end method.

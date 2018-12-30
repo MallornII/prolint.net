@@ -18,7 +18,7 @@ interface Prolint.IUnitWorker:
     
     define public property TempDir as character no-undo 
     get.
-    set. 
+    set.
 
     method public void Visit
     (

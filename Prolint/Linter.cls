@@ -334,11 +334,11 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
      Notes:
     ------------------------------------------------------------------------------*/
 
-    method public void SetDbSchema( input iLoader as proparse.ischemaloader ):
+    method public void SetDbSchema( input dbSchema as Proparse.IDbSchema ):
         
-        if not valid-object(iLoader) then
-            undo, throw new Progress.Lang.AppError("Invalid schema loader instance":T).
-        Proparse.Wrapper:SchemaLoader = iLoader.
+        if not valid-object(dbSchema) then
+            undo, throw new Progress.Lang.AppError("Invalid IDBSchema instance":T).
+        Proparse.Wrapper:DbSchema = dbSchema.
         Proparse.Wrapper:ReadDbSchema().
         return.
 

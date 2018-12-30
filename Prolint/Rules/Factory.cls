@@ -106,13 +106,15 @@ class Prolint.Rules.Factory:
             end.
         end.
         
-        currentClass = Progress.Lang.Class:GetClass(ruleClass).
+        currentClass = Progress.Lang.Class:GetClass(ruleClass) no-error.
         if currentClass = ? then
             undo, throw new proparse.perror({&LINE-NUMBER}, substitute("<&1> cannot be found within PROPATH":T, ruleClass), 0).
         if not currentClass:IsA("Prolint.Rules.IRule":U) then            
             undo, throw new proparse.perror({&LINE-NUMBER}, substitute("<&1> is not implementing of Prolint.Rules.IRule":T, ruleClass), 0).        
         if currentClass:IsAbstract() then            
             undo, throw new proparse.perror({&LINE-NUMBER}, substitute("<&1> is abstract class":T, ruleClass), 0).
+        if not currentClass:IsSerializable() then            
+            undo, throw new proparse.perror({&LINE-NUMBER}, substitute("<&1> is not serializable class":T, ruleClass), 0). 
         currentRule = cast(currentClass:new(), Prolint.Rules.IRule) no-error.
         if error-status:error then            
             undo, throw new proparse.perror({&LINE-NUMBER}, error-status:get-message(1), error-status:get-number(1), 1).

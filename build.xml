@@ -28,6 +28,25 @@
     <fileset dir="" includes="*.p" />
     <propath refid="compilation.propath" />
 </PCTCompile>
+
+<echo message="copying dlls"/>
+<copy todir="bin">
+  <fileset dir="">
+    <include name="*.dll"/>
+    <include name="assemblies.xml"/>
+    <include name="profiles.xml"/>
+    <include name="toolbox.xml"/>
+  </fileset>
+</copy>
+
+<echo message="copying resources"/>
+<copy todir="bin/Prolint/Forms">
+  <fileset dir="Prolint/Forms">
+    <include name="*.resx"/>    
+  </fileset>
+</copy>
+
+<echo message="building Procedure Library"/>
 <PCTLibrary destfile="bin/Prolint.pl">
     <fileset dir="bin">
         <include name="**/*.r" />

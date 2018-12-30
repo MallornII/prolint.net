@@ -6,3 +6,7 @@
 /AbstractRule.r
 /Factory.r
 /TestRule.r
+/AbbrevKwd.r
+/AbbrevTable.r
+/AlertType.r
+/AlertMessage.r
