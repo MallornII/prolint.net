@@ -50,4 +50,39 @@ interface Prolint.ILintUnit:
 
     method public void Accept( input currentWorker as Prolint.IUnitWorker ).
 
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    method public integer GetParentNum( input nodeNum as integer ).
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    method public integer GetParentType( input nodeNum as integer ).
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    method public integer NextSequenceId(  ).
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Returns JPNode that is a statement head for given node
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    method public integer GetStateHead( input iNodeNum as integer ).
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Returns NodeType for node that is a statement head for given node
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    method public integer GetStateHeadType( input iNodeNum as integer ).
+
 end interface.

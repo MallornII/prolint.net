@@ -76,6 +76,8 @@ class Prolint.Forms.MainForm inherits Form final:
         bsResults:HANDLE = queryResults.        
        
         catch e as Progress.Lang.Error:
+            message e:GetMessage(1)
+            view-as alert-box error.
             log-manager:write-message(e:CallStack).
             log-manager:write-message(e:GetMessage(1)).
             undo, throw e.
@@ -409,6 +411,10 @@ class Prolint.Forms.MainForm inherits Form final:
         this-object:ResumeLayout(false).
         this-object:PerformLayout().
         catch e as Progress.Lang.Error:
+            message e:GetMessage(1)
+            view-as alert-box error.
+            log-manager:write-message(e:CallStack).
+            log-manager:write-message(e:GetMessage(1)).
             undo, throw e.
         end catch.
     end method.

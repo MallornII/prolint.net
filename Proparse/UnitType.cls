@@ -15,6 +15,9 @@ block-level on error undo, throw.
 
 enum proparse.UnitType: 
     define enum
+        U_ROOT = 0        
+        U_CLASS
+        U_INTERFACE        
         U_PROCEDURE
         U_FUNCTION
         U_METHOD
@@ -22,5 +25,6 @@ enum proparse.UnitType:
         U_SETTER
         U_PROPERTY
         U_VARIABLE
+        U_PARAMETER
         U_TEMPTABLE.
 end enum.

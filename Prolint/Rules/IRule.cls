@@ -14,7 +14,7 @@ using Progress.Lang.*.
 interface Prolint.Rules.IRule:
     
     {proparse/parsedata.i}
-    {prolint/lintdata.i}   
+    {prolint/lintdata.i} 
     
     /*------------------------------------------------------------------------------
      Purpose: Publish current's rule result

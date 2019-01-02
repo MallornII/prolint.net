@@ -69,7 +69,6 @@ class Prolint.Rules.AbstractRule  implements Prolint.Rules.IRule serializable ab
             Severity        = {&MIN_SEVERITY}.
     end constructor.
    
-
     /*------------------------------------------------------------------------------
      Purpose: Publish current's rule result
      Notes:
@@ -88,7 +87,7 @@ class Prolint.Rules.AbstractRule  implements Prolint.Rules.IRule serializable ab
         return.
 
     end method.	
-
+ 
     method public abstract void Visit
         (
         input unitInst as Prolint.ILintUnit,

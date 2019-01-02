@@ -77,7 +77,7 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
     define public property UnitClass as Progress.Lang.Class no-undo 
         get.
         set (input newClass as Progress.Lang.Class):
-            if newClass:IsA("Prolint.ILintUnit":U) then
+            if newClass:IsA("Prolint.ILintUnit":u) and not newClass:IsAbstract() then
                 UnitClass = newClass.
         end set. 
 
@@ -92,7 +92,7 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
             CurrentProfile   = profileName
             ErrorList        = new OpenEdge.Core.Collections.List()
             LintRules        = new OpenEdge.Core.Collections.List()
-            UnitClass        = Progress.Lang.Class:GetClass("Prolint.SimpleLintUnit")
+            UnitClass        = Progress.Lang.Class:GetClass("Prolint.SimpleLintUnit":u)
             LintDataDebugger = new Prolint.UnitDebugData()
             LintCompiler     = new Prolint.UnitCompiler()        
             TempDir          = Proparse.Wrapper:MakePath(session:temp-directory, guid(generate-uuid)).
@@ -100,7 +100,7 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         LintCompiler:PublishRuleResult:Subscribe(PublishRuleResult).
         os-create-dir value(TempDir).
         if os-error <> 0 then
-            undo, throw new proparse.perror({&LINE-NUMBER}, substitute("Can't create temp directory. OS error [&1]":T, os-error), os-error).
+            undo, throw new proparse.perror({&LINE-NUMBER}, substitute("Can't create temp directory. OS error [&1]":t, os-error), os-error).
         
         assign
             Proparse.Wrapper:TempDir = TempDir
@@ -109,7 +109,7 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         LoadProfiles().     
         find first ttProfile where ttProfile.ProfileName = CurrentProfile no-error.
         if not available(ttProfile) then
-            undo, throw new Progress.Lang.AppError(substitute("Profile <&1> doesn't exist":T, CurrentProfile), 0).
+            undo, throw new Progress.Lang.AppError(substitute("Profile <&1> doesn't exist":t, CurrentProfile), 0).
         LoadRules().     
 		
     end constructor.
@@ -161,11 +161,11 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
 	    
         define variable profilesPath as character no-undo.
 	    
-        profilesPath = search("profiles.xml":U).
+        profilesPath = search("profiles.xml":u).
         if profilesPath = ? then
-            undo, throw new Progress.Lang.AppError("Can't find <profiles.xml>":T).
+            undo, throw new Progress.Lang.AppError("Can't find <profiles.xml>":t).
 	       
-        dataset dsProfile:read-xml("FILE":U, profilesPath, "EMPTY":U, ?, false).        	    
+        dataset dsProfile:read-xml("FILE":U, profilesPath, "EMPTY":u, ?, false).        	    
 		
         return.
 
@@ -224,19 +224,19 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         define variable currentRule   as prolint.rules.irule                 no-undo.        
         define variable parseResult   as logical                             no-undo.
         
-        assign
-            CurrentUnit = cast(UnitClass:New(), Prolint.ILintUnit)        
+        CurrentUnit = cast(UnitClass:New(), Prolint.ILintUnit).
+        assign                    
             CurrentUnit:CompileUnit = Proparse.Wrapper:MakePath(lintFile, ?)
             CurrentUnit:IsDebug = IsDebug.            
         
-        PublishStatus:Publish("Linting...":T, CurrentUnit:CompileUnit).        
+        PublishStatus:Publish("Linting...":t, CurrentUnit:CompileUnit).        
         process events.
         
         CurrentUnit:Accept(LintCompiler).        
         if not currentUnit:IsCompiled then
             return prolint.lintresult:COMPILE_ERROR.
         
-        PublishStatus:Publish("Parsing":T, CurrentUnit:CompileUnit).
+        PublishStatus:Publish("Parsing":t, CurrentUnit:CompileUnit).
         process events.
        
         if not Proparse.Wrapper:Parse(CurrentUnit) then
@@ -253,7 +253,7 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         rulesIteartor = LintRules:ListIterator().
         do while rulesIteartor:HasNext():            	    
             currentRule = cast(rulesIteartor:Next(), Prolint.Rules.IRule).                      
-            PublishStatus:Publish(substitute("Applying rule &1":T, currentRule:RuleId), CurrentUnit:CompileUnit).
+            PublishStatus:Publish(substitute("Applying rule &1":t, currentRule:RuleId), CurrentUnit:CompileUnit).
             process events.
             currentRule:PublishRuleResult:Subscribe(PublishRuleResult).
             CurrentUnit:Accept(currentRule).            
@@ -267,7 +267,7 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         end catch.
         
         finally:
-            PublishStatus:Publish("Finished":T, CurrentUnit:CompileUnit).
+            PublishStatus:Publish("Finished":t, CurrentUnit:CompileUnit).
             Proparse.Wrapper:ReleaseNodes().
             if valid-object(CurrentUnit) then
                 delete object CurrentUnit.
@@ -337,7 +337,7 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
     method public void SetDbSchema( input dbSchema as Proparse.IDbSchema ):
         
         if not valid-object(dbSchema) then
-            undo, throw new Progress.Lang.AppError("Invalid IDBSchema instance":T).
+            undo, throw new Progress.Lang.AppError("Invalid IDBSchema instance":t).
         Proparse.Wrapper:DbSchema = dbSchema.
         Proparse.Wrapper:ReadDbSchema().
         return.

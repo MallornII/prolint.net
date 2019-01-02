@@ -1,13 +1,13 @@
  
- /*------------------------------------------------------------------------
-    File        : ProUnitsParser
-    Purpose     : 
-    Syntax      : 
-    Description : 
-    Author(s)   : niand
-    Created     : Sat Dec 22 15:59:38 ALMT 2018
-    Notes       : 
-  ----------------------------------------------------------------------*/
+/*------------------------------------------------------------------------
+   File        : ProUnitsParser
+   Purpose     : 
+   Syntax      : 
+   Description : 
+   Author(s)   : niand
+   Created     : Sat Dec 22 15:59:38 ALMT 2018
+   Notes       : 
+ ----------------------------------------------------------------------*/
 using com.joanju.proparse.ProParserTokenTypes.
 using Proparse.UnitType.
 using Proparse.IParser.
@@ -20,16 +20,88 @@ class Proparse.ProUnitsParser implements IParser final:
     &SCOPED-DEFINE REF_MOD    reference-only
     {proparse/parsedata.i} 
 
+    define private property LintUnit as Prolint.ILintUnit no-undo 
+        get.
+        set. 
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    method private integer GetParentUnit( input nodeNum as integer ):
+        
+        define variable nextNum as integer no-undo.
+        
+        define buffer ttNode    for ttNode.
+        define buffer ttProUnit for ttProUnit.
+        
+        find first ttNode where ttNode.NodeNum = nodeNum no-error.
+        if available(ttNode) then
+        do:
+            nextNum = ttNode.ParentNum.
+            do while ttNode.NodeNum <> 0:                
+                find first ttNode where ttNode.NodeNum = nextNum.
+                find first ttProUnit where ttProUnit.StartNode = ttNode.NodeNum no-error.
+                if available(ttProUnit) then
+                    return ttProUnit.Id.
+                nextNum = ttNode.ParentNum.                
+            end.
+        end.
+        
+        find first ttProUnit where ttProUnit.UnitType = Proparse.UnitType:U_ROOT:GetValue().        
+        return ttProUnit.Id.
+    end method.
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    method private void ParseMain
+        (
+        input tokenType     as integer,
+        input proUnitType   as UnitType
+        ):
+        
+        define buffer ttChildNode for ttNode.
+        
+        BLK_NODE:
+        for each ttNode where ttNode.NodeType = tokenType:
+            create ttProUnit.
+            assign
+                ttProUnit.Id         = LintUnit:NextSequenceId()
+                ttProUnit.UnitType   = proUnitType:GetValue()
+                ttProUnit.StartNode  = ttNode.NodeNum
+                ttProUnit.SourceFile = ttNode.NodeFile
+                ttProUnit.FirstLine  = ttNode.NodeLine
+                ttProUnit.AccessMode = ""
+                ttProUnit.IsForward  = true 
+                when tokenType = ProParserTokenTypes:INTERFACE.
+            for each ttChildNode where ttChildNode.ParentNum = ttNode.NodeNum:
+                case ttChildNode.NodeType:
+                    when ProParserTokenTypes:ABSTRACT then
+                        ttProUnit.IsForward = true.
+                    when ProParserTokenTypes:ID then
+                        ttProUnit.UnitName = ttChildNode.NodeText. 
+                end case.
+            end.         
+        end.        
+        
+        return.
+
+    end method.
+
     /*------------------------------------------------------------------------------
      Purpose:
      Notes:
     ------------------------------------------------------------------------------*/
 
     method private void ParseDefines
-    (
+        (
         input tokenType     as integer,
         input proUnitType   as UnitType
-    ):
+        ):
         define buffer ttNode  for ttNode.
         define buffer bttNode for ttNode.
         define buffer cttNode for ttNode.
@@ -44,15 +116,26 @@ class Proparse.ProUnitsParser implements IParser final:
                 
             create ttProUnit.
             assign
+                ttProUnit.Id         = LintUnit:NextSequenceId()
+                ttProUnit.ParentId   = GetParentUnit(ttNode.NodeNum)
                 ttProUnit.UnitType   = proUnitType:GetValue()
                 ttProUnit.StartNode  = bttNode.NodeNum
                 ttProUnit.SourceFile = ttNode.NodeFile
                 ttProUnit.FirstLine  = ttNode.NodeLine
-                ttProUnit.AccessMode = "PUBLIC".                
+                ttProUnit.AccessMode = "PUBLIC":u
+                when tokenType = ProParserTokenTypes:PROPERTY
+                ttProUnit.AccessMode = "PRIVATE":u
+                when tokenType = ProParserTokenTypes:VARIABLE.                
                         
             BLK_NEXT:
             for each cttNode where cttNode.ParentNum = bttNode.NodeNum:    
                 case cttNode.NodeType:
+                    when ProParserTokenTypes:INPUT then
+                        ttProUnit.Direction = "INPUT":u.
+                    when ProParserTokenTypes:INPUTOUTPUT then
+                        ttProUnit.Direction = "INPUT-OUTPUT":u.
+                    when ProParserTokenTypes:OUTPUT then
+                        ttProUnit.Direction = "OUTPUT":u.
                     when ProParserTokenTypes:ABSTRACT then
                         ttProUnit.IsForward = true.
                     when ProParserTokenTypes:PUBLIC then
@@ -66,17 +149,17 @@ class Proparse.ProUnitsParser implements IParser final:
                     when ProParserTokenTypes:NOUNDO then
                         ttProUnit.IsNoUndo = true.
                     when ProParserTokenTypes:AS then
-                    do:
-                        /* In variables definition DataType is child for 'AS'
-                           and won't appear as child of 'DEFINE'
-                           In properties however DataType is child for 'DEFINE'
-                           and next-sibling for 'AS'. Mre interesting in variables 
-                           DataType is also next-sibling for 'AS' 
-                           TODO: Correct g4 grammar to make DataType child of 'DEFINE' everywhere */
-                        find first dttNode where dttNode.NodeNum = cttNode.NextSibling no-error.
-                        if available(dttNode) then
-                            ttProUnit.ReturnType = dttNode.NodeText.
-                    end.
+                        do:
+                            /* In variables definition DataType is child for 'AS'
+                               and won't appear as child of 'DEFINE'
+                               In properties however DataType is child for 'DEFINE'
+                               and next-sibling for 'AS'. More interesting in variables 
+                               DataType is also next-sibling for 'AS' 
+                               TODO: Correct g4 grammar to make DataType child of 'DEFINE' everywhere */
+                            find first dttNode where dttNode.NodeNum = cttNode.NextSibling no-error.
+                            if available(dttNode) then
+                                ttProUnit.ReturnType = dttNode.NodeText.
+                        end.
                     when ProParserTokenTypes:ID then
                         ttProUnit.UnitName = cttNode.NodeText.                                            
                 end case.
@@ -91,9 +174,84 @@ class Proparse.ProUnitsParser implements IParser final:
      Notes:
     ------------------------------------------------------------------------------*/
 
+    method private void ParseParameterList(  ):
+        
+        define buffer ttNode          for ttNode.
+        define buffer ttParameterNode for ttNode.
+        define buffer ttChildNode     for ttNode.
+        
+        define variable nextNum    as integer no-undo.
+        define variable isDataType as logical no-undo.        
+        
+        BLK_NODE:
+        for each ttNode where ttNode.NodeType = ProParserTokenTypes:PARAMETER_LIST,
+            each ttParameterNode where ttParameterNode.ParentNum = ttNode.NodeNum and
+            (ttParameterNode.NodeType = ProParserTokenTypes:INPUT
+            or ttParameterNode.NodeType = ProParserTokenTypes:INPUTOUTPUT
+            or ttParameterNode.NodeType = ProParserTokenTypes:OUTPUT
+            or ttParameterNode.NodeType = ProParserTokenTypes:BUFFER):
+            create ttProUnit.            
+            assign
+                ttProUnit.Id         = LintUnit:NextSequenceId()
+                ttProUnit.ParentId   = GetParentUnit(ttNode.NodeNum)
+                ttProUnit.UnitType   = proparse.UnitType:U_PARAMETER:GetValue()
+                ttProUnit.StartNode  = ttParameterNode.NodeNum
+                ttProUnit.SourceFile = ttParameterNode.NodeFile
+                ttProUnit.FirstLine  = ttParameterNode.NodeLine
+                ttProUnit.ReturnType = "BUFFER":u
+                when ttParameterNode.NodeType = ProParserTokenTypes:BUFFER
+                ttProUnit.Direction  = "INPUT":u
+                when ttParameterNode.NodeType = ProParserTokenTypes:INPUT
+                ttProUnit.Direction  = "INPUT-OUTPUT":u
+                when ttParameterNode.NodeType = ProParserTokenTypes:INPUTOUTPUT
+                ttProUnit.Direction  = "OUTPUT":u
+                when ttParameterNode.NodeType = ProParserTokenTypes:OUTPUT.
+            for each ttChildNode where ttChildNode.ParentNum = ttParameterNode.NodeNum:
+                /* If 'input' keyword is virtual it points to line 0 of compiled file */
+                if ttProUnit.FirstLine = 0 then
+                do:
+                    assign
+                        ttProUnit.StartNode  = ttChildNode.NodeNum
+                        ttProUnit.SourceFile = ttChildNode.NodeFile
+                        ttProUnit.FirstLine  = ttChildNode.NodeLine.
+                end.
+                case ttChildNode.NodeType:                    
+                    when ProParserTokenTypes:AS then
+                        isDataType = true.
+                    when ProParserTokenTypes:ID then
+                        ttProUnit.UnitName = ttChildNode.NodeText.
+                    when ProParserTokenTypes:DATASET
+                    or 
+                    when ProParserTokenTypes:DATASETHANDLE
+                    or 
+                    when ProParserTokenTypes:TABLE
+                    or 
+                    when ProParserTokenTypes:TABLEHANDLE
+                    or 
+                    when ProParserTokenTypes:RECORD_NAME then
+                        ttProUnit.ReturnType = ttChildNode.NodeText.
+                    otherwise
+                    do:
+                        if isDataType then
+                            ttProUnit.ReturnType = ttChildNode.NodeText.
+                        assign
+                            isDataType = false.
+                    end.       
+                end case.               
+            end.
+        end.
+        return.
+
+    end method.
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
     method private void ParseTempTables(  ):
         
-        define buffer tNode   for ttNode.
+        define buffer ttNode  for ttNode.
         define buffer bttNode for ttNode.
         
         define variable nextNum as integer no-undo.        
@@ -102,12 +260,14 @@ class Proparse.ProUnitsParser implements IParser final:
         for each ttNode where ttNode.NodeType = ProParserTokenTypes:TEMPTABLE
             and ttNode.IsStateHead = false.            
             find first bttNode where bttNode.NodeNum = ttNode.ParentNum
-            and bttNode.NodeType = ProParserTokenTypes:DEFINE no-error.
+                and bttNode.NodeType = ProParserTokenTypes:DEFINE no-error.
             if not available(bttNode) then
                 next.
                 
             create ttProUnit.
             assign
+                ttProUnit.Id         = LintUnit:NextSequenceId()
+                ttProUnit.ParentId   = GetParentUnit(ttNode.NodeNum)
                 ttProUnit.UnitType   = proparse.UnitType:U_TEMPTABLE:GetValue()
                 ttProUnit.StartNode  = bttNode.NodeNum
                 ttProUnit.SourceFile = ttNode.NodeFile
@@ -141,41 +301,54 @@ class Proparse.ProUnitsParser implements IParser final:
     end method.
 
     method public void Visit
-    (
-       input currentUnit as Prolint.ILintUnit,
-       input dataset dsProparse              
-    ):  
-        ParseProcedures(ProParserTokenTypes:PROCEDURE, proparse.UnitType:U_PROCEDURE, ?).
-        ParseProcedures(ProParserTokenTypes:FUNCTION, proparse.UnitType:U_FUNCTION, ?).
+        (
+        input currentUnit as Prolint.ILintUnit,
+        input dataset dsProparse              
+        ):  
+        LintUnit = currentUnit.
+        
+        create ttProUnit.
+        assign
+            ttProUnit.Id         = LintUnit:NextSequenceId()
+            ttProUnit.UnitType   = Proparse.UnitType:U_ROOT:GetValue()            
+            ttProUnit.SourceFile = LintUnit:CompileUnit
+            ttProUnit.UnitName   = LintUnit:CompileUnit.
+              
+        ParseMain(ProParserTokenTypes:CLASS, proparse.UnitType:U_CLASS).
+        ParseMain(ProParserTokenTypes:INTERFACE, proparse.UnitType:U_INTERFACE).        
+        ParseProcedures(ProParserTokenTypes:PROCEDURE, proparse.UnitType:U_PROCEDURE, ?).        
+        ParseProcedures(ProParserTokenTypes:FUNCTION, proparse.UnitType:U_FUNCTION, ?).        
         ParseProcedures(ProParserTokenTypes:METHOD, proparse.UnitType:U_METHOD, "Interface":U).        
-        ParseAccessors(ProParserTokenTypes:Property_getter, proparse.UnitType:U_GETTER).        
-        ParseAccessors(ProParserTokenTypes:Property_setter, proparse.UnitType:U_SETTER).
-        ParseDefines(ProParserTokenTypes:PROPERTY, proparse.UnitType:U_PROPERTY).
-        ParseDefines(ProParserTokenTypes:VARIABLE, proparse.UnitType:U_VARIABLE).
-        ParseTempTables().        
+        ParseDefines(ProParserTokenTypes:PROPERTY, proparse.UnitType:U_PROPERTY).                
+        ParseAccessors(ProParserTokenTypes:Property_getter, proparse.UnitType:U_GETTER).                
+        ParseAccessors(ProParserTokenTypes:Property_setter, proparse.UnitType:U_SETTER).                
+        ParseDefines(ProParserTokenTypes:VARIABLE, proparse.UnitType:U_VARIABLE).        
+        ParseDefines(ProParserTokenTypes:PARAMETER, proparse.UnitType:U_PARAMETER).        
+        ParseParameterList().        
+        ParseTempTables().                
       
         return.
 
     end method.
     
-        /*------------------------------------------------------------------------------
-     Purpose:
-     Notes:
-    ------------------------------------------------------------------------------*/
+    /*------------------------------------------------------------------------------
+ Purpose:
+ Notes:
+------------------------------------------------------------------------------*/
 
     method private void ParseProcedures
         (
         input tokenType     as integer,
         input proUnitType   as UnitType,
         input abstractBlock as character
-        ):
+        ):        
         
-        define buffer tNode   for ttNode.
-        define buffer bttNode for ttNode.
+        define buffer ttNode  for ttNode.
+        define buffer bttNode for ttNode.        
         
-        define variable nextNum as integer no-undo.
-        define variable tempText as character no-undo.
-        define variable isReturns as logical no-undo.
+        define variable nextNum   as integer   no-undo.
+        define variable tempText  as character no-undo.
+        define variable isReturns as logical   no-undo.
         
         BLK_NODE:
         for each ttNode where ttNode.NodeType = tokenType
@@ -186,6 +359,8 @@ class Proparse.ProUnitsParser implements IParser final:
                 next BLK_NODE.
             create ttProUnit.
             assign
+                ttProUnit.Id         = LintUnit:NextSequenceId()
+                ttProUnit.ParentId   = GetParentUnit(ttNode.NodeNum)
                 ttProUnit.UnitType   = proUnitType:GetValue()
                 ttProUnit.StartNode  = ttNode.NodeNum
                 ttProUnit.SourceFile = ttNode.NodeFile
@@ -193,11 +368,10 @@ class Proparse.ProUnitsParser implements IParser final:
                 ttProUnit.UnitName   = bttNode.NodeText
                 ttProUnit.AccessMode = "PUBLIC".
                 
-            if abstractBlock <> ? and LOOKUP(abstractBlock, ttNode.CodeBlock) > 0 then
-            do:
-                ttProUnit.IsForward = true.
-                next BLK_NODE.
-            end.
+            if abstractBlock <> ? and LOOKUP(abstractBlock, ttNode.CodeBlock) > 0 then            
+                ttProUnit.IsForward = true.            
+           
+                                          
             
             BLK_NEXT:
             do while bttNode.NextSibling <> 0:
@@ -205,9 +379,12 @@ class Proparse.ProUnitsParser implements IParser final:
                 find first bttNode where bttNode.NodeNum = nextNum.
                 case bttNode.NodeType:
                     when ProParserTokenTypes:EXTERNAL
-                        or when ProParserTokenTypes:FORWARDS
-                        or when ProParserTokenTypes:IN_KW
-                        or when ProParserTokenTypes:ABSTRACT then
+                    or 
+                    when ProParserTokenTypes:FORWARDS
+                    or 
+                    when ProParserTokenTypes:IN_KW
+                    or 
+                    when ProParserTokenTypes:ABSTRACT then
                         ttProUnit.IsForward = true.
                     when ProParserTokenTypes:PUBLIC then
                         ttProUnit.AccessMode = "PUBLIC":U.
@@ -218,7 +395,8 @@ class Proparse.ProUnitsParser implements IParser final:
                     when ProParserTokenTypes:STATIC then
                         ttProUnit.IsStatic = true.
                     when ProParserTokenTypes:RETURN
-                        or when ProParserTokenTypes:RETURNS then
+                    or 
+                    when ProParserTokenTypes:RETURNS then
                         isReturns = true.
                     when ProParserTokenTypes:ID then                    
                         if proUnitType = proparse.UnitType:U_METHOD then
@@ -229,7 +407,7 @@ class Proparse.ProUnitsParser implements IParser final:
                             ttProUnit.ReturnType = bttNode.NodeText.
                         assign
                             isReturns = false
-                            tempText = bttNode.NodeText.
+                            tempText  = bttNode.NodeText.
                     end.                        
                 end case.
             end.
@@ -265,6 +443,8 @@ class Proparse.ProUnitsParser implements IParser final:
                 next BLK_NODE.
             create ttProUnit.
             assign
+                ttProUnit.Id         = LintUnit:NextSequenceId()
+                ttProUnit.ParentId   = GetParentUnit(ttNode.NodeNum)
                 ttProUnit.UnitType   = proUnitType:GetValue()
                 ttProUnit.StartNode  = ttNode.NodeNum
                 ttProUnit.SourceFile = ttNode.NodeFile

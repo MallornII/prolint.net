@@ -27,6 +27,10 @@ class Prolint.Forms.Profile inherits Form  final:
         super().
         InitializeComponent ( ).
         catch e as Progress.Lang.Error:
+            message e:GetMessage(1)
+            view-as alert-box error.
+            log-manager:write-message(e:CallStack).
+            log-manager:write-message(e:GetMessage(1)).
             undo, throw e.
         end catch.        
 
@@ -129,6 +133,10 @@ class Prolint.Forms.Profile inherits Form  final:
         this-object:ResumeLayout(false).
         this-object:PerformLayout().
         catch e as Progress.Lang.Error:
+            message e:GetMessage(1)
+            view-as alert-box error.
+            log-manager:write-message(e:CallStack).
+            log-manager:write-message(e:GetMessage(1)).
             undo, throw e.
         end catch.
     end method. 

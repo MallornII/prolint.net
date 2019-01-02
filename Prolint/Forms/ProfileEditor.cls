@@ -88,6 +88,10 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         bsRules:HANDLE = queryRules.
         
         catch e as Progress.Lang.Error:
+            message e:GetMessage(1)
+            view-as alert-box error.
+            log-manager:write-message(e:CallStack).
+            log-manager:write-message(e:GetMessage(1)).
             undo, throw e.
         end catch.
 
@@ -557,6 +561,10 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         this-object:groupProfile:ResumeLayout(false).
         this-object:ResumeLayout(false).
         catch e as Progress.Lang.Error:
+            message e:GetMessage(1)
+            view-as alert-box error.
+            log-manager:write-message(e:CallStack).
+            log-manager:write-message(e:GetMessage(1)).
             undo, throw e.
         end catch.
     end method.

@@ -9,7 +9,7 @@
     Notes       : 
   ----------------------------------------------------------------------*/
 
-using prolint.ilintunit.
+using Prolint.ILintUnit.
 using com.joanju.proparse.ProParserTokenTypes.
 
 block-level on error undo, throw.
@@ -19,7 +19,9 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
     &SCOPED-DEFINE ACCESS_MOD PROTECTED
     
     {proparse/parsedata.i}
-    {prolint/lintdata.i} 
+    {prolint/lintdata.i}
+    
+    define protected variable sequenceId as integer no-undo. 
 
     define public property CompileUnit as character no-undo 
     get.
@@ -52,6 +54,28 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
     method public void Accept( input currentWorker as Prolint.IUnitWorker ):
         
         currentWorker:Visit(this-object, dataset dsProparse by-reference, dataset dsXref by-reference ).
+
+    end method.
+
+    method public integer GetParentNum( input nodeNum as integer ):
+        
+        define buffer ttNode for ttNode.
+        find first ttNode where ttNode.NodeNum = nodeNum no-error.
+        if available(ttNode) then        
+            return ttNode.ParentNum.
+        else
+            return 0.
+
+    end method.
+
+    method public integer GetParentType( input nodeNum as integer ):
+        
+        define buffer ttNode for ttNode.
+        find first ttNode where ttNode.NodeNum = GetParentNum(nodeNum) no-error.
+        if available(ttNode) then        
+            return ttNode.NodeType.
+        else
+            return 0.
 
     end method.
 
@@ -99,6 +123,13 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
         catch eErr as Progress.Lang.Error :            
             return ProParserTokenTypes:Program_root.                
         end catch. 
+
+    end method.
+
+    method public integer NextSequenceId(  ):
+        
+        sequenceId = sequenceId + 1.
+        return sequenceId.
 
     end method.
 
