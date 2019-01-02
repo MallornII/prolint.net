@@ -1,0 +1,7 @@
+-cpinternal utf-8
+-cpstream utf-8
+-cpcoll Basic
+-cpcase Basic
+-d mdy
+-numsep 44
+-numdec 46

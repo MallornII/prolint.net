@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <LintProfiles xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Profile ProfileName="default">
     <Rule>
@@ -6,6 +6,24 @@
     </Rule>
     <Rule>
       <RuleClass>Prolint.Rules.AbbrevTable</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.AlertMessage</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.AlertType</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.AndOrParens</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.BackSlash</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.BlockLabel</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.BuffDb</RuleClass>
     </Rule>
   </Profile>
 </LintProfiles>

@@ -2,6 +2,7 @@
 <project default="main" basedir=".">
 
  <property environment="env" />
+ <property name="version" value="0.2.0" />
  <taskdef resource="PCT.properties" />
  <typedef resource="types.properties" />
 
@@ -11,6 +12,12 @@
   <pathelement path="." />
 </path>
 
+<echo message="clean"/>
+<delete includeemptydirs="true">
+  <fileset dir="Release" includes="**/*"/>
+  <fileset dir="bin" includes="**/*"/>
+</delete>
+    
 <echo message="building Proparse"/>    
 <PCTCompile destDir="bin" relativePaths="false" inputChars="32000" token="5000">
     <fileset dir="Proparse" includes="**/*.cls" />
@@ -22,38 +29,44 @@
     <fileset dir="Prolint" includes="**/*.cls" />
     <propath refid="compilation.propath" />
 </PCTCompile>
-
-<echo message="building Misc"/>
-<PCTCompile destDir="bin" relativePaths="false">
-    <fileset dir="" includes="*.p" />
+<PCTCompile destDir="bin/Prolint" relativePaths="false">
+    <fileset dir="Prolint" includes="**/*.p" />
     <propath refid="compilation.propath" />
-</PCTCompile>
+</PCTCompile>    
 
-<echo message="copying dlls"/>
-<copy todir="bin">
+<echo message="creating profile"/>
+<PCTRun procedure="make_profile.p"/>
+
+<echo message="copying files"/>
+<copy todir="Release">
   <fileset dir="">
-    <include name="*.dll"/>
+    <include name="*.dll"/>        
     <include name="assemblies.xml"/>
     <include name="profiles.xml"/>
-    <include name="toolbox.xml"/>
+    <include name="prolint.pf"/>
+    <include name="prolint.bat"/>
   </fileset>
 </copy>
 
 <echo message="copying resources"/>
-<copy todir="bin/Prolint/Forms">
+<copy todir="Release/Prolint/Forms">
   <fileset dir="Prolint/Forms">
     <include name="*.resx"/>    
   </fileset>
 </copy>
+<mkdir dir="Release/Profiles"/>
+<mkdir dir="Release/Profiles/default"/>
 
 <echo message="building Procedure Library"/>
-<PCTLibrary destfile="bin/Prolint.pl">
+<PCTLibrary destfile="Release/Prolint.pl" encoding="utf-8" cpStream="utf-8" cpinternal="utf-8">
     <fileset dir="bin">
         <include name="**/*.r" />
         <exclude name="Prolint.pl" />
     </fileset>
 </PCTLibrary>
-</target>
 
-  
+<zip destfile="Release/Prolint_${version}.zip"
+     basedir="Release"
+     excludes="*.zip"/>
+</target>  
 </project>
