@@ -20,11 +20,14 @@ enum proparse.UnitType:
         U_INTERFACE        
         U_PROCEDURE
         U_FUNCTION
+        U_CONSTRUCTOR
+        U_DESTRUCTOR
         U_METHOD
         U_GETTER
         U_SETTER
         U_PROPERTY
         U_VARIABLE
         U_PARAMETER
-        U_TEMPTABLE.
+        U_TEMPTABLE
+        U_BUFFER.
 end enum.

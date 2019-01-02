@@ -21,7 +21,7 @@ class Prolint.UnitDebugData implements IUnitWorker final:
     {proparse/parsedata.i}
     {prolint/lintdata.i} 
 
-    define public property TempDir as character no-undo 
+    define public property TempDir as character no-undo
     get.
     set.     
 

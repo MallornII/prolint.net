@@ -76,12 +76,12 @@ class Proparse.ProUnitsParser implements IParser final:
                 ttProUnit.SourceFile = ttNode.NodeFile
                 ttProUnit.FirstLine  = ttNode.NodeLine
                 ttProUnit.AccessMode = ""
-                ttProUnit.IsForward  = true 
+                ttProUnit.IsAbstract = true 
                 when tokenType = ProParserTokenTypes:INTERFACE.
             for each ttChildNode where ttChildNode.ParentNum = ttNode.NodeNum:
                 case ttChildNode.NodeType:
                     when ProParserTokenTypes:ABSTRACT then
-                        ttProUnit.IsForward = true.
+                        ttProUnit.IsAbstract = true.
                     when ProParserTokenTypes:ID then
                         ttProUnit.UnitName = ttChildNode.NodeText. 
                 end case.
@@ -137,7 +137,7 @@ class Proparse.ProUnitsParser implements IParser final:
                     when ProParserTokenTypes:OUTPUT then
                         ttProUnit.Direction = "OUTPUT":u.
                     when ProParserTokenTypes:ABSTRACT then
-                        ttProUnit.IsForward = true.
+                        ttProUnit.IsAbstract = true.
                     when ProParserTokenTypes:PUBLIC then
                         ttProUnit.AccessMode = "PUBLIC":U.
                     when ProParserTokenTypes:PROTECTED then
@@ -148,6 +148,8 @@ class Proparse.ProUnitsParser implements IParser final:
                         ttProUnit.IsStatic = true.
                     when ProParserTokenTypes:NOUNDO then
                         ttProUnit.IsNoUndo = true.
+                    when ProParserTokenTypes:RECORD_NAME then
+                        ttProUnit.DataType = cttNode.NodeText.
                     when ProParserTokenTypes:AS then
                         do:
                             /* In variables definition DataType is child for 'AS'
@@ -158,7 +160,7 @@ class Proparse.ProUnitsParser implements IParser final:
                                TODO: Correct g4 grammar to make DataType child of 'DEFINE' everywhere */
                             find first dttNode where dttNode.NodeNum = cttNode.NextSibling no-error.
                             if available(dttNode) then
-                                ttProUnit.ReturnType = dttNode.NodeText.
+                                ttProUnit.DataType = dttNode.NodeText.
                         end.
                     when ProParserTokenTypes:ID then
                         ttProUnit.UnitName = cttNode.NodeText.                                            
@@ -194,12 +196,10 @@ class Proparse.ProUnitsParser implements IParser final:
             assign
                 ttProUnit.Id         = LintUnit:NextSequenceId()
                 ttProUnit.ParentId   = GetParentUnit(ttNode.NodeNum)
-                ttProUnit.UnitType   = proparse.UnitType:U_PARAMETER:GetValue()
+                ttProUnit.UnitType   = Proparse.UnitType:U_PARAMETER:GetValue()
                 ttProUnit.StartNode  = ttParameterNode.NodeNum
                 ttProUnit.SourceFile = ttParameterNode.NodeFile
-                ttProUnit.FirstLine  = ttParameterNode.NodeLine
-                ttProUnit.ReturnType = "BUFFER":u
-                when ttParameterNode.NodeType = ProParserTokenTypes:BUFFER
+                ttProUnit.FirstLine  = ttParameterNode.NodeLine                
                 ttProUnit.Direction  = "INPUT":u
                 when ttParameterNode.NodeType = ProParserTokenTypes:INPUT
                 ttProUnit.Direction  = "INPUT-OUTPUT":u
@@ -229,11 +229,11 @@ class Proparse.ProUnitsParser implements IParser final:
                     when ProParserTokenTypes:TABLEHANDLE
                     or 
                     when ProParserTokenTypes:RECORD_NAME then
-                        ttProUnit.ReturnType = ttChildNode.NodeText.
+                        ttProUnit.DataType = ttChildNode.NodeText.
                     otherwise
                     do:
                         if isDataType then
-                            ttProUnit.ReturnType = ttChildNode.NodeText.
+                            ttProUnit.DataType = ttChildNode.NodeText.
                         assign
                             isDataType = false.
                     end.       
@@ -251,8 +251,9 @@ class Proparse.ProUnitsParser implements IParser final:
 
     method private void ParseTempTables(  ):
         
-        define buffer ttNode  for ttNode.
-        define buffer bttNode for ttNode.
+        define buffer ttNode   for ttNode.
+        define buffer bttNode  for ttNode.
+        define buffer ttIDNode for ttNode.
         
         define variable nextNum as integer no-undo.        
         
@@ -268,7 +269,7 @@ class Proparse.ProUnitsParser implements IParser final:
             assign
                 ttProUnit.Id         = LintUnit:NextSequenceId()
                 ttProUnit.ParentId   = GetParentUnit(ttNode.NodeNum)
-                ttProUnit.UnitType   = proparse.UnitType:U_TEMPTABLE:GetValue()
+                ttProUnit.UnitType   = Proparse.UnitType:U_TEMPTABLE:GetValue()
                 ttProUnit.StartNode  = bttNode.NodeNum
                 ttProUnit.SourceFile = ttNode.NodeFile
                 ttProUnit.FirstLine  = ttNode.NodeLine
@@ -280,7 +281,7 @@ class Proparse.ProUnitsParser implements IParser final:
                 find first bttNode where bttNode.NodeNum = nextNum.
                 case bttNode.NodeType:
                     when ProParserTokenTypes:ABSTRACT then
-                        ttProUnit.IsForward = true.                    
+                        ttProUnit.IsAbstract = true.                    
                     when ProParserTokenTypes:PROTECTED then
                         ttProUnit.AccessMode = "PROTECTED":U.
                     when ProParserTokenTypes:PRIVATE then
@@ -291,6 +292,12 @@ class Proparse.ProUnitsParser implements IParser final:
                         ttProUnit.IsNoUndo = true.              
                     when ProParserTokenTypes:ID then
                         ttProUnit.UnitName = bttNode.NodeText.
+                    when ProParserTokenTypes:BEFORETABLE then
+                        do:
+                            find first ttIDNode where ttIDNode.NodeNum = bttNode.FirstChild no-error.
+                            if available(ttIDNode) then
+                                ttProUnit.UnitName = ttIDNode.NodeText.
+                        end.
                     when ProParserTokenTypes:FIELD then
                         leave BLK_NEXT.                                        
                 end case.
@@ -314,18 +321,21 @@ class Proparse.ProUnitsParser implements IParser final:
             ttProUnit.SourceFile = LintUnit:CompileUnit
             ttProUnit.UnitName   = LintUnit:CompileUnit.
               
-        ParseMain(ProParserTokenTypes:CLASS, proparse.UnitType:U_CLASS).
-        ParseMain(ProParserTokenTypes:INTERFACE, proparse.UnitType:U_INTERFACE).        
-        ParseProcedures(ProParserTokenTypes:PROCEDURE, proparse.UnitType:U_PROCEDURE, ?).        
-        ParseProcedures(ProParserTokenTypes:FUNCTION, proparse.UnitType:U_FUNCTION, ?).        
-        ParseProcedures(ProParserTokenTypes:METHOD, proparse.UnitType:U_METHOD, "Interface":U).        
-        ParseDefines(ProParserTokenTypes:PROPERTY, proparse.UnitType:U_PROPERTY).                
-        ParseAccessors(ProParserTokenTypes:Property_getter, proparse.UnitType:U_GETTER).                
-        ParseAccessors(ProParserTokenTypes:Property_setter, proparse.UnitType:U_SETTER).                
-        ParseDefines(ProParserTokenTypes:VARIABLE, proparse.UnitType:U_VARIABLE).        
-        ParseDefines(ProParserTokenTypes:PARAMETER, proparse.UnitType:U_PARAMETER).        
+        ParseMain(ProParserTokenTypes:CLASS, Proparse.UnitType:U_CLASS).
+        ParseMain(ProParserTokenTypes:INTERFACE, Proparse.UnitType:U_INTERFACE).        
+        ParseProcedures(ProParserTokenTypes:PROCEDURE, Proparse.UnitType:U_PROCEDURE, ?).        
+        ParseProcedures(ProParserTokenTypes:FUNCTION, Proparse.UnitType:U_FUNCTION, ?).        
+        ParseProcedures(ProParserTokenTypes:METHOD, Proparse.UnitType:U_METHOD, "Interface":U).        
+        ParseProcedures(ProParserTokenTypes:CONSTRUCTOR, Proparse.UnitType:U_CONSTRUCTOR, ?).
+        ParseProcedures(ProParserTokenTypes:DESTRUCTOR, Proparse.UnitType:U_DESTRUCTOR, ?).
+        ParseDefines(ProParserTokenTypes:PROPERTY, Proparse.UnitType:U_PROPERTY).                
+        ParseAccessors(ProParserTokenTypes:Property_getter, Proparse.UnitType:U_GETTER).                
+        ParseAccessors(ProParserTokenTypes:Property_setter, Proparse.UnitType:U_SETTER).                
+        ParseDefines(ProParserTokenTypes:VARIABLE, Proparse.UnitType:U_VARIABLE).        
+        ParseDefines(ProParserTokenTypes:PARAMETER, Proparse.UnitType:U_PARAMETER).        
         ParseParameterList().        
-        ParseTempTables().                
+        ParseTempTables().
+        ParseDefines(ProParserTokenTypes:BUFFER, Proparse.UnitType:U_BUFFER).                
       
         return.
 
@@ -343,8 +353,9 @@ class Proparse.ProUnitsParser implements IParser final:
         input abstractBlock as character
         ):        
         
-        define buffer ttNode  for ttNode.
-        define buffer bttNode for ttNode.        
+        define buffer ttNode    for ttNode.
+        define buffer bttNode   for ttNode.        
+        define buffer ttEndNode for ttNode.
         
         define variable nextNum   as integer   no-undo.
         define variable tempText  as character no-undo.
@@ -368,15 +379,16 @@ class Proparse.ProUnitsParser implements IParser final:
                 ttProUnit.UnitName   = bttNode.NodeText
                 ttProUnit.AccessMode = "PUBLIC".
                 
+            find first ttEndNode where ttEndNode.ParentNum = ttNode.nodeNum
+                and ttEndNode.NodeType = ProParserTokenTypes:END no-error.
+            if available(ttEndNode) then
+                ttProunit.EndNode = ttEndNode.NodeNum.
+                
             if abstractBlock <> ? and LOOKUP(abstractBlock, ttNode.CodeBlock) > 0 then            
-                ttProUnit.IsForward = true.            
-           
-                                          
+                ttProUnit.IsAbstract = true.                                          
             
             BLK_NEXT:
-            do while bttNode.NextSibling <> 0:
-                nextNum = bttNode.NextSibling.
-                find first bttNode where bttNode.NodeNum = nextNum.
+            for each bttNode where bttNode.ParentNum = ttNode.NodeNum:                
                 case bttNode.NodeType:
                     when ProParserTokenTypes:EXTERNAL
                     or 
@@ -385,7 +397,7 @@ class Proparse.ProUnitsParser implements IParser final:
                     when ProParserTokenTypes:IN_KW
                     or 
                     when ProParserTokenTypes:ABSTRACT then
-                        ttProUnit.IsForward = true.
+                        ttProUnit.IsAbstract = true.
                     when ProParserTokenTypes:PUBLIC then
                         ttProUnit.AccessMode = "PUBLIC":U.
                     when ProParserTokenTypes:PROTECTED then
@@ -399,12 +411,12 @@ class Proparse.ProUnitsParser implements IParser final:
                     when ProParserTokenTypes:RETURNS then
                         isReturns = true.
                     when ProParserTokenTypes:ID then                    
-                        if proUnitType = proparse.UnitType:U_METHOD then
-                            ttProUnit.ReturnType = tempText.
+                        if proUnitType = Proparse.UnitType:U_METHOD then
+                            ttProUnit.DataType = tempText.
                     otherwise
                     do:
                         if isReturns then
-                            ttProUnit.ReturnType = bttNode.NodeText.
+                            ttProUnit.DataType = bttNode.NodeText.
                         assign
                             isReturns = false
                             tempText  = bttNode.NodeText.
@@ -425,10 +437,11 @@ class Proparse.ProUnitsParser implements IParser final:
         input proUnitType as UnitType
         ):       
          
-        define buffer ttNode  for ttNode. /* setter or getter */
-        define buffer bttNode for ttNode. /* ID node with propety name */
-        define buffer cttNode for ttNode. /* define node */
-        define buffer dttNode for ttNode. /* Code_block node of accessor */
+        define buffer ttNode    for ttNode. /* setter or getter */
+        define buffer bttNode   for ttNode. /* ID node with propety name */
+        define buffer cttNode   for ttNode. /* define node */
+        define buffer dttNode   for ttNode. /* Code_block node of accessor */
+        define buffer ttEndNode for ttNode.
         
         define variable nextNum as integer no-undo.
         
@@ -451,9 +464,14 @@ class Proparse.ProUnitsParser implements IParser final:
                 ttProUnit.FirstLine  = ttNode.NodeLine
                 ttProUnit.UnitName   = bttNode.NodeText.
                 
+            find first ttEndNode where ttEndNode.ParentNum = ttNode.nodeNum
+                and ttEndNode.NodeType = ProParserTokenTypes:END no-error.
+            if available(ttEndNode) then
+                ttProunit.EndNode = ttEndNode.NodeNum.
+                
             if lookup("Interface":U, ttNode.CodeBlock) > 0 then
             do:
-                ttProUnit.IsForward = true.
+                ttProUnit.IsAbstract = true.
                 next BLK_NODE.
             end.
             
@@ -466,7 +484,7 @@ class Proparse.ProUnitsParser implements IParser final:
                     or bttNode.NodeType = ProParserTokenTypes:IN_KW
                     or bttNode.NodeType = ProParserTokenTypes:ABSTRACT then
                 do:
-                    ttProUnit.IsForward = true.
+                    ttProUnit.IsAbstract = true.
                     leave BLK_NEXT.
                 end.
             end.

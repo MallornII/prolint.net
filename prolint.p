@@ -25,6 +25,9 @@ log-manager:clear-log().
 log-manager:log-entry-types = "4GLMessages":u.
 log-manager:logging-level = 2.
 
+if not connected("bisquit":u) then
+    connect value("-db bisquit -H localhost -S 2164 -U bis -P 123":u).
+
 lintForm = new Prolint.Forms.MainForm() no-error.
 wait-for System.Windows.Forms.Application:Run(lintForm).
 lintForm:Dispose().

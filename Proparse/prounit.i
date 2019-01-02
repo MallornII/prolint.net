@@ -8,9 +8,10 @@ define {&ACCESS_MOD} {&STAT_MOD} temp-table ttProUnit no-undo
     field FirstLine  as integer
     field AccessMode as character
     field Direction  as character
-    field ReturnType as character
+    field DataType   as character
     field IsNoUndo   as logical
     field IsStatic   as logical
-    field IsForward  as logical
-    field StartNode  as integer.
+    field IsAbstract as logical
+    field StartNode  as integer
+    field EndNode    as integer.
 

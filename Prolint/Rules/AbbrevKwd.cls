@@ -14,8 +14,7 @@ using com.joanju.proparse.NodeTypes.
 
 block-level on error undo, throw.
 
-class Prolint.Rules.AbbrevKwd inherits Prolint.Rules.AbstractRule serializable final:
-   
+class Prolint.Rules.AbbrevKwd inherits Prolint.Rules.AbstractRule serializable final:   
     
     define private temp-table ttSkipNodes no-undo
         field NodeType as integer.

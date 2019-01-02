@@ -13,7 +13,7 @@ using org.prorefactor.core.JPNode.
 interface Prolint.ILintUnit:
         
   
-    define public property CompileUnit as character no-undo 
+    define public property CompileUnit as character no-undo
     get.
     set.
 

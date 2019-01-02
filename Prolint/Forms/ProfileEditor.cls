@@ -45,7 +45,7 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         
         super().
         InitializeComponent().
-        this-object:ComponentsCollection:ADD(this-object:components).
+        this-object:ComponentsCollection:ADD(this-object:components).        
         
         profileFile = search("profiles.xml":U).
         if profileFile <> ? then        

@@ -14,7 +14,7 @@ using Prolint.Rules.AbstractRule.
 
 block-level on error undo, throw.
 
-class Prolint.Rules.AlertMessage inherits AbstractRule final serializable: 
+class Prolint.Rules.AlertMessage inherits AbstractRule final serializable:
 
     /*------------------------------------------------------------------------------
      Purpose:

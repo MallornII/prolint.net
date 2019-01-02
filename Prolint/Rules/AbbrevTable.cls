@@ -13,7 +13,7 @@ using Prolint.Rules.AbstractRule.
 
 block-level on error undo, throw.
 
-class Prolint.Rules.AbbrevTable inherits AbstractRule serializable final: 
+class Prolint.Rules.AbbrevTable inherits AbstractRule serializable final:
         
     constructor public AbbrevTable (  ):
         super ().

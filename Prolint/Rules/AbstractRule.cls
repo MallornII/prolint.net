@@ -24,7 +24,7 @@ class Prolint.Rules.AbstractRule  implements Prolint.Rules.IRule serializable ab
     {proparse/parsedata.i}
     {prolint/lintdata.i}    
 
-    define public event PublishRuleResult  signature void 
+    define public event PublishRuleResult  signature void
         (
         input iRuleId   as character,
         input iUnit     as character,
