@@ -32,6 +32,12 @@
 <PCTCompile destDir="bin/Prolint" relativePaths="false">
     <fileset dir="Prolint" includes="**/*.p" />
     <propath refid="compilation.propath" />
+</PCTCompile>
+
+<echo message="building Utils"/>
+<PCTCompile destDir="bin" relativePaths="false">
+    <fileset dir="Utils" includes="**/*.cls" />
+    <propath refid="compilation.propath" />
 </PCTCompile>    
 
 <echo message="creating profile"/>
