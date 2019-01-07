@@ -1,6 +1,6 @@
  /*------------------------------------------------------------------------
     File        : Profile
-    Purpose     : Add profile form
+    Purpose     : Form for adding profile
     Syntax      : 
     Description : 
     Author(s)   : Andrew Ni

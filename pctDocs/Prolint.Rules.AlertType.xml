@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Prolint.Rules" className="AlertType" inherits="AbstractRule" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="true" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+    File        : ViewAsType&#xD;
+    Purpose     : Finds alert-boxes without AlertType option&#xD;
+    Syntax      : &#xD;
+    Description : &#xD;
+    Author(s)   : Andrew Ni&#xD;
+    Created     : 30.12.2018 19:23:45&#xD;
+    Notes       : &#xD;
+  ----------------------------------------------------------------------*/</classComment>
+    <constructor signature="AlertType()" modifier="PUBLIC">
+        <constrComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Default constructor&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</constrComment>
+    </constructor>
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Start method for visiting ILintUnit&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="currentUnit" dataType="Prolint.ILintUnit" position="0" mode="INPUT"/>
+        <parameter name="dsProparse" dataType="DATASET" position="1" mode="INPUT"/>
+        <parameter name="dsXref" dataType="DATASET" position="2" mode="INPUT"/>
+    </method>
+    <using name="com.joanju.proparse.ProParserTokenTypes" type="NONE"/>
+    <using name="Prolint.Rules.AbstractRule" type="NONE"/>
+</unit>

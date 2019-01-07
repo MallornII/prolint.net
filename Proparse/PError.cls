@@ -1,6 +1,6 @@
  
 /*------------------------------------------------------------------------
-   File        : perror
+   File        : PError
    Purpose     : Error class that provides actual line in file where error occured
    Syntax      : 
    Description : 

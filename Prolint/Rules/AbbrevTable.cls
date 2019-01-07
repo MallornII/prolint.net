@@ -1,11 +1,11 @@
  
 /*------------------------------------------------------------------------
    File        : AbbrevTable
-   Purpose     : 
+   Purpose     : Finds abbreviated table names
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Sat Dec 29 22:53:41 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 29.12.2018 22:53:41
    Notes       : 
  ----------------------------------------------------------------------*/
 using com.joanju.proparse.ProParserTokenTypes.
@@ -14,6 +14,11 @@ using Prolint.Rules.AbstractRule.
 block-level on error undo, throw.
 
 class Prolint.Rules.AbbrevTable inherits AbstractRule serializable final:
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Default constructor
+     Notes:
+    ------------------------------------------------------------------------------*/
         
     constructor public AbbrevTable (  ):
         super ().
@@ -23,6 +28,10 @@ class Prolint.Rules.AbbrevTable inherits AbstractRule serializable final:
             Severity        = 7.
     end constructor.
 
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method override public void Visit
         (

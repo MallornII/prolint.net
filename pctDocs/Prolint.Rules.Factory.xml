@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Prolint.Rules" className="Factory" isAbstract="false" isFinal="false" isInterface="false" isEnum="false" isSerializable="false" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+   File        : Factory&#xD;
+   Purpose     : Factory that creates or loades rule's instances&#xD;
+   Syntax      : &#xD;
+   Description : &#xD;
+   Author(s)   : Andrew Ni&#xD;
+   Created     : 21.12.2019 22:04:16 &#xD;
+   Notes       : &#xD;
+ ----------------------------------------------------------------------*/</classComment>
+    <constructor signature="Factory()" modifier="STATIC">
+        <constrComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Default constructor&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</constrComment>
+    </constructor>
+    <method methodName="DropInstance" signature="DropInstance(INPUT:character,INPUT:character,INPUT:logical)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Removes instance from cache and file system&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="profileName" dataType="CHARACTER" position="0" mode="INPUT"/>
+        <parameter name="ruleClass" dataType="CHARACTER" position="1" mode="INPUT"/>
+        <parameter name="isPermanent" dataType="LOGICAL" position="2" mode="INPUT"/>
+    </method>
+    <method methodName="GetInfo" signature="GetInfo(INPUT:character,INPUT:character,OUTPUT:character,OUTPUT:integer,OUTPUT:character)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Gets rule's severity, ID and description&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="profileName" dataType="CHARACTER" position="3" mode="INPUT"/>
+        <parameter name="ruleClass" dataType="CHARACTER" position="4" mode="INPUT"/>
+        <parameter name="ruleId" dataType="CHARACTER" position="5" mode="OUTPUT"/>
+        <parameter name="severity" dataType="INTEGER" position="6" mode="OUTPUT"/>
+        <parameter name="ruleDescription" dataType="CHARACTER" position="7" mode="OUTPUT"/>
+    </method>
+    <method methodName="GetInstance" returnType="Prolint.Rules.IRule" signature="GetInstance(INPUT:character,INPUT:character):Prolint.Rules.IRule" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Gets instance from cache, file system or createa new one (in that specific order)&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="profileName" dataType="CHARACTER" position="8" mode="INPUT"/>
+        <parameter name="ruleClass" dataType="CHARACTER" position="9" mode="INPUT"/>
+    </method>
+    <method methodName="SaveAllRules" signature="SaveAllRules()" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Saves all rules from cache to file system&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+    </method>
+    <method methodName="SaveRule" signature="SaveRule(INPUT:character,INPUT:character)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Saves specific ruile to file system&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="profileName" dataType="CHARACTER" position="10" mode="INPUT"/>
+        <parameter name="ruleClass" dataType="CHARACTER" position="11" mode="INPUT"/>
+    </method>
+</unit>

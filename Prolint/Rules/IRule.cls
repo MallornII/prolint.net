@@ -1,6 +1,6 @@
 
 /*------------------------------------------------------------------------
-    File        : irule
+    File        : IRule
     Purpose     : Basic interface for rules
     Syntax      : 
     Description : 
@@ -42,7 +42,7 @@ interface Prolint.Rules.IRule:
     set.
     
 	/*------------------------------------------------------------------------------
-	 Purpose:
+	 Purpose: Start method for visiting ILintUnit
 	 Notes:
 	------------------------------------------------------------------------------*/
 

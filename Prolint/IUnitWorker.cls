@@ -1,11 +1,11 @@
 
 /*------------------------------------------------------------------------
     File        : IUnitWorker
-    Purpose     : 
+    Purpose     : Interface for various classes performing actions on ILintUnit
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Sat Dec 22 21:02:16 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 22.12.2018 21:02:16
     Notes       : 
   ----------------------------------------------------------------------*/
 
@@ -19,6 +19,11 @@ interface Prolint.IUnitWorker:
     define public property TempDir as character no-undo
     get.
     set.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/    
 
     method public void Visit
     (

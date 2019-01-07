@@ -1,11 +1,11 @@
  
  /*------------------------------------------------------------------------
     File        : UnitDebugData
-    Purpose     : 
+    Purpose     : Saves data from ILintUnit for debugging
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Sat Dec 22 21:03:23 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 22.12.2018 21:03:23
     Notes       : 
   ----------------------------------------------------------------------*/
 
@@ -23,7 +23,12 @@ class Prolint.UnitDebugData implements IUnitWorker final:
 
     define public property TempDir as character no-undo
     get.
-    set.     
+    set.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/     
 
     method public void Visit
     (

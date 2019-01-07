@@ -1,11 +1,11 @@
  
  /*------------------------------------------------------------------------
     File        : DirectivesParser
-    Purpose     : 
+    Purpose     : Parses ProParseDirectives
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Sat Dec 22 15:53:27 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 22.12.2018 15:53:27
     Notes       : 
   ----------------------------------------------------------------------*/
 using com.joanju.proparse.ProParserTokenTypes.
@@ -17,7 +17,12 @@ class Proparse.DirectivesParser implements IParser final:
     
     &SCOPED-DEFINE ACCESS_MOD private
     &SCOPED-DEFINE REF_MOD    reference-only
-    {proparse/parsedata.i} 
+    {proparse/parsedata.i}
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/ 
 
     method public void Visit
     (

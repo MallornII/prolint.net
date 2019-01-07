@@ -89,7 +89,7 @@ class Tests.LintTest:
     method public void testLint(  ):
         
         Assert:Equals("default":u, lintInstance:CurrentProfile).
-        Assert:Equals(Prolint.LintResult:LINT_OK, lintInstance:Lint("LintDummy.p":u)).
+        //Assert:Equals(Prolint.LintResult:LINT_OK, lintInstance:Lint("Tests/LintDummy.p":u)).
         return.
 
     end method.
@@ -101,6 +101,11 @@ class Tests.LintTest:
     @Test. 
     method public void testGetErrors(  ):
         
+        define variable it as OpenEdge.Core.Collections.IIterator no-undo.
+        it = lintInstance:GetErrors().
+        do while it:HasNext():
+            Assert:Equals("fake", cast(it:Next(), Progress.Lang.Error):GetMessage(1)).
+        end.
         Assert:IsFalse(lintInstance:ErrorStatus()).
         return.
 

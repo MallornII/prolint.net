@@ -1,11 +1,11 @@
  
  /*------------------------------------------------------------------------
-    File        : simplelintunit
-    Purpose     : 
+    File        : SimpleLintUnit
+    Purpose     : Simle class that hold information about current Lint process
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Fri Dec 21 23:13:48 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 21.12.2018 23:13:48
     Notes       : 
   ----------------------------------------------------------------------*/
 
@@ -37,13 +37,23 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
 
     define public property topNode as org.prorefactor.core.JPNode no-undo 
     get.
-    set.     
+    set.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Accepts IRule visitor
+     Notes:
+    ------------------------------------------------------------------------------*/     
 
     method public void Accept( input currentRule as Prolint.Rules.IRule ):
         
         currentRule:Visit(this-object, dataset dsProparse by-reference, dataset dsXref by-reference ).
 
     end method.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Accepts IParser visitor
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method public void Accept( input currentParser as Proparse.IParser ):
         
@@ -51,11 +61,21 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
 
     end method.
     
+    /*------------------------------------------------------------------------------
+     Purpose: Accepts IUnitWorker visitor
+     Notes:
+    ------------------------------------------------------------------------------*/
+    
     method public void Accept( input currentWorker as Prolint.IUnitWorker ):
         
         currentWorker:Visit(this-object, dataset dsProparse by-reference, dataset dsXref by-reference ).
 
     end method.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Return node's parent num
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method public integer GetParentNum( input nodeNum as integer ):
         
@@ -67,6 +87,11 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
             return 0.
 
     end method.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Return node's parent type
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method public integer GetParentType( input nodeNum as integer ):
         
@@ -80,7 +105,7 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
     end method.
 
     /*------------------------------------------------------------------------------
-     Purpose: Returns JPNode that is a statement head for given node
+     Purpose: Returns NodeNum that is a statement head for given node
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -125,6 +150,11 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
         end catch. 
 
     end method.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Return next sequence ID. Acts like NEXT-VALUE function
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method public integer NextSequenceId(  ):
         

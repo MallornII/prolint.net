@@ -1,11 +1,11 @@
  
 /*------------------------------------------------------------------------
-   File        : factory
-   Purpose     : 
+   File        : Factory
+   Purpose     : Factory that creates or loades rule's instances
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Fri Dec 21 22:04:16 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 21.12.2019 22:04:16 
    Notes       : 
  ----------------------------------------------------------------------*/
 
@@ -23,17 +23,17 @@ class Prolint.Rules.Factory:
      
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Default constructor
      Notes:
     ------------------------------------------------------------------------------*/
 		
-    constructor static factory (  ):
+    constructor static Factory (  ):
         rulesCache = new OpenEdge.Core.Collections.StringKeyedMap().
         ruleSerializer = new Progress.IO.BinarySerializer(). 		
     end constructor.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Removes instance from cache and file system
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -53,7 +53,7 @@ class Prolint.Rules.Factory:
     end method.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Gets rule's severity, ID and description
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -77,7 +77,7 @@ class Prolint.Rules.Factory:
     end method.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Gets instance from cache, file system or createa new one (in that specific order)
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -125,7 +125,7 @@ class Prolint.Rules.Factory:
     end method.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Saves all rules from cache to file system
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -154,7 +154,7 @@ class Prolint.Rules.Factory:
     end method.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Saves specific ruile to file system
      Notes:
     ------------------------------------------------------------------------------*/
 

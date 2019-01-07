@@ -1,6 +1,6 @@
  
 /*------------------------------------------------------------------------
-   File        : prolint.MainForm
+   File        : MainForm
    Purpose     : Main form for prolint
    Syntax      : 
    Description : 

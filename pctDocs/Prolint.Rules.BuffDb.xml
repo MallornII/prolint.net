@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Prolint.Rules" className="BuffDb" inherits="AbstractRule" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="true" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+   File        : BuffDb&#xD;
+   Purpose     : Finds use of default buffers inside procedure, functions etc&#xD;
+   Syntax      : &#xD;
+   Description : &#xD;
+   Author(s)   : Andrew Ni&#xD;
+   Created     : 02.01.2019 14:58:08&#xD;
+   Notes       : &#xD;
+ ----------------------------------------------------------------------*/</classComment>
+    <constructor signature="BuffDb()" modifier="PUBLIC">
+        <constrComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Default constructor&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</constrComment>
+    </constructor>
+    <method methodName="AddInspectUnit" signature="AddInspectUnit(INPUT:Proparse.UnitType)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="unitType" dataType="Proparse.UnitType" position="0" mode="INPUT"/>
+    </method>
+    <method methodName="InspectFieldRefs" signature="InspectFieldRefs(INPUT:integer,INPUT:integer,INPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="proUnitId" dataType="INTEGER" position="1" mode="INPUT"/>
+        <parameter name="startNode" dataType="INTEGER" position="2" mode="INPUT"/>
+        <parameter name="endNode" dataType="INTEGER" position="3" mode="INPUT"/>
+    </method>
+    <method methodName="InspectRecords" signature="InspectRecords(INPUT:integer,INPUT:integer,INPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="proUnitId" dataType="INTEGER" position="4" mode="INPUT"/>
+        <parameter name="startNode" dataType="INTEGER" position="5" mode="INPUT"/>
+        <parameter name="endNode" dataType="INTEGER" position="6" mode="INPUT"/>
+    </method>
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Start method for visiting ILintUnit&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="currentUnit" dataType="Prolint.ILintUnit" position="7" mode="INPUT"/>
+        <parameter name="dsProparse" dataType="DATASET" position="8" mode="INPUT"/>
+        <parameter name="dsXref" dataType="DATASET" position="9" mode="INPUT"/>
+    </method>
+    <property name="LintUnit" dataType="Prolint.ILintUnit" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <using name="com.joanju.proparse.ProParserTokenTypes" type="NONE"/>
+    <using name="Prolint.Rules.AbstractRule" type="NONE"/>
+    <temp-table name="ttInspectUnit" definition="" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttInspectUnit NO-UNDO 
+  FIELD UnitType AS INTEGER
+</text>
+        <field name="UnitType" dataType="INTEGER"/>
+    </temp-table>
+</unit>

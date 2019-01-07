@@ -1,11 +1,11 @@
  
 /*------------------------------------------------------------------------
    File        : ProUnitsParser
-   Purpose     : 
+   Purpose     : Parses classes, methods, procedures etc
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Sat Dec 22 15:59:38 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 22.12.2018 15:59:38
    Notes       : 
  ----------------------------------------------------------------------*/
 using com.joanju.proparse.ProParserTokenTypes.
@@ -306,6 +306,11 @@ class Proparse.ProUnitsParser implements IParser final:
         return.
 
     end method.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method public void Visit
         (

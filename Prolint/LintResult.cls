@@ -1,11 +1,11 @@
 
 /*------------------------------------------------------------------------
-    File        : lintresult
+    File        : LintResult
     Purpose     : Enum for resutls of linter:Lint
     Syntax      : 
     Description : 
     Author(s)   : Andrew Ni
-    Created     : 18.12.2018 14:24:42 ALMT 2018
+    Created     : 18.12.2018 14:24:42
     Notes       : 
   ----------------------------------------------------------------------*/
 

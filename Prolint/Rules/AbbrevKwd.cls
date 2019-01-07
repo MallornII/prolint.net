@@ -1,7 +1,7 @@
  
 /*------------------------------------------------------------------------
-   File        : testrule
-   Purpose     : Demo rule
+   File        : AbbrevKwd
+   Purpose     : Finds abbreviated keywords
    Syntax      : 
    Description : 
    Author(s)   : Andrew Ni
@@ -24,7 +24,7 @@ class Prolint.Rules.AbbrevKwd inherits Prolint.Rules.AbstractRule serializable f
         field FullName   as character.
 
     /*------------------------------------------------------------------------------
-     Purpose: Basic constructor
+     Purpose: Default constructor
      Notes:
     ------------------------------------------------------------------------------*/
 		
@@ -32,7 +32,7 @@ class Prolint.Rules.AbbrevKwd inherits Prolint.Rules.AbstractRule serializable f
         super ().
 		
         assign
-            RuleDescription = "Finds abbreviated keywords":T
+            RuleDescription = "Finds abbreviated keywords":t
             RuleId          = "AbbrevKwd":U
             Severity        = 7.
 		
@@ -52,7 +52,7 @@ class Prolint.Rules.AbbrevKwd inherits Prolint.Rules.AbstractRule serializable f
 
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Start method for visiting ILintUnit
      Notes:
     ------------------------------------------------------------------------------*/
 

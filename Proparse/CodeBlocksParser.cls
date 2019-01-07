@@ -1,16 +1,17 @@
  
  /*------------------------------------------------------------------------
     File        : CodeBlocksParser
-    Purpose     : 
+    Purpose     : Marks every Node inside Code_block with type of Code_block
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Sat Dec 22 15:42:43 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 22.12.2018 15:42:43
     Notes       : 
   ----------------------------------------------------------------------*/
 
 using com.joanju.proparse.ProParserTokenTypes.
 using Proparse.IParser.
+using Utils.Strings.
 
 block-level on error undo, throw.
 
@@ -18,7 +19,12 @@ class Proparse.CodeBlocksParser implements IParser final:
     
     &SCOPED-DEFINE ACCESS_MOD private
     &SCOPED-DEFINE REF_MOD    reference-only
-    {proparse/parsedata.i}    
+    {proparse/parsedata.i}
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/    
 
     method public void Visit
     (
@@ -30,7 +36,7 @@ class Proparse.CodeBlocksParser implements IParser final:
         
         for each ttNode where ttNode.NodeType = ProParserTokenTypes:Code_block,
             first bttNode where bttNode.NodeNum = ttNode.ParentNum:
-            ttNode.CodeBlock = Proparse.Wrapper:AddEntry(ttNode.CodeBlock, bttNode.NodeText).
+            ttNode.CodeBlock = Strings:AppendEntry(ttNode.CodeBlock, bttNode.NodeText).
             PopulateCodeBlocks(ttNode.NodeNum, bttNode.NodeText).                         
         end.
         
@@ -58,7 +64,7 @@ class Proparse.CodeBlocksParser implements IParser final:
         define buffer tNode for ttNode.
         
         for each ttNode where ttNode.ParentNum = iNodeNum:
-            ttNode.CodeBlock = Proparse.Wrapper:AddEntry(ttNode.CodeBlock, iBlockText).
+            ttNode.CodeBlock = Strings:AppendEntry(ttNode.CodeBlock, iBlockText).
             PopulateCodeBlocks(ttNode.NodeNum, iBlockText).
         end.
         return.

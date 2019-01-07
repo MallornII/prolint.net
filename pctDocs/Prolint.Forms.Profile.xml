@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Prolint.Forms" className="Profile" inherits="Form" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="false" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+    File        : Profile&#xD;
+    Purpose     : Form for adding profile&#xD;
+    Syntax      : &#xD;
+    Description : &#xD;
+    Author(s)   : Andrew Ni&#xD;
+    Created     : 17.12.2018 12:59:29&#xD;
+    Notes       : &#xD;
+  ----------------------------------------------------------------------*/</classComment>
+    <constructor signature="Profile()" modifier="PUBLIC"/>
+    <method methodName="okButton_Click" signature="okButton_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="sender" dataType="System.Object" position="1" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="2" mode="INPUT"/>
+    </method>
+    <method methodName="cancelButton_Click" signature="cancelButton_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="sender" dataType="System.Object" position="3" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="4" mode="INPUT"/>
+    </method>
+    <method methodName="InitializeComponent" signature="InitializeComponent()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false"/>
+    <method methodName="ShowModalDialog" signature="ShowModalDialog()" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false"/>
+    <property name="profileName" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PRIVATE"/>
+    <using name="Progress.Windows.Form" type="NONE"/>
+</unit>

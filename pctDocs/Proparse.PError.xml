@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Proparse" className="PError" inherits="AppError" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="false" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+   File        : PError&#xD;
+   Purpose     : Error class that provides actual line in file where error occured&#xD;
+   Syntax      : &#xD;
+   Description : &#xD;
+   Author(s)   : Andrew Ni&#xD;
+   Created     : 05.12.2018 22:29:20&#xD;
+   Notes       : &#xD;
+ ----------------------------------------------------------------------*/</classComment>
+    <constructor signature="PError(INPUT:integer,INPUT:character,INPUT:integer)" modifier="PUBLIC">
+        <constrComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Default constructor&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</constrComment>
+        <parameter name="errLine" dataType="INTEGER" position="0" mode="INPUT"/>
+        <parameter name="errMessage" dataType="CHARACTER" position="1" mode="INPUT"/>
+        <parameter name="errCode" dataType="INTEGER" position="2" mode="INPUT"/>
+    </constructor>
+    <constructor signature="PError(INPUT:integer,INPUT:character,INPUT:integer,INPUT:integer)" modifier="PUBLIC">
+        <constrComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Constructor with error severity&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</constrComment>
+        <parameter name="iLine" dataType="INTEGER" position="3" mode="INPUT"/>
+        <parameter name="iMessage" dataType="CHARACTER" position="4" mode="INPUT"/>
+        <parameter name="iCode" dataType="INTEGER" position="5" mode="INPUT"/>
+        <parameter name="iSeverity" dataType="INTEGER" position="6" mode="INPUT"/>
+    </constructor>
+    <property name="LineNumber" dataType="INTEGER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PRIVATE"/>
+    <using name="Progress.Lang.AppError" type="NONE"/>
+</unit>

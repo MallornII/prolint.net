@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Proparse" className="CodeBlocksParser" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="false" useWidgetPool="false">
+    <interfaces>IParser</interfaces>
+    <classComment>/*------------------------------------------------------------------------&#xD;
+    File        : CodeBlocksParser&#xD;
+    Purpose     : Marks every Node inside Code_block with type of Code_block&#xD;
+    Syntax      : &#xD;
+    Description : &#xD;
+    Author(s)   : Andrew Ni&#xD;
+    Created     : 22.12.2018 15:42:43&#xD;
+    Notes       : &#xD;
+  ----------------------------------------------------------------------*/</classComment>
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Start method for visiting ILintUnit&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="currentUnit" dataType="Prolint.ILintUnit" position="0" mode="INPUT"/>
+        <parameter name="dsProparse" dataType="DATASET" position="1" mode="INPUT"/>
+    </method>
+    <method methodName="PopulateCodeBlocks" signature="PopulateCodeBlocks(INPUT:integer,INPUT:character)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="iNodeNum" dataType="INTEGER" position="2" mode="INPUT"/>
+        <parameter name="iBlockText" dataType="CHARACTER" position="3" mode="INPUT"/>
+    </method>
+    <using name="com.joanju.proparse.ProParserTokenTypes" type="NONE"/>
+    <using name="Proparse.IParser" type="NONE"/>
+    <using name="Utils.Strings" type="NONE"/>
+    <temp-table name="ttNode" definition="jpnodes.i" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttNode NO-UNDO 
+  FIELD NodeNum AS INTEGER
+  FIELD ParentNum AS INTEGER
+  FIELD FirstChild AS INTEGER
+  FIELD NextSibling AS INTEGER
+  FIELD PrevSibling AS INTEGER
+  FIELD NodeType AS INTEGER
+  FIELD NodeFile AS CHARACTER
+  FIELD NodeLine AS INTEGER
+  FIELD NodeText AS CHARACTER
+  FIELD NodeColumn AS INTEGER
+  FIELD IngroneRules AS CHARACTER
+  FIELD IsStateHead AS LOGICAL
+  FIELD StoreType AS CHARACTER
+  FIELD CodeBlock AS CHARACTER
+  INDEX iMain PRIMARY UNIQUE NodeNum
+  INDEX iParent ParentNum NodeType
+  INDEX iType NodeType
+</text>
+        <field name="NodeNum" dataType="INTEGER"/>
+        <field name="ParentNum" dataType="INTEGER"/>
+        <field name="FirstChild" dataType="INTEGER"/>
+        <field name="NextSibling" dataType="INTEGER"/>
+        <field name="PrevSibling" dataType="INTEGER"/>
+        <field name="NodeType" dataType="INTEGER"/>
+        <field name="NodeFile" dataType="CHARACTER"/>
+        <field name="NodeLine" dataType="INTEGER"/>
+        <field name="NodeText" dataType="CHARACTER"/>
+        <field name="NodeColumn" dataType="INTEGER"/>
+        <field name="IngroneRules" dataType="CHARACTER"/>
+        <field name="IsStateHead" dataType="LOGICAL"/>
+        <field name="StoreType" dataType="CHARACTER"/>
+        <field name="CodeBlock" dataType="CHARACTER"/>
+        <index name="iMain" primary="true" unique="true" wordIndex="false">
+            <field>NodeNum</field>
+        </index>
+        <index name="iParent" primary="false" unique="false" wordIndex="false">
+            <field>ParentNum</field>
+            <field>NodeType</field>
+        </index>
+        <index name="iType" primary="false" unique="false" wordIndex="false">
+            <field>NodeType</field>
+        </index>
+    </temp-table>
+    <temp-table name="ttProUnit" definition="prounit.i" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttProUnit NO-UNDO 
+  FIELD UnitType AS INT64
+  FIELD Id AS INTEGER
+  FIELD ParentId AS INTEGER
+  FIELD UnitName AS CHARACTER
+  FIELD SourceFile AS CHARACTER
+  FIELD FirstLine AS INTEGER
+  FIELD AccessMode AS CHARACTER
+  FIELD Direction AS CHARACTER
+  FIELD DataType AS CHARACTER
+  FIELD IsNoUndo AS LOGICAL
+  FIELD IsStatic AS LOGICAL
+  FIELD IsAbstract AS LOGICAL
+  FIELD StartNode AS INTEGER
+  FIELD EndNode AS INTEGER
+</text>
+        <field name="UnitType" dataType="INT64"/>
+        <field name="Id" dataType="INTEGER"/>
+        <field name="ParentId" dataType="INTEGER"/>
+        <field name="UnitName" dataType="CHARACTER"/>
+        <field name="SourceFile" dataType="CHARACTER"/>
+        <field name="FirstLine" dataType="INTEGER"/>
+        <field name="AccessMode" dataType="CHARACTER"/>
+        <field name="Direction" dataType="CHARACTER"/>
+        <field name="DataType" dataType="CHARACTER"/>
+        <field name="IsNoUndo" dataType="LOGICAL"/>
+        <field name="IsStatic" dataType="LOGICAL"/>
+        <field name="IsAbstract" dataType="LOGICAL"/>
+        <field name="StartNode" dataType="INTEGER"/>
+        <field name="EndNode" dataType="INTEGER"/>
+    </temp-table>
+    <dataset name="dsProparse" definition="proparse/parsedata.i">
+        <text>DEFINE DATASET dsProparse FOR ttNode, ttProUnit
+</text>
+        <buffer>ttNode</buffer>
+        <buffer>ttProUnit</buffer>
+    </dataset>
+</unit>

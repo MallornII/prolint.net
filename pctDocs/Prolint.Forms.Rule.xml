@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Prolint.Forms" className="Rule" inherits="Form" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="false" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+   File        : Rule&#xD;
+   Purpose     : Add/Edit rule form&#xD;
+   Syntax      : &#xD;
+   Description : &#xD;
+   Author(s)   : Andrew Ni&#xD;
+   Created     : 17.12.2018 13:14:28&#xD;
+   Notes       : &#xD;
+ ----------------------------------------------------------------------*/</classComment>
+    <constructor signature="Rule()" modifier="PUBLIC"/>
+    <method methodName="okButton_Click" signature="okButton_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="sender" dataType="System.Object" position="1" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="2" mode="INPUT"/>
+    </method>
+    <method methodName="cancelButton_Click" signature="cancelButton_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="sender" dataType="System.Object" position="3" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="4" mode="INPUT"/>
+    </method>
+    <method methodName="InitializeComponent" signature="InitializeComponent()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false"/>
+    <method methodName="SaveProperties" signature="SaveProperties()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+    </method>
+    <method methodName="ShowModalDialog" signature="ShowModalDialog()" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false"/>
+    <method methodName="ShowProperties" signature="ShowProperties()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+    </method>
+    <method methodName="textClass_Leave" signature="textClass_Leave(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="sender" dataType="System.Object" position="6" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="7" mode="INPUT"/>
+    </method>
+    <method methodName="ValidateForm" returnType="LOGICAL" signature="ValidateForm():LOGICAL" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+    </method>
+    <property name="ruleClass" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="profileName" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <using name="Progress.Windows.Form" type="NONE"/>
+</unit>

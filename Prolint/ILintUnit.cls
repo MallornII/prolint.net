@@ -1,11 +1,11 @@
 
 /*------------------------------------------------------------------------
-    File        : ilintunit
-    Purpose     : 
+    File        : ILintUnit
+    Purpose     : Interface for Units that hold information about current Lint process
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Fri Dec 21 22:45:18 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 21.12.2018 22:45:18
     Notes       : 
   ----------------------------------------------------------------------*/
 using org.prorefactor.core.JPNode.
@@ -30,49 +30,49 @@ interface Prolint.ILintUnit:
     set.      
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Accepts IRule visitor
      Notes:
     ------------------------------------------------------------------------------*/
 
     method public void Accept( input currentRule as Prolint.Rules.IRule ).
     
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Accepts IParser visitor
      Notes:
     ------------------------------------------------------------------------------*/
 
     method public void Accept( input currentParser as Proparse.IParser ).    
     
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Accepts IUnitWorker visitor
      Notes:
     ------------------------------------------------------------------------------*/
 
     method public void Accept( input currentWorker as Prolint.IUnitWorker ).
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Return node's parent num
      Notes:
     ------------------------------------------------------------------------------*/
 
     method public integer GetParentNum( input nodeNum as integer ).
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Return node's parent type
      Notes:
     ------------------------------------------------------------------------------*/
 
     method public integer GetParentType( input nodeNum as integer ).
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Return next sequence ID. Acts like NEXT-VALUE function
      Notes:
     ------------------------------------------------------------------------------*/
 
     method public integer NextSequenceId(  ).
     
     /*------------------------------------------------------------------------------
-     Purpose: Returns JPNode that is a statement head for given node
+     Purpose: Returns NodeNum that is a statement head for given node
      Notes:
     ------------------------------------------------------------------------------*/
 

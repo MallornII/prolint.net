@@ -1,11 +1,11 @@
 
 /*------------------------------------------------------------------------
-    File        : iparser
-    Purpose     : 
+    File        : IParser
+    Purpose     : Interface for classes that parse ILintUnit
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Fri Dec 21 23:18:24 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 21.12.2018 23:18:24
     Notes       : 
   ----------------------------------------------------------------------*/
 
@@ -14,7 +14,7 @@ interface Proparse.IParser:
     {proparse/parsedata.i}    
     
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Start method for visiting ILintUnit
      Notes:
     ------------------------------------------------------------------------------*/
 

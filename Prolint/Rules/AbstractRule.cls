@@ -1,7 +1,7 @@
  
 /*------------------------------------------------------------------------
-   File        : abstractrule
-   Purpose     : Abstract class from which all actual rules should be derived
+   File        : AbstractRule
+   Purpose     : Abstract class for implementing linter rules
    Syntax      : 
    Description : 
    Author(s)   : Andrew Ni
@@ -58,7 +58,7 @@ class Prolint.Rules.AbstractRule  implements Prolint.Rules.IRule serializable ab
           
 
     /*------------------------------------------------------------------------------
-     Purpose: Basic constructor
+     Purpose: Default constructor
      Notes:
     ------------------------------------------------------------------------------*/
 		
@@ -88,6 +88,11 @@ class Prolint.Rules.AbstractRule  implements Prolint.Rules.IRule serializable ab
 
     end method.	
  
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/
+    
     method public abstract void Visit
         (
         input unitInst as Prolint.ILintUnit,

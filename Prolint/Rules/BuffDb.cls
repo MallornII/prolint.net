@@ -1,11 +1,11 @@
  
 /*------------------------------------------------------------------------
    File        : BuffDb
-   Purpose     : 
+   Purpose     : Finds use of default buffers inside procedure, functions etc
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Wed Jan 02 14:58:08 ALMT 2019
+   Author(s)   : Andrew Ni
+   Created     : 02.01.2019 14:58:08
    Notes       : 
  ----------------------------------------------------------------------*/
 
@@ -23,6 +23,10 @@ class Prolint.Rules.BuffDb inherits AbstractRule final serializable:
         get.
         set. 
 
+    /*------------------------------------------------------------------------------
+     Purpose: Default constructor
+     Notes:
+    ------------------------------------------------------------------------------*/
         
     constructor public BuffDb (  ):
         super ().
@@ -137,6 +141,11 @@ class Prolint.Rules.BuffDb inherits AbstractRule final serializable:
         return.
 
     end method.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method override public void Visit
         (

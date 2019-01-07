@@ -1,15 +1,16 @@
  
  /*------------------------------------------------------------------------
     File        : UnitCompiler
-    Purpose     : 
+    Purpose     : Class for cimpiling procedures and classes
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Sat Dec 22 21:22:44 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 22.12.2018 21:22:44
     Notes       : 
   ----------------------------------------------------------------------*/
 
 using Prolint.IUnitWorker.
+using Utils.IO.
 
 block-level on error undo, throw.
 
@@ -20,6 +21,11 @@ class Prolint.UnitCompiler implements IUnitWorker:
     
     {proparse/parsedata.i}
     {prolint/lintdata.i}
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Publishes result of compiling
+     Notes:
+    ------------------------------------------------------------------------------*/
     
     define public event PublishRuleResult  signature void
     (   
@@ -54,6 +60,11 @@ class Prolint.UnitCompiler implements IUnitWorker:
         else
             compilerOptions = "".
     end set. 
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method public void Visit
     (
@@ -67,7 +78,7 @@ class Prolint.UnitCompiler implements IUnitWorker:
         define variable messageSeverity as integer   no-undo.                
 
         /* We can't compile it, so return TRUE */
-        if lookup(GetFileExt(CurrentUnit:CompileUnit), "p,w,cls":U) = 0 then
+        if lookup(Utils.IO:GetFileExt(CurrentUnit:CompileUnit), "p,w,cls":U) = 0 then
         do:
             currentUnit:IsCompiled = true.
             return.
@@ -82,7 +93,7 @@ class Prolint.UnitCompiler implements IUnitWorker:
         do cnt = 1 to compiler:num-messages:
             create ttCompileMessage.
             assign
-                ttCompileMessage.SourceFile   = Proparse.Wrapper:MakePath(compiler:get-file-name(cnt), ?)                
+                ttCompileMessage.SourceFile   = IO:MakePath(compiler:get-file-name(cnt))                
                 ttCompileMessage.ErrorLine    = compiler:get-row(cnt)
                 ttCompileMessage.ErrorCode    = compiler:get-number(cnt)
                 ttCompileMessage.Severity     = GetMessageSeverity(ttCompileMessage.ErrorCode)
@@ -108,31 +119,17 @@ class Prolint.UnitCompiler implements IUnitWorker:
         do:
             dataset dsXRef:read-xml("FILE":U, XrefFile, "EMPTY":U, ?, false).
             for each ttSource:
-                ttSource.SourceFile = Proparse.Wrapper:MakePath(ttSource.SourceFile, ?).
+                ttSource.SourceFile = IO:MakePath(ttSource.SourceFile).
             end.
         end.       
          
         currentUnit:IsCompiled = true.
         return.  
 
-    end method.
+    end method.    
+    
     
     /*------------------------------------------------------------------------------
-     Purpose:
-     Notes:
-    ------------------------------------------------------------------------------*/
-
-    method private character GetFileExt( input fullName as character ):
-        
-        define variable ext as character no-undo.
-        
-        ext = entry(num-entries(fullName, "/":U), fullName, "/":U).
-        ext = entry(num-entries(ext, ".":U), ext, ".":U).
-        return ext.
-
-    end method.
-    
-        /*------------------------------------------------------------------------------
      Purpose:
      Notes:
     ------------------------------------------------------------------------------*/

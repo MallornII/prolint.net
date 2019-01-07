@@ -1,11 +1,11 @@
  
  /*------------------------------------------------------------------------
     File        : AlertMessage
-    Purpose     : 
+    Purpose     : Finds message without alert-box options
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Sun Dec 30 18:50:38 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 30.12.2018 18:50:38
     Notes       : 
   ----------------------------------------------------------------------*/
 
@@ -17,7 +17,7 @@ block-level on error undo, throw.
 class Prolint.Rules.AlertMessage inherits AbstractRule final serializable:
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Default constructor
      Notes:
     ------------------------------------------------------------------------------*/
         
@@ -25,12 +25,16 @@ class Prolint.Rules.AlertMessage inherits AbstractRule final serializable:
         super ().
         
         assign
-            RuleDescription = "Finds message without alert-box options":T
-            RuleId          = "AlertMessage":U
+            RuleDescription = "Finds message without alert-box options":t
+            RuleId          = "AlertMessage":u
             Severity        = 5.
         
     end constructor.
 
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method override public void Visit
     (

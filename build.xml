@@ -4,19 +4,25 @@
  <property environment="env" />
  <property name="version" value="0.2.0" />
  <taskdef resource="PCT.properties" />
+ <taskdef resource="extras115.properties" />
  <typedef resource="types.properties" />
 
-<target name="main">
-<DlcHome value="c:/progress/openedge" />
-<path id="compilation.propath">
-  <pathelement path="." />
-</path>
-
+<target name="clean">
 <echo message="clean"/>
 <delete includeemptydirs="true">
   <fileset dir="Release" includes="**/*"/>
   <fileset dir="bin" includes="**/*"/>
 </delete>
+</target>
+
+<target name="main">
+<DlcHome value="c:/progress/openedge" />
+<path id="compilation.propath">
+  <pathelement path="." />
+  <pathelement path="Proparse" />
+  <pathelement path="Prolint" />
+  <pathelement path="Utils" />
+</path>
     
 <echo message="building Proparse"/>    
 <PCTCompile destDir="bin" relativePaths="false" inputChars="32000" token="5000">
@@ -38,7 +44,31 @@
 <PCTCompile destDir="bin" relativePaths="false">
     <fileset dir="Utils" includes="**/*.cls" />
     <propath refid="compilation.propath" />
-</PCTCompile>    
+</PCTCompile>
+
+<ABLUnit haltOnFailure="true">
+  <fileset dir="Tests" includes="**/*.cls" />  
+  <propath>
+    <pathelement path="Tests" />
+  </propath>
+</ABLUnit> 
+</target>  
+
+<target name="release">
+<DlcHome value="c:/progress/openedge" />
+<path id="compilation.propath">
+  <pathelement path="." />
+  <pathelement path="Proparse" />
+  <pathelement path="Prolint" />
+  <pathelement path="Utils" />
+</path>
+<ClassDocumentation destDir="pctDocs">
+  <fileset dir="Proparse" includes="**/*.cls" />
+  <fileset dir="Prolint" includes="**/*.cls" />
+  <fileset dir="Utils" includes="**/*.cls" />
+  <propath refid="compilation.propath" />
+</ClassDocumentation>
+<HTMLDocumentation sourceDir="pctDocs" destDir="docs" title="Prolint.Net documentation"/>
 
 <echo message="creating profile"/>
 <PCTRun procedure="make_profile.p"/>
@@ -60,6 +90,13 @@
     <include name="*.resx"/>    
   </fileset>
 </copy>
+
+<echo message="copying docs"/>
+<copy todir="Release/docs">
+  <fileset dir="docs">
+    <include name="**/*.*"/>    
+  </fileset>
+</copy>
 <mkdir dir="Release/Profiles"/>
 <mkdir dir="Release/Profiles/default"/>
 
@@ -71,8 +108,6 @@
     </fileset>
 </PCTLibrary>
 
-<zip destfile="Release/Prolint_${version}.zip"
-     basedir="Release"
-     excludes="*.zip"/>
-</target>  
+<zip destfile="Release/Prolint_${version}.zip" basedir="Release" excludes="*.zip"/>
+</target>
 </project>

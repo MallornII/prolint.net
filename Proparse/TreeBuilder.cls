@@ -1,17 +1,19 @@
  
 /*------------------------------------------------------------------------
-   File        : treebuilder
-   Purpose     : 
+   File        : TreeBuilder
+   Purpose     : Turns JPNode tree into progress temp-table
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Fri Dec 21 23:21:12 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 21.12.2018 23:21:12
    Notes       : 
  ----------------------------------------------------------------------*/
 
-using proparse.iparser.
+using Proparse.IParser.
+using com.joanju.proparse.ProToken.
 using com.joanju.proparse.ProParserTokenTypes.
 using org.prorefactor.core.JPNode.
+using Utils.IO.
 
 block-level on error undo, throw.
 
@@ -19,17 +21,13 @@ class Proparse.TreeBuilder implements Proparse.IParser final:
     
     &SCOPED-DEFINE ACCESS_MOD private
     &SCOPED-DEFINE REF_MOD    reference-only
-    {proparse/parsedata.i}
+    {proparse/parsedata.i}    
+   
     
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Start method for visiting ILintUnit
      Notes:
     ------------------------------------------------------------------------------*/
-        
-    constructor public treebuilder ( ):
-        super ().
-        
-    end constructor.
 
     method public void Visit
     (
@@ -55,11 +53,11 @@ class Proparse.TreeBuilder implements Proparse.IParser final:
                 childNode       = curNode:firstChild()
                 nextNode        = curNode:nextNode()
                 prevNode        = curNode:prevNode()                
-                ttNode.NodeType = curNode:getType().
+                ttNode.NodeType = curNode:getType().          
             
             assign                
                 ttNode.NodeNum     = curNode:getNodeNum()
-                ttNode.NodeFile    = Proparse.Wrapper:MakePath(curNode:getFilename(), ?)
+                ttNode.NodeFile    = IO:MakePath(curNode:getFilename())
                 ttNode.NodeLine    = curNode:getLine()
                 ttNode.NodeColumn  = curNode:getColumn()
                 ttNode.NodeText    = curNode:getText()

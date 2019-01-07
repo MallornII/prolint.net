@@ -1,11 +1,11 @@
  
  /*------------------------------------------------------------------------
     File        : ViewAsType
-    Purpose     : 
+    Purpose     : Finds alert-boxes without AlertType option
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Sun Dec 30 19:23:45 ALMT 2018
+    Author(s)   : Andrew Ni
+    Created     : 30.12.2018 19:23:45
     Notes       : 
   ----------------------------------------------------------------------*/
 
@@ -17,7 +17,7 @@ block-level on error undo, throw.
 class Prolint.Rules.AlertType inherits AbstractRule final serializable:
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Default constructor
      Notes:
     ------------------------------------------------------------------------------*/
         
@@ -25,12 +25,16 @@ class Prolint.Rules.AlertType inherits AbstractRule final serializable:
         super ().
         
         assign
-            RuleDescription = "Finds alert-boxes without AlertType option":T
-            RuleId          = "AlertType":U
+            RuleDescription = "Finds alert-boxes without AlertType option":t
+            RuleId          = "AlertType":u
             Severity        = 2.
         
     end constructor.
 
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method override public void Visit
     (

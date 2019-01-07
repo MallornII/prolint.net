@@ -1,11 +1,11 @@
  
 /*------------------------------------------------------------------------
    File        : AbstractDbSchema
-   Purpose     : 
+   Purpose     : Abstract class for working with Progress databases
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Sat Dec 29 22:03:02 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 29.12.2018 22:03:02
    Notes       : 
  ----------------------------------------------------------------------*/
 
@@ -20,7 +20,7 @@ class Proparse.AbstractDbSchema implements Proparse.IDbSchema abstract:
     {proparse/prodb.i &ACCESS_MOD=PROTECTED}
     
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Returns full DB name by it's name or alias
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -39,7 +39,7 @@ class Proparse.AbstractDbSchema implements Proparse.IDbSchema abstract:
     end method.
     
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Resolves full field name from a field_ref qualifier.
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -59,7 +59,7 @@ class Proparse.AbstractDbSchema implements Proparse.IDbSchema abstract:
     end method.
     
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Resolves full field name from a table name and a field name qualifier.
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -82,7 +82,7 @@ class Proparse.AbstractDbSchema implements Proparse.IDbSchema abstract:
     end method.
     
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Resolves full field name from a database name, a table name and a field name qualifier.
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -110,7 +110,7 @@ class Proparse.AbstractDbSchema implements Proparse.IDbSchema abstract:
     end method.
     
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Resolves full table name from a table name qualifier.
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -128,7 +128,7 @@ class Proparse.AbstractDbSchema implements Proparse.IDbSchema abstract:
     end method.
     
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Resolves full table name from a database name and a table name qualifier.
      Notes:
     ------------------------------------------------------------------------------*/
 

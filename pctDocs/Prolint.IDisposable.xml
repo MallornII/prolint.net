@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Prolint" className="IDisposable" isAbstract="false" isFinal="false" isInterface="true" isEnum="false" isSerializable="false" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+    File        : IDisposable&#xD;
+    Purpose     : Interface for classes that allocates recources that GC can't deallocate automatically&#xD;
+    Syntax      : &#xD;
+    Description : &#xD;
+    Author(s)   : Andrw Ni&#xD;
+    Created     : 19.12.2018 22:54:02&#xD;
+    Notes       : &#xD;
+  ----------------------------------------------------------------------*/</classComment>
+    <method methodName="Dispose" signature="Dispose()" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false"/>
+</unit>

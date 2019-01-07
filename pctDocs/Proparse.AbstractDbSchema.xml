@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Proparse" className="AbstractDbSchema" isAbstract="true" isFinal="false" isInterface="false" isEnum="false" isSerializable="false" useWidgetPool="false">
+    <interfaces>Proparse.IDbSchema</interfaces>
+    <classComment>/*------------------------------------------------------------------------&#xD;
+   File        : AbstractDbSchema&#xD;
+   Purpose     : Abstract class for working with Progress databases&#xD;
+   Syntax      : &#xD;
+   Description : &#xD;
+   Author(s)   : Andrew Ni&#xD;
+   Created     : 29.12.2018 22:03:02&#xD;
+   Notes       : &#xD;
+ ----------------------------------------------------------------------*/</classComment>
+    <method methodName="ResolveDatabase" returnType="CHARACTER" signature="ResolveDatabase(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Returns full DB name by it's name or alias&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="databaseName" dataType="CHARACTER" position="0" mode="INPUT"/>
+    </method>
+    <method methodName="ResolveFieldName" returnType="CHARACTER" signature="ResolveFieldName(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Resolves full field name from a field_ref qualifier.&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="fieldName" dataType="CHARACTER" position="1" mode="INPUT"/>
+    </method>
+    <method methodName="ResolveFieldName" returnType="CHARACTER" signature="ResolveFieldName(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Resolves full field name from a table name and a field name qualifier.&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="tableName" dataType="CHARACTER" position="2" mode="INPUT"/>
+        <parameter name="fieldName" dataType="CHARACTER" position="3" mode="INPUT"/>
+    </method>
+    <method methodName="ResolveFieldName" returnType="CHARACTER" signature="ResolveFieldName(INPUT:character,INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Resolves full field name from a database name, a table name and a field name qualifier.&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="databaseName" dataType="CHARACTER" position="4" mode="INPUT"/>
+        <parameter name="tableName" dataType="CHARACTER" position="5" mode="INPUT"/>
+        <parameter name="fieldName" dataType="CHARACTER" position="6" mode="INPUT"/>
+    </method>
+    <method methodName="ResolveTableName" returnType="CHARACTER" signature="ResolveTableName(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Resolves full table name from a table name qualifier.&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="tableName" dataType="CHARACTER" position="7" mode="INPUT"/>
+    </method>
+    <method methodName="ResolveTableName" returnType="CHARACTER" signature="ResolveTableName(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Resolves full table name from a database name and a table name qualifier.&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="databaseName" dataType="CHARACTER" position="8" mode="INPUT"/>
+        <parameter name="tableName" dataType="CHARACTER" position="9" mode="INPUT"/>
+    </method>
+    <method methodName="ToFile" signature="ToFile(INPUT:character)" modifier="PUBLIC" isStatic="false" isFinal="true" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+    Purpose: Save current DB schema into file (proparse.net.dll can only get DB schema from file)&#xD;
+    Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="schemaFile" dataType="CHARACTER" position="10" mode="INPUT"/>
+    </method>
+    <using name="Proparse.IDbSchema" type="NONE"/>
+    <temp-table name="ttProDb" definition="proparse/prodb.i" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttProDb NO-UNDO 
+  FIELD id AS INT64
+  FIELD DatabaseName AS CHARACTER
+</text>
+        <field name="id" dataType="INT64"/>
+        <field name="DatabaseName" dataType="CHARACTER"/>
+    </temp-table>
+    <temp-table name="ttProAlias" definition="proparse/prodb.i" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttProAlias NO-UNDO 
+  FIELD DatabaseName AS CHARACTER
+  FIELD AliasName AS CHARACTER
+</text>
+        <field name="DatabaseName" dataType="CHARACTER"/>
+        <field name="AliasName" dataType="CHARACTER"/>
+    </temp-table>
+    <temp-table name="ttProTable" definition="proparse/prodb.i" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttProTable NO-UNDO 
+  FIELD id AS INT64
+  FIELD DatabaseName AS CHARACTER
+  FIELD TableName AS CHARACTER
+  INDEX Main PRIMARY TableName
+  INDEX DataTable DatabaseName TableName
+</text>
+        <field name="id" dataType="INT64"/>
+        <field name="DatabaseName" dataType="CHARACTER"/>
+        <field name="TableName" dataType="CHARACTER"/>
+        <index name="Main" primary="true" unique="false" wordIndex="false">
+            <field>TableName</field>
+        </index>
+        <index name="DataTable" primary="false" unique="false" wordIndex="false">
+            <field>DatabaseName</field>
+            <field>TableName</field>
+        </index>
+    </temp-table>
+    <temp-table name="ttProField" definition="proparse/prodb.i" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttProField NO-UNDO 
+  FIELD id AS INT64
+  FIELD DatabaseName AS CHARACTER
+  FIELD TableName AS CHARACTER
+  FIELD FieldName AS CHARACTER
+  FIELD DataType AS CHARACTER
+  FIELD Ext AS INTEGER
+  INDEX Main PRIMARY FieldName
+  INDEX TableField TableName FieldName
+  INDEX DataTableField DatabaseName TableName FieldName
+</text>
+        <field name="id" dataType="INT64"/>
+        <field name="DatabaseName" dataType="CHARACTER"/>
+        <field name="TableName" dataType="CHARACTER"/>
+        <field name="FieldName" dataType="CHARACTER"/>
+        <field name="DataType" dataType="CHARACTER"/>
+        <field name="Ext" dataType="INTEGER"/>
+        <index name="Main" primary="true" unique="false" wordIndex="false">
+            <field>FieldName</field>
+        </index>
+        <index name="TableField" primary="false" unique="false" wordIndex="false">
+            <field>TableName</field>
+            <field>FieldName</field>
+        </index>
+        <index name="DataTableField" primary="false" unique="false" wordIndex="false">
+            <field>DatabaseName</field>
+            <field>TableName</field>
+            <field>FieldName</field>
+        </index>
+    </temp-table>
+    <dataset name="dsSchema" definition="proparse/prodb.i">
+        <text>DEFINE DATASET dsSchema FOR ttProDb, ttProAlias, ttProTable, ttProField
+</text>
+        <buffer>ttProDb</buffer>
+        <buffer>ttProAlias</buffer>
+        <buffer>ttProTable</buffer>
+        <buffer>ttProField</buffer>
+    </dataset>
+</unit>

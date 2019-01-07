@@ -1,11 +1,11 @@
  
  /*------------------------------------------------------------------------
     File        : AndOrParens
-    Purpose     : 
+    Purpose     : Finds use 'or' and 'and' without parens
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Wed Jan 02 13:31:01 ALMT 2019
+    Author(s)   : Andrew Ni
+    Created     : 02.01.2019 13:31:01
     Notes       : 
   ----------------------------------------------------------------------*/
 
@@ -17,7 +17,7 @@ block-level on error undo, throw.
 class Prolint.Rules.AndOrParens inherits AbstractRule final serializable: 
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Default constructor
      Notes:
     ------------------------------------------------------------------------------*/
         
@@ -29,6 +29,10 @@ class Prolint.Rules.AndOrParens inherits AbstractRule final serializable:
             Severity        = 7.
     end constructor.
 
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method override public void Visit
         (

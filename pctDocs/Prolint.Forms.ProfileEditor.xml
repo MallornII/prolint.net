@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Prolint.Forms" className="ProfileEditor" inherits="Form" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="false" useWidgetPool="true">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+   File        : ProfileEditor&#xD;
+   Purpose     : Main form of profile editor&#xD;
+   Syntax      : &#xD;
+   Description : &#xD;
+   Author(s)   : Andrew Ni&#xD;
+   Created     : 17.12.2018 11:54:42 ALMT&#xD;
+   Notes       : &#xD;
+ ----------------------------------------------------------------------*/</classComment>
+    <constructor signature="ProfileEditor()" modifier="PUBLIC"/>
+    <method methodName="btnAddProfile_Click" signature="btnAddProfile_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="sender" dataType="System.Object" position="2" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="3" mode="INPUT"/>
+    </method>
+    <method methodName="btnAddRule_Click" signature="btnAddRule_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="sender" dataType="System.Object" position="4" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="5" mode="INPUT"/>
+    </method>
+    <method methodName="btnEditRule_Click" signature="btnEditRule_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="sender" dataType="System.Object" position="6" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="7" mode="INPUT"/>
+    </method>
+    <method methodName="btnRemoveProfile_Click" signature="btnRemoveProfile_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="sender" dataType="System.Object" position="8" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="9" mode="INPUT"/>
+    </method>
+    <method methodName="btnRemoveRule_Click" signature="btnRemoveRule_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="sender" dataType="System.Object" position="10" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="11" mode="INPUT"/>
+    </method>
+    <method methodName="btnSaveProfile_Click" signature="btnSaveProfile_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="sender" dataType="System.Object" position="12" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="13" mode="INPUT"/>
+    </method>
+    <method methodName="comboProfiles_SelectedIndexChanged" signature="comboProfiles_SelectedIndexChanged(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="sender" dataType="System.Object" position="14" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="15" mode="INPUT"/>
+    </method>
+    <method methodName="GetFileName" returnType="CHARACTER" signature="GetFileName(INPUT:character):CHARACTER" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="iFileName" dataType="CHARACTER" position="16" mode="INPUT"/>
+    </method>
+    <method methodName="GetFilePath" returnType="CHARACTER" signature="GetFilePath(INPUT:character):CHARACTER" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="iFileName" dataType="CHARACTER" position="17" mode="INPUT"/>
+    </method>
+    <method methodName="InitializeComponent" signature="InitializeComponent()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false"/>
+    <method methodName="RefreshProfiles" signature="RefreshProfiles(INPUT:logical)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="isNew" dataType="LOGICAL" position="19" mode="INPUT"/>
+    </method>
+    <method methodName="RefreshRules" signature="RefreshRules(INPUT:character)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="profileName" dataType="CHARACTER" position="20" mode="INPUT"/>
+    </method>
+    <method methodName="ShowModalDialog" signature="ShowModalDialog()" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+    </method>
+    <using name="Progress.Lang.*" type="NONE"/>
+    <using name="Progress.Windows.Form" type="NONE"/>
+    <temp-table name="ttProfile" definition="profile.i" noUndo="true" xmlNodeName="Profile">
+        <text>DEFINE TEMP-TABLE ttProfile NO-UNDO XML-NODE-NAME 'Profile' 
+  FIELD ProfileName AS CHARACTER
+</text>
+        <field name="ProfileName" dataType="CHARACTER"/>
+    </temp-table>
+    <temp-table name="ttRule" definition="profile.i" noUndo="true" xmlNodeName="Rule">
+        <text>DEFINE TEMP-TABLE ttRule NO-UNDO XML-NODE-NAME 'Rule' 
+  FIELD ProfileName AS CHARACTER
+  FIELD RuleId AS CHARACTER
+  FIELD RuleClass AS CHARACTER
+  FIELD Severity AS INTEGER
+  FIELD RuleDescription AS CHARACTER
+  INDEX iMain PRIMARY UNIQUE ProfileName RuleClass
+</text>
+        <field name="ProfileName" dataType="CHARACTER"/>
+        <field name="RuleId" dataType="CHARACTER"/>
+        <field name="RuleClass" dataType="CHARACTER"/>
+        <field name="Severity" dataType="INTEGER"/>
+        <field name="RuleDescription" dataType="CHARACTER"/>
+        <index name="iMain" primary="true" unique="true" wordIndex="false">
+            <field>ProfileName</field>
+            <field>RuleClass</field>
+        </index>
+    </temp-table>
+    <dataset name="dsProfile" definition="profile.i">
+        <text>DEFINE DATASET dsProfile FOR ttProfile, ttRule
+</text>
+        <buffer>ttProfile</buffer>
+        <buffer>ttRule</buffer>
+    </dataset>
+</unit>

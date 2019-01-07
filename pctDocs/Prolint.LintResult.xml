@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Prolint" className="LintResult" isAbstract="false" isFinal="false" isInterface="false" isEnum="true" isSerializable="false" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+    File        : LintResult&#xD;
+    Purpose     : Enum for resutls of linter:Lint&#xD;
+    Syntax      : &#xD;
+    Description : &#xD;
+    Author(s)   : Andrew Ni&#xD;
+    Created     : 18.12.2018 14:24:42&#xD;
+    Notes       : &#xD;
+  ----------------------------------------------------------------------*/</classComment>
+    <member name="LINT_OK"/>
+    <member name="COMPILE_ERROR"/>
+    <member name="PARSE_ERROR"/>
+    <member name="PROPARSE_ERROR"/>
+    <member name="UNKNOWN_ERROR"/>
+</unit>

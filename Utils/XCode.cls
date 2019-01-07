@@ -1,15 +1,19 @@
  
 /*------------------------------------------------------------------------
    File        : XCode
-   Purpose     : 
+   Purpose     : Class for working with xcoded files and data
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Fri Jan 04 22:27:15 ALMT 2019
+   Author(s)   : Andrew Ni
+   Created     : 04.01.2019 22:27:15
    Notes       : 
  ----------------------------------------------------------------------*/
 
 block-level on error undo, throw.
+
+using Utils.IO.
+using Utils.Strings.
+using Progress.IO.FileInputStream.
 
 class Utils.XCode final: 
 
@@ -30,7 +34,7 @@ class Utils.XCode final:
 
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Converts (encodes or decodes) data
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -87,6 +91,29 @@ class Utils.XCode final:
         copy-lob convertedBytes starting at (if toEncode then 1 else 2) for get-size(outData) to outData overlay at 1.
         set-size(ConvertedBytes) = 0.
         return outData.
+
+    end method.
+
+    /*------------------------------------------------------------------------------
+     Purpose: Converts (encodes or decodes) file
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    method public static void ConvertFile( input sourceFile as character, input toEncode as logical, input targetPath as character ):
+        
+        define variable targetDir as character no-undo.
+        define variable sourcePtr as memptr no-undo.
+        define variable targetPtr as memptr no-undo.        
+        
+        targetDir = IO:GetDirectory(targetPath).
+        if not Strings:IsEmptyOrNull(targetDir) and not IO:PathExists(targetDir) then
+            os-create-dir value(targetDir).
+            
+        copy-lob file sourceFile to sourcePtr no-convert.
+        targetPtr = ConvertData(sourcePtr, toEncode).
+        copy-lob targetPtr to file targetPath no-convert.
+        
+        return.
 
     end method.
 
@@ -153,12 +180,37 @@ class Utils.XCode final:
      Notes:
     ------------------------------------------------------------------------------*/
 
+    method public static logical IsFileEncoded( input sourceFile as character ):
+        define variable inStream as Progress.IO.FileInputStream no-undo.
+        define variable firstByte as memptr no-undo.
+        
+        if not IO:PathExists(sourceFile) then
+            return false.        
+        
+        inStream = new FileInputStream(sourceFile).
+        set-size(firstByte) = 1.
+        inStream:Read(firstByte, 1, 1).
+        return IsFirstByteFromEncryptedFile(get-byte(firstByte, 1)).
+        
+        finally:
+            set-size(firstByte) = 0.
+            inStream:Close().
+            delete object inStream.
+        end finally.
+
+    end method.
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
     method private static logical IsFirstByteFromEncryptedFile( input firstByte as integer ):        
         return Utils.Math:bin_or(firstByte, 2) = 0x13.
     end method.
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Sets the key for encoding or decoding
      Notes:
     ------------------------------------------------------------------------------*/
 

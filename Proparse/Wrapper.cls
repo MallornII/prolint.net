@@ -1,6 +1,6 @@
 /*------------------------------------------------------------------------
-   File        : api
-   Purpose     : Additional API over proparse.net dll
+   File        : Wrapper
+   Purpose     : Wrapper over proparse.net dll
    Syntax      : 
    Description : 
    Author(s)   : Andrew Ni
@@ -8,6 +8,9 @@
    Notes       : Calls org.prorefactor.treeparser.ParseUnit(JavaFile):ParseUnit:treeParser01()
                  from proparse.net.dll, then fills OpenEdge temp-tables with parsed nodes and decorates them  with additional properties.
 ----------------------------------------------------------------------*/
+
+block-level on error undo, throw.
+
 using com.joanju.proparse.ProToken.
 using com.joanju.proparse.ProParserTokenTypes.
 using org.prorefactor.core.JPNode.
@@ -18,10 +21,9 @@ using java.io.File.
 using Progress.Lang.Error.
 using Progress.Lang.AppError.
 using OpenEdge.Core.Collections.List.
-using proparse.UnitType.
+using Proparse.UnitType.
 using com.joanju.proparse.ProParserTokenTypes.
-
-block-level on error undo, throw.
+using Utils.IO.
 
 class Proparse.Wrapper use-widget-pool final:
     
@@ -92,23 +94,10 @@ class Proparse.Wrapper use-widget-pool final:
         
         ReadDbSchema().
 		
-    end constructor.
-
-    /*------------------------------------------------------------------------------
-     Purpose: Adds entry to the list (empty or not)
-     Notes: 
-    ------------------------------------------------------------------------------*/
-
-    method public static character AddEntry
-        (
-        input iFirst  as character,
-        input iSecond as character
-        ):		
-        return iFirst + (if iFirst = "":U then "":U else ",":U) + iSecond.
-    end method.
+    end constructor.   
  
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Adds new parser. All parsers are called after the org.prorefactor.treeparser.ParseUnit call from Parse method
      Notes:
     ------------------------------------------------------------------------------*/
 
@@ -125,10 +114,8 @@ class Proparse.Wrapper use-widget-pool final:
      Notes:
     ------------------------------------------------------------------------------*/
 
-    method private static void CleanUp(  ):
+    method private static void CleanUp(  ):		
 		
-		//empty temp-table ttNode.
-        //empty temp-table ttProUnit.
         ErrorList:Clear().
         if valid-object(ParseUnit) then
             delete object ParseUnit.
@@ -158,27 +145,6 @@ class Proparse.Wrapper use-widget-pool final:
 
     end method.
 
-    /*------------------------------------------------------------------------------
-     Purpose: Creates FullPath from directory and file. Alos changes all "\" to "/"
-     Notes: Second paramater can be ?. In that way it's just converts the path delimiters
-     @param iPath Directory path. Can end with "/" or not
-     @param iFileName Name of the file. Can be null
-    ------------------------------------------------------------------------------*/
-
-    method public static character MakePath
-        (
-        input iPath as character,
-        input iFileName as character
-        ):
-        
-        iPath = right-trim(replace(iPath, "~\":U, "/":U), "/":U).
-        iFileName = replace(iFileName, "~\":U, "/":U).
-        if iFileName <> ? and iFileName <> "":U then
-            iPath = iPath + "/":U + iFileName.         
-
-        return iPath.
-
-    end method.
 
     /*------------------------------------------------------------------------------
      Purpose: Parses file, returns temp-tables for Nodes nd ProUnits (methods, functions e.t.c.) 
@@ -244,7 +210,7 @@ class Proparse.Wrapper use-widget-pool final:
         define variable dummyFile as character no-undo.
         
         CleanUp().
-        dummyFile = MakePath(TempDir, "parse_dummy.p":U).
+        dummyFile = IO:MakePath(TempDir, "parse_dummy.p":U).
         output stream sParse to value(dummyFile).
         output stream sParse close.        
 

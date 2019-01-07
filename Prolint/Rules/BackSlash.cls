@@ -1,11 +1,11 @@
  
  /*------------------------------------------------------------------------
     File        : BackSlash
-    Purpose     : 
+    Purpose     : Finds use of backslah in strings
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Wed Jan 02 13:39:03 ALMT 2019
+    Author(s)   : Andrew Ni
+    Created     : 02.01.2019 13:39:03
     Notes       : 
   ----------------------------------------------------------------------*/
 
@@ -17,7 +17,7 @@ block-level on error undo, throw.
 class Prolint.Rules.BackSlash inherits AbstractRule final serializable: 
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Default constructor
      Notes:
     ------------------------------------------------------------------------------*/
         
@@ -28,7 +28,11 @@ class Prolint.Rules.BackSlash inherits AbstractRule final serializable:
             RuleId          = "BackSlash":u
             Severity        = 5.
     end constructor.
-
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method override public void Visit
         (

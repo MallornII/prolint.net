@@ -1,11 +1,11 @@
  
  /*------------------------------------------------------------------------
     File        : BlockLabel
-    Purpose     : 
+    Purpose     : Finds use leave, next without corresponding labels
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Wed Jan 02 13:48:51 ALMT 2019
+    Author(s)   : Andrew Ni
+    Created     : 02.01.2019 13:48:51
     Notes       : 
   ----------------------------------------------------------------------*/
 
@@ -17,7 +17,7 @@ block-level on error undo, throw.
 class Prolint.Rules.BlockLabel inherits AbstractRule final serializable: 
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Default constructor
      Notes:
     ------------------------------------------------------------------------------*/
         
@@ -29,6 +29,10 @@ class Prolint.Rules.BlockLabel inherits AbstractRule final serializable:
             Severity        = 8.
     end constructor.
 
+    /*------------------------------------------------------------------------------
+     Purpose: Start method for visiting ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/
 
     method override public void Visit
         (

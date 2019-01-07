@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Utils" className="XCode" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="false" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+   File        : XCode&#xD;
+   Purpose     : Class for working with xcoded files and data&#xD;
+   Syntax      : &#xD;
+   Description : &#xD;
+   Author(s)   : Andrew Ni&#xD;
+   Created     : 04.01.2019 22:27:15&#xD;
+   Notes       : &#xD;
+ ----------------------------------------------------------------------*/</classComment>
+    <constructor signature="XCode()" modifier="STATIC">
+        <constrComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</constrComment>
+    </constructor>
+    <method methodName="ConvertData" returnType="MEMPTR" signature="ConvertData(INPUT:memptr,INPUT:logical):MEMPTR" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Converts (encodes or decodes) data&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="inData" dataType="MEMPTR" position="0" mode="INPUT"/>
+        <parameter name="toEncode" dataType="LOGICAL" position="1" mode="INPUT"/>
+    </method>
+    <method methodName="ConvertFile" signature="ConvertFile(INPUT:character,INPUT:logical,INPUT:character)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Converts (encodes or decodes) file&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="sourceFile" dataType="CHARACTER" position="2" mode="INPUT"/>
+        <parameter name="toEncode" dataType="LOGICAL" position="3" mode="INPUT"/>
+        <parameter name="targetPath" dataType="CHARACTER" position="4" mode="INPUT"/>
+    </method>
+    <method methodName="GetConstantCrcTable" returnType="INTEGER" signature="GetConstantCrcTable():INTEGER[]" modifier="PRIVATE" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+    </method>
+    <method methodName="GetKeyData" returnType="INTEGER" signature="GetKeyData(INPUT:character):INTEGER[]" modifier="PRIVATE" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="inKey" dataType="CHARACTER" position="5" mode="INPUT"/>
+    </method>
+    <method methodName="IsFileEncoded" returnType="LOGICAL" signature="IsFileEncoded(INPUT:character):LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="sourceFile" dataType="CHARACTER" position="6" mode="INPUT"/>
+    </method>
+    <method methodName="IsFirstByteFromEncryptedFile" returnType="LOGICAL" signature="IsFirstByteFromEncryptedFile(INPUT:integer):LOGICAL" modifier="PRIVATE" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="firstByte" dataType="INTEGER" position="7" mode="INPUT"/>
+    </method>
+    <method methodName="SetKey" signature="SetKey(INPUT:character)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Sets the key for encoding or decoding&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="inKey" dataType="CHARACTER" position="8" mode="INPUT"/>
+    </method>
+    <using name="Utils.IO" type="NONE"/>
+    <using name="Utils.Strings" type="NONE"/>
+    <using name="Progress.IO.FileInputStream" type="NONE"/>
+</unit>

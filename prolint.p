@@ -19,7 +19,19 @@ define variable lintForm as Prolint.Forms.MainForm no-undo.
 
 
 /* ***************************  Main Block  *************************** */
-session:error-stack-trace = true.
+define variable crc as integer extent no-undo.
+define variable i as integer no-undo.
+define variable fData as memptr no-undo.
+define variable newData as memptr no-undo.
+
+//copy-lob file "C:/temp/bis/bis/tty/src/ver-menu.run" to fData no-convert.
+copy-lob file "C:/temp/decode2.run" to fData no-convert.
+
+newData = Utils.XCode:ConvertData(fData, false).
+
+copy-lob newData to file "C:/temp/encode2.run" no-convert.
+
+/*session:error-stack-trace = true.
 log-manager:logfile-name = "prolint.net.log".
 log-manager:clear-log().
 log-manager:log-entry-types = "4GLMessages":u.
@@ -41,4 +53,4 @@ finally:
     session:error-stack-trace = false.
     log-manager:close-log().
     quit.    
-end finally.
+end finally.*/

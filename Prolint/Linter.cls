@@ -1,14 +1,16 @@
 /*------------------------------------------------------------------------
-   File        : linter
-   Purpose     : 
+   File        : Linter
+   Purpose     : Main class for linting files
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Sun Dec 09 16:03:54 ALMT 2018
+   Author(s)   : Andrew Ni
+   Created     : 09.12.2018 16:03:54
    Notes       : 
  ----------------------------------------------------------------------*/
 
 block-level on error undo, throw.
+
+using Utils.IO.
 
 class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
     
@@ -21,7 +23,12 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
     
     &UNDEFINE REF_MOD
     {prolint/profile.i}
-    {prolint/results.i}  
+    {prolint/results.i}
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Publishes result of linting
+     Notes:
+    ------------------------------------------------------------------------------*/  
     
     define public event PublishResult  signature void 
         (
@@ -33,6 +40,11 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         input iComment  as character
         ).
 
+    /*------------------------------------------------------------------------------
+     Purpose: Publishes current job status
+     Notes:
+    ------------------------------------------------------------------------------*/
+    
     define public event PublishStatus  signature void
         (
         input iUnit as character,
@@ -95,7 +107,7 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
             UnitClass        = Progress.Lang.Class:GetClass("Prolint.SimpleLintUnit":u)
             LintDataDebugger = new Prolint.UnitDebugData()
             LintCompiler     = new Prolint.UnitCompiler()        
-            TempDir          = Proparse.Wrapper:MakePath(session:temp-directory, guid(generate-uuid)).
+            TempDir          = IO:MakePath(session:temp-directory, guid(generate-uuid)).
         
         LintCompiler:PublishRuleResult:Subscribe(PublishRuleResult).
         os-create-dir value(TempDir).
@@ -136,10 +148,6 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         return ErrorList:ListIterator().
 
     end method.
-    
-
-
-
     
     /*------------------------------------------------------------------------------
      Purpose: Return TRUE if there errors during class' work
@@ -197,13 +205,13 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
      Notes:
     ------------------------------------------------------------------------------*/
 
-    method public prolint.lintresult extent Lint( input iFileList as OpenEdge.Core.Collections.StringCollection ):
+    method public Prolint.LintResult extent Lint( input fileList as OpenEdge.Core.Collections.StringCollection ):
         define variable fileIterator as OpenEdge.Core.Collections.IIterator no-undo.
         define variable resultSet    as prolint.lintresult                  extent no-undo.
         define variable cnt          as integer                             no-undo.
         
-        extent(resultSet) = iFileList:Size.
-        fileIterator = iFileList:Iterator().
+        extent(resultSet) = fileList:Size.
+        fileIterator = fileList:Iterator().
         
         do while fileIterator:HasNext():
             cnt = cnt + 1.
@@ -226,7 +234,7 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         
         CurrentUnit = cast(UnitClass:New(), Prolint.ILintUnit).
         assign                    
-            CurrentUnit:CompileUnit = Proparse.Wrapper:MakePath(lintFile, ?)
+            CurrentUnit:CompileUnit = IO:MakePath(lintFile)
             CurrentUnit:IsDebug = IsDebug.            
         
         PublishStatus:Publish("Linting...":t, CurrentUnit:CompileUnit).        
@@ -348,7 +356,7 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
      Purpose:
      Notes:
     ------------------------------------------------------------------------------*/
-    destructor public linter ( ):
+    destructor public Linter ( ):
         if not IsDebug then 
             os-delete value(TempDir) recursive.
     end destructor.

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Prolint.Rules" className="AbbrevKwd" inherits="Prolint.Rules.AbstractRule" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="true" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+   File        : AbbrevKwd&#xD;
+   Purpose     : Finds abbreviated keywords&#xD;
+   Syntax      : &#xD;
+   Description : &#xD;
+   Author(s)   : Andrew Ni&#xD;
+   Created     : 09.12.2018 15:46:45&#xD;
+   Notes       : &#xD;
+ ----------------------------------------------------------------------*/</classComment>
+    <constructor signature="AbbrevKwd()" modifier="PUBLIC">
+        <constrComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Default constructor&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</constrComment>
+    </constructor>
+    <method methodName="AddAbbrev" signature="AddAbbrev(INPUT:character,INPUT:character)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Start method for visiting ILintUnit&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="abbrevName" dataType="CHARACTER" position="0" mode="INPUT"/>
+        <parameter name="fullName" dataType="CHARACTER" position="1" mode="INPUT"/>
+    </method>
+    <method methodName="AddSkipType" signature="AddSkipType(INPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="nodeType" dataType="INTEGER" position="2" mode="INPUT"/>
+    </method>
+    <method methodName="UnAbbrev" returnType="CHARACTER" signature="UnAbbrev(INPUT:character):CHARACTER" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="abbrevName" dataType="CHARACTER" position="3" mode="INPUT"/>
+    </method>
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <parameter name="currentUnit" dataType="Prolint.ILintUnit" position="4" mode="INPUT"/>
+        <parameter name="dsProparse" dataType="DATASET" position="5" mode="INPUT"/>
+        <parameter name="dsXref" dataType="DATASET" position="6" mode="INPUT"/>
+    </method>
+    <using name="com.joanju.proparse.ProParserTokenTypes" type="NONE"/>
+    <using name="com.joanju.proparse.NodeTypes" type="NONE"/>
+    <temp-table name="ttSkipNodes" definition="" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttSkipNodes NO-UNDO 
+  FIELD NodeType AS INTEGER
+</text>
+        <field name="NodeType" dataType="INTEGER"/>
+    </temp-table>
+    <temp-table name="ttAbbrev" definition="" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttAbbrev NO-UNDO 
+  FIELD AbbrevName AS CHARACTER
+  FIELD FullName AS CHARACTER
+</text>
+        <field name="AbbrevName" dataType="CHARACTER"/>
+        <field name="FullName" dataType="CHARACTER"/>
+    </temp-table>
+</unit>

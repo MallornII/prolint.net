@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Utils" className="IO" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="false" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+    File        : IO&#xD;
+    Purpose     : Utilities for working wih filesystem&#xD;
+    Syntax      : &#xD;
+    Description : &#xD;
+    Author(s)   : Andrew Ni&#xD;
+    Created     : 05.01.2019 18:09:05&#xD;
+    Notes       : &#xD;
+  ----------------------------------------------------------------------*/</classComment>
+    <method methodName="GetDirectory" returnType="CHARACTER" signature="GetDirectory(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Gets Directory from FullPath&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="sourcePath" dataType="CHARACTER" position="0" mode="INPUT"/>
+    </method>
+    <method methodName="GetFileName" returnType="CHARACTER" signature="GetFileName(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Gets FileName from FullPath&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="sourcePath" dataType="CHARACTER" position="1" mode="INPUT"/>
+    </method>
+    <method methodName="MakePath" returnType="CHARACTER" signature="MakePath(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Creates FullPath from directory and file. Also changes all "\" to "/"&#xD;
+     Notes: &#xD;
+     @param sourcePath Directory path. Can end with "/" or not&#xD;
+     @param sourceName Name of the file&#xD;
+     @return full path combined from path and filename&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="sourcePath" dataType="CHARACTER" position="2" mode="INPUT"/>
+        <parameter name="sourceName" dataType="CHARACTER" position="3" mode="INPUT"/>
+    </method>
+    <method methodName="MakePath" returnType="CHARACTER" signature="MakePath(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Changes all "\" to "/"&#xD;
+     Notes:&#xD;
+     @param iPath Directory path. Can end with "/" or not     &#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="sourcePath" dataType="CHARACTER" position="4" mode="INPUT"/>
+    </method>
+    <method methodName="PathExists" returnType="LOGICAL" signature="PathExists(INPUT:character):LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Checks if Path provided exists&#xD;
+     Notes:&#xD;
+     @param sourcePath Path to file or directory&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="sourcePath" dataType="CHARACTER" position="5" mode="INPUT"/>
+    </method>
+    <method methodName="GetFileExt" returnType="CHARACTER" signature="GetFileExt(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Get file extenstion&#xD;
+     Notes:&#xD;
+     @param fullName Can be just a FileName for FullPath&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="fullName" dataType="CHARACTER" position="6" mode="INPUT"/>
+    </method>
+    <using name="Progress.IO.FileInputStream" type="NONE"/>
+</unit>

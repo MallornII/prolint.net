@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Prolint" className="IUnitWorker" isAbstract="false" isFinal="false" isInterface="true" isEnum="false" isSerializable="false" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+    File        : IUnitWorker&#xD;
+    Purpose     : Interface for various classes performing actions on ILintUnit&#xD;
+    Syntax      : &#xD;
+    Description : &#xD;
+    Author(s)   : Andrew Ni&#xD;
+    Created     : 22.12.2018 21:02:16&#xD;
+    Notes       : &#xD;
+  ----------------------------------------------------------------------*/</classComment>
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Start method for visiting ILintUnit&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="unitInst" dataType="Prolint.ILintUnit" position="0" mode="INPUT"/>
+        <parameter name="dsProparse" dataType="DATASET" position="1" mode="INPUT"/>
+        <parameter name="dsXref" dataType="DATASET" position="2" mode="INPUT"/>
+    </method>
+    <property name="TempDir" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <using name="Progress.Lang.*" type="NONE"/>
+    <temp-table name="ttNode" definition="jpnodes.i" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttNode NO-UNDO 
+  FIELD NodeNum AS INTEGER
+  FIELD ParentNum AS INTEGER
+  FIELD FirstChild AS INTEGER
+  FIELD NextSibling AS INTEGER
+  FIELD PrevSibling AS INTEGER
+  FIELD NodeType AS INTEGER
+  FIELD NodeFile AS CHARACTER
+  FIELD NodeLine AS INTEGER
+  FIELD NodeText AS CHARACTER
+  FIELD NodeColumn AS INTEGER
+  FIELD IngroneRules AS CHARACTER
+  FIELD IsStateHead AS LOGICAL
+  FIELD StoreType AS CHARACTER
+  FIELD CodeBlock AS CHARACTER
+  INDEX iMain PRIMARY UNIQUE NodeNum
+  INDEX iParent ParentNum NodeType
+  INDEX iType NodeType
+</text>
+        <field name="NodeNum" dataType="INTEGER"/>
+        <field name="ParentNum" dataType="INTEGER"/>
+        <field name="FirstChild" dataType="INTEGER"/>
+        <field name="NextSibling" dataType="INTEGER"/>
+        <field name="PrevSibling" dataType="INTEGER"/>
+        <field name="NodeType" dataType="INTEGER"/>
+        <field name="NodeFile" dataType="CHARACTER"/>
+        <field name="NodeLine" dataType="INTEGER"/>
+        <field name="NodeText" dataType="CHARACTER"/>
+        <field name="NodeColumn" dataType="INTEGER"/>
+        <field name="IngroneRules" dataType="CHARACTER"/>
+        <field name="IsStateHead" dataType="LOGICAL"/>
+        <field name="StoreType" dataType="CHARACTER"/>
+        <field name="CodeBlock" dataType="CHARACTER"/>
+        <index name="iMain" primary="true" unique="true" wordIndex="false">
+            <field>NodeNum</field>
+        </index>
+        <index name="iParent" primary="false" unique="false" wordIndex="false">
+            <field>ParentNum</field>
+            <field>NodeType</field>
+        </index>
+        <index name="iType" primary="false" unique="false" wordIndex="false">
+            <field>NodeType</field>
+        </index>
+    </temp-table>
+    <temp-table name="ttProUnit" definition="prounit.i" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttProUnit NO-UNDO 
+  FIELD UnitType AS INT64
+  FIELD Id AS INTEGER
+  FIELD ParentId AS INTEGER
+  FIELD UnitName AS CHARACTER
+  FIELD SourceFile AS CHARACTER
+  FIELD FirstLine AS INTEGER
+  FIELD AccessMode AS CHARACTER
+  FIELD Direction AS CHARACTER
+  FIELD DataType AS CHARACTER
+  FIELD IsNoUndo AS LOGICAL
+  FIELD IsStatic AS LOGICAL
+  FIELD IsAbstract AS LOGICAL
+  FIELD StartNode AS INTEGER
+  FIELD EndNode AS INTEGER
+</text>
+        <field name="UnitType" dataType="INT64"/>
+        <field name="Id" dataType="INTEGER"/>
+        <field name="ParentId" dataType="INTEGER"/>
+        <field name="UnitName" dataType="CHARACTER"/>
+        <field name="SourceFile" dataType="CHARACTER"/>
+        <field name="FirstLine" dataType="INTEGER"/>
+        <field name="AccessMode" dataType="CHARACTER"/>
+        <field name="Direction" dataType="CHARACTER"/>
+        <field name="DataType" dataType="CHARACTER"/>
+        <field name="IsNoUndo" dataType="LOGICAL"/>
+        <field name="IsStatic" dataType="LOGICAL"/>
+        <field name="IsAbstract" dataType="LOGICAL"/>
+        <field name="StartNode" dataType="INTEGER"/>
+        <field name="EndNode" dataType="INTEGER"/>
+    </temp-table>
+    <temp-table name="ttCompileMessage" definition="prolint/compile.i" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttCompileMessage NO-UNDO 
+  FIELD SourceFile AS CHARACTER
+  FIELD Severity AS INTEGER
+  FIELD ErrorCode AS INTEGER
+  FIELD ErrorMessage AS CHARACTER
+  FIELD ErrorLine AS INTEGER
+</text>
+        <field name="SourceFile" dataType="CHARACTER"/>
+        <field name="Severity" dataType="INTEGER"/>
+        <field name="ErrorCode" dataType="INTEGER"/>
+        <field name="ErrorMessage" dataType="CHARACTER"/>
+        <field name="ErrorLine" dataType="INTEGER"/>
+    </temp-table>
+    <temp-table name="ttSource" definition="prolint/xref.i" noUndo="true" xmlNodeName="Source">
+        <text>DEFINE TEMP-TABLE ttSource NO-UNDO XML-NODE-NAME 'Source' 
+  FIELD SourceFile AS CHARACTER
+  FIELD SourceGUID AS CHARACTER
+  FIELD FileNum AS INTEGER
+</text>
+        <field name="SourceFile" dataType="CHARACTER"/>
+        <field name="SourceGUID" dataType="CHARACTER"/>
+        <field name="FileNum" dataType="INTEGER"/>
+    </temp-table>
+    <temp-table name="ttXRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="Reference">
+        <text>DEFINE TEMP-TABLE ttXRef NO-UNDO XML-NODE-NAME 'Reference' 
+  FIELD ReferenceType AS CHARACTER
+  FIELD ObjectIdentifier AS CHARACTER
+  FIELD SourceGUID AS CHARACTER
+  FIELD FileNum AS INTEGER
+  FIELD RefSeq AS INTEGER
+  FIELD LineNum AS INTEGER
+  FIELD ObjectContext AS CHARACTER
+  FIELD AccessMode AS CHARACTER
+  FIELD DataMemberRef AS CHARACTER
+  FIELD TempRef AS CHARACTER
+  FIELD Detail AS CHARACTER
+  FIELD IsStatic AS LOGICAL
+  FIELD IsAbstract AS LOGICAL
+</text>
+        <field name="ReferenceType" dataType="CHARACTER"/>
+        <field name="ObjectIdentifier" dataType="CHARACTER"/>
+        <field name="SourceGUID" dataType="CHARACTER"/>
+        <field name="FileNum" dataType="INTEGER"/>
+        <field name="RefSeq" dataType="INTEGER"/>
+        <field name="LineNum" dataType="INTEGER"/>
+        <field name="ObjectContext" dataType="CHARACTER"/>
+        <field name="AccessMode" dataType="CHARACTER"/>
+        <field name="DataMemberRef" dataType="CHARACTER"/>
+        <field name="TempRef" dataType="CHARACTER"/>
+        <field name="Detail" dataType="CHARACTER"/>
+        <field name="IsStatic" dataType="LOGICAL"/>
+        <field name="IsAbstract" dataType="LOGICAL"/>
+    </temp-table>
+    <temp-table name="ttParameterRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="Parameter-ref">
+        <text>DEFINE TEMP-TABLE ttParameterRef NO-UNDO XML-NODE-NAME 'Parameter-ref' 
+  FIELD Order AS INTEGER
+  FIELD ParameterMode AS CHARACTER
+  FIELD ParameterName AS CHARACTER
+  FIELD ParameterType AS CHARACTER
+  FIELD SourceGUID AS CHARACTER
+  FIELD RefSeq AS INTEGER
+  FIELD Dimension AS INTEGER
+  FIELD IsAppend AS LOGICAL
+  FIELD DatasetGUID AS CHARACTER
+</text>
+        <field name="Order" dataType="INTEGER"/>
+        <field name="ParameterMode" dataType="CHARACTER"/>
+        <field name="ParameterName" dataType="CHARACTER"/>
+        <field name="ParameterType" dataType="CHARACTER"/>
+        <field name="SourceGUID" dataType="CHARACTER"/>
+        <field name="RefSeq" dataType="INTEGER"/>
+        <field name="Dimension" dataType="INTEGER"/>
+        <field name="IsAppend" dataType="LOGICAL"/>
+        <field name="DatasetGUID" dataType="CHARACTER"/>
+    </temp-table>
+    <temp-table name="ttClassRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="Class-ref">
+        <text>DEFINE TEMP-TABLE ttClassRef NO-UNDO XML-NODE-NAME 'Class-ref' 
+  FIELD SourceGUID AS CHARACTER
+  FIELD RefSeq AS INTEGER
+  FIELD InheritedList AS CHARACTER
+  FIELD ImplementsList AS CHARACTER
+  FIELD HasUsePool AS LOGICAL
+  FIELD IsFinal AS LOGICAL
+  FIELD IsSerializable AS LOGICAL
+</text>
+        <field name="SourceGUID" dataType="CHARACTER"/>
+        <field name="RefSeq" dataType="INTEGER"/>
+        <field name="InheritedList" dataType="CHARACTER"/>
+        <field name="ImplementsList" dataType="CHARACTER"/>
+        <field name="HasUsePool" dataType="LOGICAL"/>
+        <field name="IsFinal" dataType="LOGICAL"/>
+        <field name="IsSerializable" dataType="LOGICAL"/>
+    </temp-table>
+    <temp-table name="ttStringRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="String-ref">
+        <text>DEFINE TEMP-TABLE ttStringRef NO-UNDO XML-NODE-NAME 'String-ref' 
+  FIELD SourceGUID AS CHARACTER
+  FIELD RefSeq AS INTEGER
+  FIELD MaxLength AS INTEGER
+  FIELD Justification AS CHARACTER
+  FIELD Translatable AS LOGICAL
+</text>
+        <field name="SourceGUID" dataType="CHARACTER"/>
+        <field name="RefSeq" dataType="INTEGER"/>
+        <field name="MaxLength" dataType="INTEGER"/>
+        <field name="Justification" dataType="CHARACTER"/>
+        <field name="Translatable" dataType="LOGICAL"/>
+    </temp-table>
+    <temp-table name="ttDatasetRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="Dataset-ref">
+        <text>DEFINE TEMP-TABLE ttDatasetRef NO-UNDO XML-NODE-NAME 'Dataset-ref' 
+  FIELD SourceGUID AS CHARACTER
+  FIELD DatasetGUID AS CHARACTER
+  FIELD RefSeq AS INTEGER
+  FIELD NameUri AS CHARACTER
+  FIELD NamePrefix AS CHARACTER
+  FIELD IsReference AS LOGICAL
+  FIELD BufferList AS CHARACTER
+  FIELD DataLinks AS INTEGER
+</text>
+        <field name="SourceGUID" dataType="CHARACTER"/>
+        <field name="DatasetGUID" dataType="CHARACTER"/>
+        <field name="RefSeq" dataType="INTEGER"/>
+        <field name="NameUri" dataType="CHARACTER"/>
+        <field name="NamePrefix" dataType="CHARACTER"/>
+        <field name="IsReference" dataType="LOGICAL"/>
+        <field name="BufferList" dataType="CHARACTER"/>
+        <field name="DataLinks" dataType="INTEGER"/>
+    </temp-table>
+    <dataset name="dsProparse" definition="proparse/parsedata.i">
+        <text>DEFINE DATASET dsProparse FOR ttNode, ttProUnit
+</text>
+        <buffer>ttNode</buffer>
+        <buffer>ttProUnit</buffer>
+    </dataset>
+    <dataset name="dsXRef" definition="prolint/lintdata.i">
+        <text>DEFINE DATASET dsXRef FOR ttCompileMessage, ttSource, ttXRef, ttParameterRef, ttClassRef, ttStringRef, ttDatasetRef
+</text>
+        <buffer>ttCompileMessage</buffer>
+        <buffer>ttSource</buffer>
+        <buffer>ttXRef</buffer>
+        <buffer>ttParameterRef</buffer>
+        <buffer>ttClassRef</buffer>
+        <buffer>ttStringRef</buffer>
+        <buffer>ttDatasetRef</buffer>
+    </dataset>
+</unit>

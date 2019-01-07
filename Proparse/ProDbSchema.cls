@@ -1,6 +1,6 @@
  
 /*------------------------------------------------------------------------
-   File        : schemaloader
+   File        : ProDbSchema
    Purpose     : Reads schemas of all currently connected DB's
    Syntax      : 
    Description : 
@@ -14,7 +14,7 @@ block-level on error undo, throw.
 class Proparse.ProDbSchema inherits Proparse.AbstractDbSchema final: 
 
     /*------------------------------------------------------------------------------
-     Purpose:
+     Purpose: Default constructor
      Notes:
     ------------------------------------------------------------------------------*/
         

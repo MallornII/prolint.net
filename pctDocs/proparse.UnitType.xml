@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="proparse" className="UnitType" isAbstract="false" isFinal="false" isInterface="false" isEnum="true" isSerializable="false" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+    File        : UnitType&#xD;
+    Purpose     : Enum for unit types in temp-table ttProUnit&#xD;
+    Syntax      : &#xD;
+    Description : &#xD;
+    Author(s)   : Andrew Ni&#xD;
+    Created     : 11.12.2018 21:13:45&#xD;
+    Notes       : &#xD;
+  ----------------------------------------------------------------------*/</classComment>
+    <using name="Progress.Lang.*" type="NONE"/>
+    <member name="U_ROOT"/>
+    <member name="U_CLASS"/>
+    <member name="U_INTERFACE"/>
+    <member name="U_PROCEDURE"/>
+    <member name="U_FUNCTION"/>
+    <member name="U_CONSTRUCTOR"/>
+    <member name="U_DESTRUCTOR"/>
+    <member name="U_METHOD"/>
+    <member name="U_GETTER"/>
+    <member name="U_SETTER"/>
+    <member name="U_PROPERTY"/>
+    <member name="U_VARIABLE"/>
+    <member name="U_PARAMETER"/>
+    <member name="U_TEMPTABLE"/>
+    <member name="U_BUFFER"/>
+</unit>

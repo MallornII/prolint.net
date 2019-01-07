@@ -1,6 +1,6 @@
  
 /*------------------------------------------------------------------------
-   File        : nodetypes
+   File        : NodeTypes
    Purpose     : Enum for node type in temp-table ttNode
    Syntax      : 
    Description : 
