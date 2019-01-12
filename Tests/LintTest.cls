@@ -72,9 +72,9 @@ class Tests.LintTest:
     @Test. 
     method public void testLoadProfiles(  ):
         
-        lintInstance = new Prolint.Linter("asdfasd":u) no-error.
+        lintInstance = new Prolint.Linter("asdfasd":u, ?) no-error.
         Assert:IsTrue(error-status:error).
-        lintInstance = new Prolint.Linter("default":u) no-error.
+        lintInstance = new Prolint.Linter("default":u, ?) no-error.
         Assert:NotNull(lintInstance).
         return.
 

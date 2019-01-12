@@ -43,6 +43,8 @@ class Prolint.Rules.BlockLabel inherits AbstractRule final serializable:
         
         define buffer ttChildNode for ttNode.
         
+        super:Visit(currentUnit, input dataset dsProparse, input dataset dsXref).
+        
         for each ttNode where 
             (ttNode.NodeType = ProParserTokenTypes:LEAVE
             and ttNode.IsStateHead) or

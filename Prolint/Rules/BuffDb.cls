@@ -19,10 +19,6 @@ class Prolint.Rules.BuffDb inherits AbstractRule final serializable:
     define private temp-table ttInspectUnit no-undo
         field UnitType as integer.
 
-    define public property LintUnit as Prolint.ILintUnit no-undo 
-        get.
-        set. 
-
     /*------------------------------------------------------------------------------
      Purpose: Default constructor
      Notes:
@@ -154,7 +150,7 @@ class Prolint.Rules.BuffDb inherits AbstractRule final serializable:
         input dataset dsXref
         ):
         
-        LintUnit = CurrentUnit.
+        super:Visit(currentUnit, input dataset dsProparse, input dataset dsXref).
         
         for each ttInspectUnit,            
             each ttProUnit where ttProUnit.UnitType = ttInspectUnit.UnitType

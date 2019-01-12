@@ -11,12 +11,13 @@
 block-level on error undo, throw.
 
 using Utils.IO.
+using Prolint.IResultAcceptor.
+using Prolint.LintResult.
 
 class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
     
     &SCOPED-DEFINE ACCESS_MOD PRIVATE
-    &SCOPED-DEFINE REF_MOD    REFERENCE-ONLY
-    {prolint/compile.i}    
+    &SCOPED-DEFINE REF_MOD    REFERENCE-ONLY        
     {prolint/xref.i}
     {proparse/jpnodes.i}
     {proparse/prounit.i}
@@ -25,21 +26,6 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
     {prolint/profile.i}
     {prolint/results.i}
     
-    /*------------------------------------------------------------------------------
-     Purpose: Publishes result of linting
-     Notes:
-    ------------------------------------------------------------------------------*/  
-    
-    define public event PublishResult  signature void 
-        (
-        input iRuleId   as character,
-        input iUnit     as character,
-        input iFileName as character,
-        input iLine     as integer,
-        input iSeverity as integer,
-        input iComment  as character
-        ).
-
     /*------------------------------------------------------------------------------
      Purpose: Publishes current job status
      Notes:
@@ -80,6 +66,18 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         get.
         set.
 
+    define private property ResultAcceptorClass as IResultAcceptor no-undo 
+        get.
+        set. 
+
+    define private property ResultAcceptorName as character no-undo 
+        get.
+        set. 
+
+    define private property ResultAcceptorProcedure as handle no-undo 
+        get.
+        set. 
+
     define private property TempDir as character no-undo 
         get.
         set. 
@@ -98,7 +96,7 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
      Notes:
     ------------------------------------------------------------------------------*/
 		
-    constructor public linter ( input profileName as character ):
+    constructor private Linter (input profileName as character):
 		
         assign
             CurrentProfile   = profileName
@@ -107,9 +105,8 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
             UnitClass        = Progress.Lang.Class:GetClass("Prolint.SimpleLintUnit":u)
             LintDataDebugger = new Prolint.UnitDebugData()
             LintCompiler     = new Prolint.UnitCompiler()        
-            TempDir          = IO:MakePath(session:temp-directory, guid(generate-uuid)).
+            TempDir          = IO:MakePath(session:temp-directory, guid(generate-uuid)).        
         
-        LintCompiler:PublishRuleResult:Subscribe(PublishRuleResult).
         os-create-dir value(TempDir).
         if os-error <> 0 then
             undo, throw new proparse.perror({&LINE-NUMBER}, substitute("Can't create temp directory. OS error [&1]":t, os-error), os-error).
@@ -124,6 +121,39 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
             undo, throw new Progress.Lang.AppError(substitute("Profile <&1> doesn't exist":t, CurrentProfile), 0).
         LoadRules().     
 		
+    end constructor.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Constructor used by classes
+     Notes:
+    ------------------------------------------------------------------------------*/
+        
+    constructor public Linter
+        (
+        input profileName as character,
+        input resultAcceptor as IResultAcceptor
+        ):
+        this-object(profileName).
+        
+        ResultAcceptorClass = resultAcceptor. 
+    end constructor.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Constructor used by procedures
+     Notes:
+    ------------------------------------------------------------------------------*/
+        
+    constructor public Linter
+        (
+        input profileName as character,
+        input resultAcceptor as handle,
+        input internalProcedureName as character
+        ):
+        this-object(profileName).
+        
+        assign
+            ResultAcceptorProcedure = resultAcceptor
+            ResultAcceptorname      = internalProcedureName.
     end constructor.
 
     /*------------------------------------------------------------------------------
@@ -202,12 +232,106 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
     
     /*------------------------------------------------------------------------------
      Purpose: Lints all files in collection
+     Notes: Calling routine is responsible for deleting all ILintUnit classes
+    ------------------------------------------------------------------------------*/
+
+    method public Prolint.ILintUnit extent LintEx( input fileList as OpenEdge.Core.Collections.StringCollection ):
+        define variable fileIterator as OpenEdge.Core.Collections.IIterator no-undo.
+        define variable resultSet    as Prolint.ILintUnit                   extent no-undo.
+        define variable cnt          as integer                             no-undo.
+        
+        extent(resultSet) = fileList:Size.
+        fileIterator = fileList:Iterator().
+        
+        do while fileIterator:HasNext():
+            cnt = cnt + 1.
+            resultSet[cnt] = LintEx(fileIterator:Next():ToString()).
+        end.
+        
+        return resultSet.
+    end method.
+  
+    /*------------------------------------------------------------------------------
+     Purpose: Lints one file
+     Notes: Calling routine is responsible for deleting ILintUnit class
+    ------------------------------------------------------------------------------*/
+
+    method public Prolint.ILintUnit LintEx( input lintFile as character ):
+	    
+        define variable rulesIteartor as OpenEdge.Core.Collections.IIterator no-undo.
+        define variable currentRule   as Prolint.Rules.IRule                 no-undo.        
+        define variable parseResult   as logical                             no-undo.
+        
+        CurrentUnit = cast(UnitClass:New(), Prolint.ILintUnit).
+        assign                    
+            CurrentUnit:CompileUnit = IO:MakePath(lintFile)
+            CurrentUnit:IsDebug     = IsDebug.            
+        
+        if valid-object(ResultAcceptorClass) then
+            CurrentUnit:PublishResult:Subscribe(ResultAcceptorClass:ReceiveResult).
+        if valid-handle(ResultAcceptorProcedure) then
+            CurrentUnit:PublishResult:Subscribe(ResultAcceptorProcedure, ResultAcceptorName).
+            
+        PublishStatus:Publish("Linting...":t, CurrentUnit:CompileUnit).        
+        process events.
+        
+        CurrentUnit:Accept(LintCompiler).        
+        if not currentUnit:IsCompiled then
+        do:
+            CurrentUnit:LintStatus = LintResult:COMPILE_ERROR.
+            return CurrentUnit.
+        end.
+        
+        PublishStatus:Publish("Parsing":t, CurrentUnit:CompileUnit).
+        process events.
+       
+        if not Proparse.Wrapper:Parse(CurrentUnit) then
+        do:
+            PullErrors().            
+            CurrentUnit:LintStatus = Prolint.LintResult:PARSE_ERROR.
+            return CurrentUnit.
+        end.
+        
+        CurrentUnit:Accept(LintDataDebugger).    
+            
+        if Proparse.Wrapper:ErrorStatus() then
+        do:
+            CurrentUnit:LintStatus = Prolint.LintResult:PROPARSE_ERROR.
+            return CurrentUnit.
+        end.
+                                             
+        rulesIteartor = LintRules:ListIterator().
+        do while rulesIteartor:HasNext():            	    
+            currentRule = cast(rulesIteartor:Next(), Prolint.Rules.IRule).                      
+            PublishStatus:Publish(substitute("Applying rule &1":t, currentRule:RuleId), CurrentUnit:CompileUnit).
+            process events.            
+            CurrentUnit:Accept(currentRule).            
+        end.
+        
+        CurrentUnit:LintStatus = Prolint.LintResult:LINT_OK.
+        return CurrentUnit.
+		
+        catch e as Progress.Lang.Error :            
+            ErrorList:Add(e).
+            CurrentUnit:LintStatus = Prolint.LintResult:UNKNOWN_ERROR.
+            return CurrentUnit.               
+        end catch.
+        
+        finally:
+            PublishStatus:Publish("Finished":t, CurrentUnit:CompileUnit).
+            Proparse.Wrapper:ReleaseNodes().            
+        end finally.
+
+    end method.
+    
+    /*------------------------------------------------------------------------------
+     Purpose: Lints all files in collection
      Notes:
     ------------------------------------------------------------------------------*/
 
     method public Prolint.LintResult extent Lint( input fileList as OpenEdge.Core.Collections.StringCollection ):
         define variable fileIterator as OpenEdge.Core.Collections.IIterator no-undo.
-        define variable resultSet    as prolint.lintresult                  extent no-undo.
+        define variable resultSet    as Prolint.LintResult                  extent no-undo.
         define variable cnt          as integer                             no-undo.
         
         extent(resultSet) = fileList:Size.
@@ -220,102 +344,22 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         
         return resultSet.
     end method.
-  
+    
     /*------------------------------------------------------------------------------
      Purpose: Lints one file
      Notes:
     ------------------------------------------------------------------------------*/
 
-    method public Prolint.LintResult Lint( input lintFile as character ):
-	    
-        define variable rulesIteartor as OpenEdge.Core.Collections.IIterator no-undo.
-        define variable currentRule   as prolint.rules.irule                 no-undo.        
-        define variable parseResult   as logical                             no-undo.
-        
-        CurrentUnit = cast(UnitClass:New(), Prolint.ILintUnit).
-        assign                    
-            CurrentUnit:CompileUnit = IO:MakePath(lintFile)
-            CurrentUnit:IsDebug = IsDebug.            
-        
-        PublishStatus:Publish("Linting...":t, CurrentUnit:CompileUnit).        
-        process events.
-        
-        CurrentUnit:Accept(LintCompiler).        
-        if not currentUnit:IsCompiled then
-            return prolint.lintresult:COMPILE_ERROR.
-        
-        PublishStatus:Publish("Parsing":t, CurrentUnit:CompileUnit).
-        process events.
-       
-        if not Proparse.Wrapper:Parse(CurrentUnit) then
-        do:
-            PullErrors().
-            return Prolint.LintResult:PARSE_ERROR.
-        end.
-        
-        CurrentUnit:Accept(LintDataDebugger).    
-            
-        if Proparse.Wrapper:ErrorStatus() then
-            return Prolint.LintResult:PROPARSE_ERROR.
-                                             
-        rulesIteartor = LintRules:ListIterator().
-        do while rulesIteartor:HasNext():            	    
-            currentRule = cast(rulesIteartor:Next(), Prolint.Rules.IRule).                      
-            PublishStatus:Publish(substitute("Applying rule &1":t, currentRule:RuleId), CurrentUnit:CompileUnit).
-            process events.
-            currentRule:PublishRuleResult:Subscribe(PublishRuleResult).
-            CurrentUnit:Accept(currentRule).            
-        end.
-        
-        return Prolint.LintResult:LINT_OK.
-		
-        catch e as Progress.Lang.Error :            
-            ErrorList:Add(e).
-            return Prolint.LintResult:UNKNOWN_ERROR.               
-        end catch.
+    method public Prolint.LintResult Lint( input lintFile as character ):       
+      
+        LintEx(lintFile).        
+        return CurrentUnit:LintStatus.
         
         finally:
-            PublishStatus:Publish("Finished":t, CurrentUnit:CompileUnit).
-            Proparse.Wrapper:ReleaseNodes().
             if valid-object(CurrentUnit) then
-                delete object CurrentUnit.
-        end finally.
-
-    end method.	 
-
-    /*------------------------------------------------------------------------------
-     Purpose: 
-     Notes:
-    ------------------------------------------------------------------------------*/
-
-    method private void PublishRuleResult
-        (
-        input ruleId     as character,
-        input unit       as character,
-        input sourceFile as character,
-        input lineNumber as integer,
-        input severity   as integer,
-        input comment    as character
-        ):
-            
-        find first ttRule where ttRule.RuleId = ruleId no-error.
-        if available(ttRule) then
-            severity = MIN(99, MAX(1, ttRule.Severity + severity)).
-       
-        create ttResult.
-        assign
-            ttResult.RuleId     = ruleId
-            ttResult.Unit       = CurrentUnit:CompileUnit
-            ttResult.SourceFile = sourceFile
-            ttResult.LineNumber = lineNumber
-            ttResult.Severity   = severity
-            ttResult.Comment    = comment.        
-            
-        PublishResult:Publish(ruleId, CurrentUnit:CompileUnit, sourceFile, lineNumber, severity, comment).
-        process events.
-        return.
-
-    end method.
+                delete object CurrentUnit.    
+        end finally.	
+    end method.  
 
     /*------------------------------------------------------------------------------
      Purpose:

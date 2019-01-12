@@ -16,6 +16,7 @@ enum Prolint.LintResult :
         COMPILE_ERROR  = 1
         PARSE_ERROR    = 2
         PROPARSE_ERROR = 3
-        UNKNOWN_ERROR  = 4. 
+        UNKNOWN_ERROR  = 4
+        LINT_NONE      = 5. 
 
 end enum.

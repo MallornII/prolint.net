@@ -117,19 +117,23 @@
         <field name="StartNode" dataType="INTEGER"/>
         <field name="EndNode" dataType="INTEGER"/>
     </temp-table>
-    <temp-table name="ttCompileMessage" definition="prolint/compile.i" noUndo="true">
-        <text>DEFINE TEMP-TABLE ttCompileMessage NO-UNDO 
+    <temp-table name="ttResult" definition="prolint/results.i" noUndo="true">
+        <text>DEFINE TEMP-TABLE ttResult NO-UNDO 
+  FIELD RuleId AS CHARACTER
+  FIELD Attrs AS CHARACTER
+  FIELD Unit AS CHARACTER
   FIELD SourceFile AS CHARACTER
+  FIELD LineNumber AS INTEGER
   FIELD Severity AS INTEGER
-  FIELD ErrorCode AS INTEGER
-  FIELD ErrorMessage AS CHARACTER
-  FIELD ErrorLine AS INTEGER
+  FIELD Comment AS CHARACTER
 </text>
+        <field name="RuleId" dataType="CHARACTER"/>
+        <field name="Attrs" dataType="CHARACTER"/>
+        <field name="Unit" dataType="CHARACTER"/>
         <field name="SourceFile" dataType="CHARACTER"/>
+        <field name="LineNumber" dataType="INTEGER"/>
         <field name="Severity" dataType="INTEGER"/>
-        <field name="ErrorCode" dataType="INTEGER"/>
-        <field name="ErrorMessage" dataType="CHARACTER"/>
-        <field name="ErrorLine" dataType="INTEGER"/>
+        <field name="Comment" dataType="CHARACTER"/>
     </temp-table>
     <temp-table name="ttSource" definition="prolint/xref.i" noUndo="true" xmlNodeName="Source">
         <text>DEFINE TEMP-TABLE ttSource NO-UNDO XML-NODE-NAME 'Source' 
@@ -252,9 +256,9 @@
         <buffer>ttProUnit</buffer>
     </dataset>
     <dataset name="dsXRef" definition="prolint/lintdata.i">
-        <text>DEFINE DATASET dsXRef FOR ttCompileMessage, ttSource, ttXRef, ttParameterRef, ttClassRef, ttStringRef, ttDatasetRef
+        <text>DEFINE DATASET dsXRef FOR ttResult, ttSource, ttXRef, ttParameterRef, ttClassRef, ttStringRef, ttDatasetRef
 </text>
-        <buffer>ttCompileMessage</buffer>
+        <buffer>ttResult</buffer>
         <buffer>ttSource</buffer>
         <buffer>ttXRef</buffer>
         <buffer>ttParameterRef</buffer>

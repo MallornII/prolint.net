@@ -73,16 +73,16 @@
                                 </td>
                             </tr>
                             
-                            <!--
+                            
                             <tr>
                                 <td>
                                     <span class="span_implements">Implements:</span> 
                                 </td>
                                 <td class="unit_interface">
-                                    <span class="span_implements"></span> 
+                                    <span class="span_implements"> <a href='Prolint.IResultAcceptor.html'>Prolint.IResultAcceptor</a></span> 
                                 </td>
                             </tr>
-                            -->
+                            
                             <tr>
                                 <td>
                                     <span class="span_inherits">FINAL</span>
@@ -189,6 +189,23 @@
   <td align="left" valign="top" class="img_col cell cellleft ">
   </td>
   <td align="left" valign="top" class="option_col cell">
+    <font>+</font>
+    <font></font>
+    <font></font>
+  </td>
+  <td class="signature_col cell">
+    <font>
+          <a href='#020010cgmMyI0vEwD9L5r2bsjGGg=='> ReceiveResult (character, character, character, character, integer, integer, character)</a>
+    </font>
+  </td>
+  <td class="cell">
+     Receive results published by ILintUnit <br> <i>  </i>
+  </td>
+</tr>
+<tr class="table_content overview_row">
+  <td align="left" valign="top" class="img_col cell cellleft ">
+  </td>
+  <td align="left" valign="top" class="option_col cell">
     <font>-</font>
     <font></font>
     <font></font>
@@ -213,23 +230,6 @@
   <td class="signature_col cell">
     <font>
           <a href='#020010oLq0hZm79L5bxMVQV/Uvwg=='> resultsView_Sorted (Object, EventArgs)</a>
-    </font>
-  </td>
-  <td class="cell">
-      <br> <i>  </i>
-  </td>
-</tr>
-<tr class="table_content overview_row">
-  <td align="left" valign="top" class="img_col cell cellleft ">
-  </td>
-  <td align="left" valign="top" class="option_col cell">
-    <font>-</font>
-    <font></font>
-    <font></font>
-  </td>
-  <td class="signature_col cell">
-    <font>
-          <a href='#0200109oRNqj/XZMXLKxMAFuc9DQ=='> UpdateResult (character, character, character, integer, integer, character)</a>
     </font>
   </td>
   <td class="cell">
@@ -563,6 +563,164 @@
     <th colspan="2" align="left" valign="top" class="cell">
         <div class="table_detail_comment_div">
             <font class="Code_Text">
+                <a name="020010cgmMyI0vEwD9L5r2bsjGGg==" href="#Top">Top</a>
+                <a name="  <a href='#020010cgmMyI0vEwD9L5r2bsjGGg=='> ReceiveResult (character, character, character, character, integer, integer, character)</a>"></a>
+            </font>
+        </div>
+        <h3 class="Signature_Font">PUBLIC  <a href='#020010cgmMyI0vEwD9L5r2bsjGGg=='> ReceiveResult (character, character, character, character, integer, integer, character)</a></h3>
+        <table>
+            <tr>
+                <td>
+                    <div class="img_" Title="Static">
+                    </div>
+                </td>
+                <td>
+                    <div class="img_" Title="Abstract">
+                    </div>
+                </td>
+                <td>
+                    <div class="img_" Title="Final">
+                    </div> 
+                </td>
+            </tr>
+        </table>
+        <i>  </i>
+        <div>
+        <dl>
+          <dd class="detail_comment">
+            <table><tbody class='commment_formater_table'><tr><td class='paramname'>Purpose: </td><td class='paramdesc'>Receive results published by ILintUnit </td></tr><tr><td class='paramname'>Notes: </td><td class='paramdesc'> </td></tr></tbody></table>
+            <dl>
+              <table class="parameter_table">
+                  
+                  <tr>
+                    <td colspan="2">
+                      <b>Parameters:</b>           
+                    </td>
+                  </tr>
+                  
+                  <tr>
+    <td class="document_detail_parameter">
+        <i>ruleId</i>
+    </td>
+    <td>
+       CHARACTER
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td class="document_detail_parameter">
+    </td>
+    <td>
+        
+    </td>
+</tr><tr>
+    <td class="document_detail_parameter">
+        <i>attrs</i>
+    </td>
+    <td>
+       CHARACTER
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td class="document_detail_parameter">
+    </td>
+    <td>
+        
+    </td>
+</tr><tr>
+    <td class="document_detail_parameter">
+        <i>compileUnit</i>
+    </td>
+    <td>
+       CHARACTER
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td class="document_detail_parameter">
+    </td>
+    <td>
+        
+    </td>
+</tr><tr>
+    <td class="document_detail_parameter">
+        <i>sourceFile</i>
+    </td>
+    <td>
+       CHARACTER
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td class="document_detail_parameter">
+    </td>
+    <td>
+        
+    </td>
+</tr><tr>
+    <td class="document_detail_parameter">
+        <i>lineNumber</i>
+    </td>
+    <td>
+       INTEGER
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td class="document_detail_parameter">
+    </td>
+    <td>
+        
+    </td>
+</tr><tr>
+    <td class="document_detail_parameter">
+        <i>severity</i>
+    </td>
+    <td>
+       INTEGER
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td class="document_detail_parameter">
+    </td>
+    <td>
+        
+    </td>
+</tr><tr>
+    <td class="document_detail_parameter">
+        <i>comment</i>
+    </td>
+    <td>
+       CHARACTER
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td class="document_detail_parameter">
+    </td>
+    <td>
+        
+    </td>
+</tr>
+              </table>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+    </th>
+</tr><tr class="table_content table_detail_row">
+    <th colspan="2" align="left" valign="top" class="cell">
+        <div class="table_detail_comment_div">
+            <font class="Code_Text">
                 <a name="0200103LhUOcQ5a07MZiJCzfCL6g==" href="#Top">Top</a>
                 <a name="  <a href='#0200103LhUOcQ5a07MZiJCzfCL6g=='> RefreshResults ()</a>"></a>
             </font>
@@ -666,148 +824,6 @@
     </td>
     <td>
        <a href='http://msdn.microsoft.com/en-us/library/system.eventargs(v=vs.80).aspx' target='_blank'>System.EventArgs</a>
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr>
-              </table>
-            </dl>
-          </dd>
-        </dl>
-      </div>
-    </th>
-</tr><tr class="table_content table_detail_row">
-    <th colspan="2" align="left" valign="top" class="cell">
-        <div class="table_detail_comment_div">
-            <font class="Code_Text">
-                <a name="0200109oRNqj/XZMXLKxMAFuc9DQ==" href="#Top">Top</a>
-                <a name="  <a href='#0200109oRNqj/XZMXLKxMAFuc9DQ=='> UpdateResult (character, character, character, integer, integer, character)</a>"></a>
-            </font>
-        </div>
-        <h3 class="Signature_Font">PRIVATE  <a href='#0200109oRNqj/XZMXLKxMAFuc9DQ=='> UpdateResult (character, character, character, integer, integer, character)</a></h3>
-        <table>
-            <tr>
-                <td>
-                    <div class="img_" Title="Static">
-                    </div>
-                </td>
-                <td>
-                    <div class="img_" Title="Abstract">
-                    </div>
-                </td>
-                <td>
-                    <div class="img_" Title="Final">
-                    </div> 
-                </td>
-            </tr>
-        </table>
-        <i>  </i>
-        <div>
-        <dl>
-          <dd class="detail_comment">
-            <table><tbody class='commment_formater_table'><tr><td class='paramname'>Purpose: </td><td class='paramdesc'> </td></tr><tr><td class='paramname'>Notes: </td><td class='paramdesc'> </td></tr></tbody></table>
-            <dl>
-              <table class="parameter_table">
-                  
-                  <tr>
-                    <td colspan="2">
-                      <b>Parameters:</b>           
-                    </td>
-                  </tr>
-                  
-                  <tr>
-    <td class="document_detail_parameter">
-        <i>iRuleId</i>
-    </td>
-    <td>
-       CHARACTER
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr><tr>
-    <td class="document_detail_parameter">
-        <i>iUnit</i>
-    </td>
-    <td>
-       CHARACTER
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr><tr>
-    <td class="document_detail_parameter">
-        <i>iFileName</i>
-    </td>
-    <td>
-       CHARACTER
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr><tr>
-    <td class="document_detail_parameter">
-        <i>iLine</i>
-    </td>
-    <td>
-       INTEGER
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr><tr>
-    <td class="document_detail_parameter">
-        <i>iSeverity</i>
-    </td>
-    <td>
-       INTEGER
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr><tr>
-    <td class="document_detail_parameter">
-        <i>iComment</i>
-    </td>
-    <td>
-       CHARACTER
     </td>
     <td>
     </td>
@@ -1009,6 +1025,6 @@
     <br>
     <br>
     -->
-    <font class="footer_timestamp">01.07.2019 19:59:41</font>
+    <font class="footer_timestamp">01.12.2019 15:15:33</font>
     </BODY>
 </HTML>

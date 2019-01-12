@@ -45,6 +45,8 @@ class Prolint.Rules.AlertMessage inherits AbstractRule final serializable:
             
         define buffer bttNode for ttNode.
         
+        super:Visit(currentUnit, input dataset dsProparse, input dataset dsXref).
+        
         for each ttNode where ttNode.NodeType = ProParserTokenTypes:MESSAGE:
             find first bttNode where bttNode.ParentNum = ttnode.NodeNum
                 and bttNode.NodeType = ProParserTokenTypes:VIEWAS no-error.

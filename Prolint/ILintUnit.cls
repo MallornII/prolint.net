@@ -9,10 +9,22 @@
     Notes       : 
   ----------------------------------------------------------------------*/
 using org.prorefactor.core.JPNode.
+using Prolint.LintResult.
 
 interface Prolint.ILintUnit:
         
   
+    define public event PublishResult  signature void
+    (
+        input ruleId      as character,
+        input attrs       as character,
+        input compileUnit as character,
+        input sourceFile  as character,
+        input lineNumber  as integer,
+        input severity    as integer,
+        input comment     as character
+    ).
+
     define public property CompileUnit as character no-undo
     get.
     set.
@@ -24,6 +36,13 @@ interface Prolint.ILintUnit:
     define public property IsDebug as logical no-undo 
     get.
     set. 
+
+    define public property isResultsPublished as logical no-undo 
+    get.     
+
+    define public property LintStatus as LintResult no-undo 
+    get.
+    set.     
 
     define public property TopNode as org.prorefactor.core.JPNode no-undo 
     get.
@@ -49,6 +68,20 @@ interface Prolint.ILintUnit:
     ------------------------------------------------------------------------------*/
 
     method public void Accept( input currentWorker as Prolint.IUnitWorker ).
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    method public void AddResult
+    (
+        input ruleId      as character,        
+        input sourceFile  as character,
+        input lineNumber  as integer,
+        input severity    as integer,
+        input comment     as character
+    ).
 
     /*------------------------------------------------------------------------------
      Purpose: Return node's parent num

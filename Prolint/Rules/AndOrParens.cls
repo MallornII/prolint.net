@@ -45,6 +45,8 @@ class Prolint.Rules.AndOrParens inherits AbstractRule final serializable:
         
         define buffer ttChildNode for ttNode.
         
+        super:Visit(currentUnit, input dataset dsProparse, input dataset dsXref).
+        
         for each ttNode where ttNode.NodeType = ProParserTokenTypes:OR:
             needParens = false.
             if currentUnit:GetParentType(ttNode.NodeNum) = ProParserTokenTypes:AND then

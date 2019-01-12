@@ -107,6 +107,8 @@ class Prolint.Rules.AbbrevKwd inherits Prolint.Rules.AbstractRule serializable f
         
         define variable unAbbrevName as character no-undo.
         
+        super:Visit(currentUnit, input dataset dsProparse, input dataset dsXref).
+        
         BLK_NODE:
         for each ttNode where ttNode.NodeText <> "":
             if ttNode.NodeText = NodeTypes:getTypeName(ttNode.NodeType) then

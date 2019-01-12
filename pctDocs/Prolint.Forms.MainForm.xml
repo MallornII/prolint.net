@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <unit packageName="Prolint.Forms" className="MainForm" inherits="Form" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="false" useWidgetPool="false">
+    <interfaces>IResultAcceptor</interfaces>
     <classComment>/*------------------------------------------------------------------------&#xD;
    File        : MainForm&#xD;
    Purpose     : Main form for prolint&#xD;
@@ -19,6 +20,19 @@
         <parameter name="e" dataType="System.EventArgs" position="4" mode="INPUT"/>
     </method>
     <method methodName="InitializeComponent" signature="InitializeComponent()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false"/>
+    <method methodName="ReceiveResult" signature="ReceiveResult(INPUT:character,INPUT:character,INPUT:character,INPUT:character,INPUT:integer,INPUT:integer,INPUT:character)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Receive results published by ILintUnit&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="ruleId" dataType="CHARACTER" position="6" mode="INPUT"/>
+        <parameter name="attrs" dataType="CHARACTER" position="7" mode="INPUT"/>
+        <parameter name="compileUnit" dataType="CHARACTER" position="8" mode="INPUT"/>
+        <parameter name="sourceFile" dataType="CHARACTER" position="9" mode="INPUT"/>
+        <parameter name="lineNumber" dataType="INTEGER" position="10" mode="INPUT"/>
+        <parameter name="severity" dataType="INTEGER" position="11" mode="INPUT"/>
+        <parameter name="comment" dataType="CHARACTER" position="12" mode="INPUT"/>
+    </method>
     <method methodName="RefreshResults" signature="RefreshResults()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
@@ -26,30 +40,19 @@
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
     <method methodName="resultsView_Sorted" signature="resultsView_Sorted(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
-        <parameter name="sender" dataType="System.Object" position="6" mode="INPUT"/>
-        <parameter name="e" dataType="System.EventArgs" position="7" mode="INPUT"/>
-    </method>
-    <method methodName="UpdateResult" signature="UpdateResult(INPUT:character,INPUT:character,INPUT:character,INPUT:integer,INPUT:integer,INPUT:character)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
-        <methodComment>/*------------------------------------------------------------------------------&#xD;
-     Purpose:&#xD;
-     Notes:&#xD;
-    ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="iRuleId" dataType="CHARACTER" position="8" mode="INPUT"/>
-        <parameter name="iUnit" dataType="CHARACTER" position="9" mode="INPUT"/>
-        <parameter name="iFileName" dataType="CHARACTER" position="10" mode="INPUT"/>
-        <parameter name="iLine" dataType="INTEGER" position="11" mode="INPUT"/>
-        <parameter name="iSeverity" dataType="INTEGER" position="12" mode="INPUT"/>
-        <parameter name="iComment" dataType="CHARACTER" position="13" mode="INPUT"/>
+        <parameter name="sender" dataType="System.Object" position="13" mode="INPUT"/>
+        <parameter name="e" dataType="System.EventArgs" position="14" mode="INPUT"/>
     </method>
     <method methodName="UpdateStatus" signature="UpdateStatus(INPUT:character,INPUT:character)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="iStatus" dataType="CHARACTER" position="14" mode="INPUT"/>
-        <parameter name="iUnit" dataType="CHARACTER" position="15" mode="INPUT"/>
+        <parameter name="iStatus" dataType="CHARACTER" position="15" mode="INPUT"/>
+        <parameter name="iUnit" dataType="CHARACTER" position="16" mode="INPUT"/>
     </method>
     <using name="Progress.Windows.Form" type="NONE"/>
+    <using name="Prolint.IResultAcceptor" type="NONE"/>
     <temp-table name="ttProfile" definition="prolint/profile.i" noUndo="true" xmlNodeName="Profile">
         <text>DEFINE TEMP-TABLE ttProfile NO-UNDO XML-NODE-NAME 'Profile' 
   FIELD ProfileName AS CHARACTER
@@ -78,6 +81,7 @@
     <temp-table name="ttResult" definition="prolint/results.i" noUndo="true">
         <text>DEFINE TEMP-TABLE ttResult NO-UNDO 
   FIELD RuleId AS CHARACTER
+  FIELD Attrs AS CHARACTER
   FIELD Unit AS CHARACTER
   FIELD SourceFile AS CHARACTER
   FIELD LineNumber AS INTEGER
@@ -85,6 +89,7 @@
   FIELD Comment AS CHARACTER
 </text>
         <field name="RuleId" dataType="CHARACTER"/>
+        <field name="Attrs" dataType="CHARACTER"/>
         <field name="Unit" dataType="CHARACTER"/>
         <field name="SourceFile" dataType="CHARACTER"/>
         <field name="LineNumber" dataType="INTEGER"/>

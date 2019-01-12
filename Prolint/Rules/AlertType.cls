@@ -45,6 +45,7 @@ class Prolint.Rules.AlertType inherits AbstractRule final serializable:
         define variable hasAlertType as logical no-undo.          
         define buffer ttChildNode for ttNode.
         
+        super:Visit(currentUnit, input dataset dsProparse, input dataset dsXref).
         
         for each ttNode where ttNode.NodeType = ProParserTokenTypes:VIEWAS:
             hasAlertType = false.

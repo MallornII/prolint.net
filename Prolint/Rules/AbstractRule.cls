@@ -24,15 +24,9 @@ class Prolint.Rules.AbstractRule  implements Prolint.Rules.IRule serializable ab
     {proparse/parsedata.i}
     {prolint/lintdata.i}    
 
-    define public event PublishRuleResult  signature void
-        (
-        input iRuleId   as character,
-        input iUnit     as character,
-        input iFileName as character,
-        input iLine     as integer,
-        input iSeverity as integer,
-        input iComment  as character
-        ).   
+    define protected property LintUnit as Prolint.ILintUnit no-undo 
+    get.
+    set. 
 
     define public property RuleDescription as character no-undo 
         get.
@@ -76,13 +70,13 @@ class Prolint.Rules.AbstractRule  implements Prolint.Rules.IRule serializable ab
 
     method protected void PublishResult
         (
-        input iUnit    as character,       
-        input iFileName as character,
-        input iLine as integer,     
-        input iComment as character
+        input compileUnit as character,       
+        input sourceFile  as character,
+        input lineNumber  as integer,     
+        input comment     as character
         ):
 		
-        PublishRuleResult:Publish(RuleId, iUnit, iFileName, iLine, Severity, iComment).
+		LintUnit:AddResult(RuleId, sourceFile, lineNumber, Severity, comment).        
         process events.
         return.
 
@@ -93,11 +87,13 @@ class Prolint.Rules.AbstractRule  implements Prolint.Rules.IRule serializable ab
      Notes:
     ------------------------------------------------------------------------------*/
     
-    method public abstract void Visit
+    method public void Visit
         (
-        input unitInst as Prolint.ILintUnit,
+        input currentUnit as Prolint.ILintUnit,
         input dataset dsProparse,       
         input dataset dsXref
-        ).
+        ):
+        LintUnit = currentUnit.
+    end method.
 
 end class.

@@ -44,6 +44,8 @@ class Prolint.Rules.AbbrevTable inherits AbstractRule serializable final:
         define variable databaseName as character no-undo.
         define variable fullName     as character no-undo.
         
+        super:Visit(currentUnit, input dataset dsProparse, input dataset dsXref).
+        
         for each ttNode where ttNode.NodeType = ProParserTokenTypes:RECORD_NAME
             and ttNode.StoreType = "st-dbtable":u:
             if num-entries(ttNode.NodeText, ".":u) = 2 then

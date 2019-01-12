@@ -1,11 +1,11 @@
-{prolint/compile.i}    
+{prolint/results.i}    
 {prolint/xref.i}
 
 define {&ACCESS_MOD} {&STAT_MOD} dataset dsXRef
     namespace-uri "uri:schemas-progress-com:XREFD:0005"
     xml-node-name "Cross-reference"
     {&REF_MOD}
-    for ttCompileMessage, ttSource, ttXRef, ttParameterRef, ttClassRef, ttStringRef, ttDatasetRef
+    for ttResult, ttSource, ttXRef, ttParameterRef, ttClassRef, ttStringRef, ttDatasetRef
     data-relation drXRef for ttSource, ttXRef
     relation-fields (SourceGUID, SourceGUID)
     nested

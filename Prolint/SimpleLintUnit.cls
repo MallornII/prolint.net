@@ -10,6 +10,8 @@
   ----------------------------------------------------------------------*/
 
 using Prolint.ILintUnit.
+using Prolint.LintResult.
+using Utils.IO.
 using com.joanju.proparse.ProParserTokenTypes.
 
 block-level on error undo, throw.
@@ -19,9 +21,11 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
     &SCOPED-DEFINE ACCESS_MOD PROTECTED
     
     {proparse/parsedata.i}
-    {prolint/lintdata.i}
+    {prolint/lintdata.i}    
     
     define protected variable sequenceId as integer no-undo. 
+
+    define public event PublishResult  signature void (input ruleId as character, input attrs as character, input compileUnit as character, input sourceFile as character, input lineNumber as integer, input severity as integer, input comment as character).
 
     define public property CompileUnit as character no-undo 
     get.
@@ -35,9 +39,27 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
     get.
     set.     
 
+    define public property isResultsPublished as logical initial true no-undo 
+    get.
+
+    define public property LintStatus as LintResult no-undo 
+    get.
+    set.     
+
     define public property topNode as org.prorefactor.core.JPNode no-undo 
     get.
     set.
+
+    /*------------------------------------------------------------------------------
+     Purpose: Default constructor
+     Notes:
+    ------------------------------------------------------------------------------*/
+        
+    constructor public SimpleLintUnit (  ):
+        super ().
+        LintStatus = LintResult:LINT_NONE.
+        
+    end constructor.
     
     /*------------------------------------------------------------------------------
      Purpose: Accepts IRule visitor
@@ -72,6 +94,29 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
 
     end method.
     
+    method public void AddResult
+    (
+        input ruleId as character,
+        input sourceFile as character,
+        input lineNumber as integer,
+        input severity as integer,
+        input comment as character
+    ):
+        
+        create ttResult.       
+        assign
+            ttResult.RuleId     = ruleId
+            ttResult.Unit       = CompileUnit
+            ttResult.SourceFile = IO:MakePath(sourceFile)
+            ttResult.LineNumber = lineNumber
+            ttResult.Severity   = min(99, max(1, severity)).
+            ttResult.Comment    = comment.
+            
+        PublishResult:publish(ruleId, ttResult.Attrs, CompileUnit, ttResult.SourceFile, lineNumber, severity, comment).
+        process events. 
+
+    end method.
+
     /*------------------------------------------------------------------------------
      Purpose: Return node's parent num
      Notes:

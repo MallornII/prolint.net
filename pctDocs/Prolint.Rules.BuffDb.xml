@@ -49,7 +49,6 @@
         <parameter name="dsProparse" dataType="DATASET" position="8" mode="INPUT"/>
         <parameter name="dsXref" dataType="DATASET" position="9" mode="INPUT"/>
     </method>
-    <property name="LintUnit" dataType="Prolint.ILintUnit" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <using name="com.joanju.proparse.ProParserTokenTypes" type="NONE"/>
     <using name="Prolint.Rules.AbstractRule" type="NONE"/>
     <temp-table name="ttInspectUnit" definition="" noUndo="true">

@@ -14,4 +14,5 @@
     <member name="PARSE_ERROR"/>
     <member name="PROPARSE_ERROR"/>
     <member name="UNKNOWN_ERROR"/>
+    <member name="LINT_NONE"/>
 </unit>

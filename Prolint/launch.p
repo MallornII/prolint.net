@@ -21,8 +21,18 @@ define variable lintForm as Prolint.Forms.MainForm no-undo.
 session:error-stack-trace = true.
 log-manager:logfile-name = "prolint.net.log".
 log-manager:clear-log().
-log-manager:log-entry-types = "4GLMessages":u.
-log-manager:logging-level = 2.
+if session:parameter = "debug":u then
+do:
+    assign
+        log-manager:logging-level = 4
+        log-manager:log-entry-types = "4GLMessages,4GlTrace":u.
+end.
+else
+do:
+    assign
+        log-manager:logging-level = 2
+        log-manager:log-entry-types = "4GLMessages":u.
+end.
 
 lintForm = new Prolint.Forms.MainForm() no-error.
 wait-for System.Windows.Forms.Application:Run(lintForm).

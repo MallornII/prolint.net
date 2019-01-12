@@ -10,10 +10,11 @@
  ----------------------------------------------------------------------*/
 
 using Progress.Windows.Form.
+using Prolint.IResultAcceptor.
 
 block-level on error undo, throw.
 
-class Prolint.Forms.MainForm inherits Form final: 
+class Prolint.Forms.MainForm inherits Form implements IResultAcceptor final: 
     &SCOPED-DEFINE ACCESS_MOD PRIVATE
     
     {prolint/profile.i}
@@ -101,15 +102,14 @@ class Prolint.Forms.MainForm inherits Form final:
         if dialogResult = System.Windows.Forms.DialogResult:OK then
         do:            
             empty temp-table ttResult.            
-            lintInstance = new prolint.linter(comboProfile:SelectedValue:ToString()) no-error.
+            lintInstance = new prolint.linter(comboProfile:SelectedValue:ToString(), this-object) no-error.
             if error-status:error then
             do:
                 UpdateStatus("Create linter":T, error-status:get-message(1)).
                 return.
             end.
             lintInstance:IsDebug = checkDebug:Checked.
-            lintInstance:PublishStatus:Subscribe(UpdateStatus).
-            lintInstance:PublishResult:Subscribe(UpdateResult).                        
+            lintInstance:PublishStatus:Subscribe(UpdateStatus).                                    
             if lintInstance:Lint(lintDialog:FileName) <> Prolint.LintResult:LINT_OK 
                 or lintInstance:ErrorStatus() then
             do:
@@ -117,10 +117,10 @@ class Prolint.Forms.MainForm inherits Form final:
                 do while errorIterator:HasNext():
                     lintError = cast(errorIterator:Next(), Progress.Lang.Error).
                     if type-of(lintError, Proparse.PError) then
-                        UpdateResult("system", lintDialog:FileName, lintError:CallStack,
+                        ReceiveResult("system", "", lintDialog:FileName, lintError:CallStack,
                                     cast(lintError, Proparse.PError):LineNumber, 9, lintError:GetMessage(1)).                    
                     else
-                        UpdateResult("system", lintDialog:FileName, lintError:CallStack, 0, 9, lintError:GetMessage(1)).
+                        ReceiveResult("system", "", lintDialog:FileName, lintError:CallStack, 0, 9, lintError:GetMessage(1)).
                 end.
             end.                        
             RefreshResults().        
@@ -420,6 +420,34 @@ class Prolint.Forms.MainForm inherits Form final:
     end method.
 
     /*------------------------------------------------------------------------------
+     Purpose: Receive results published by ILintUnit
+     Notes:
+    ------------------------------------------------------------------------------*/
+    method public void ReceiveResult
+    (
+        input ruleId as character,
+        input attrs as character,
+        input compileUnit as character,
+        input sourceFile as character,
+        input lineNumber as integer,
+        input severity as integer,
+        input comment as character
+    ):
+        
+        create ttResult.
+        assign
+            ttResult.RuleId     = ruleId
+            ttResult.Unit       = compileUnit
+            ttResult.SourceFile = sourceFile
+            ttResult.LineNumber = lineNumber
+            ttResult.Severity   = severity
+            ttResult.Comment    = comment.
+              
+        return.
+
+    end method.
+
+    /*------------------------------------------------------------------------------
      Purpose:
      Notes:
     ------------------------------------------------------------------------------*/
@@ -448,34 +476,7 @@ class Prolint.Forms.MainForm inherits Form final:
         return.
 
     end method.
-
-    /*------------------------------------------------------------------------------
-     Purpose:
-     Notes:
-    ------------------------------------------------------------------------------*/
-
-    method private void UpdateResult
-        (
-        input iRuleId   as character,
-        input iUnit     as character,
-        input iFileName as character,
-        input iLine     as integer,
-        input iSeverity as integer,
-        input iComment  as character
-        ):
-      
-        create ttResult.
-        assign
-            ttResult.RuleId     = iRuleId
-            ttResult.Unit       = iUnit
-            ttResult.SourceFile = iFileName
-            ttResult.LineNumber = iLine
-            ttResult.Severity   = iSeverity
-            ttResult.Comment    = iComment. 
-              
-        return.
-
-    end method.
+ 
 
     /*------------------------------------------------------------------------------
      Purpose:

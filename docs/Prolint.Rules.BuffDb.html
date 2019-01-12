@@ -263,7 +263,7 @@
         </tbody>
     </table>
     
-    
+    <!--
     <br>
     <div class="TableHeadingColor">
         <span id="event_summary" class="expand_arrow expandButtonShow HeightFixIE">
@@ -282,27 +282,10 @@
                 <th align="left">Name</th>
                 <th align="left">Purpose</th>
             </tr>
-            <tr class="table_content overview_row">
-  <td align="left" valign="top" class="img_col cell cellleft ">
-  </td>
-  <td align="left" valign="top" class="option_col cell">
-    <font>+</font>
-    <font></font>
-    <font></font>
-  </td>
-  <td class="signature_col cell">
-    <font>
-          <a href='#0200104cSEvwjwaH29xz4wTqurdg=='> PublishRuleResult (character, character, character, integer, integer, character)</a>
-    </font>
-  </td>
-  <td class="cell">
-      <br> <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
-  </td>
-</tr>
-    
+                
         </tbody>
     </table>
-    
+    -->
     
     <br>
     <div class="TableHeadingColor">
@@ -326,7 +309,7 @@
   <td align="left" valign="top" class="img_col cell cellleft ">
   </td>
   <td align="left" valign="top" class="option_col cell">
-    <font>+</font>
+    <font>#</font>
     <font></font>
     <font></font>
   </td>
@@ -336,7 +319,7 @@
     </font>
   </td>
   <td class="cell">
-      <br> <i>  </i>
+      <br> <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
   </td>
 </tr>
 <tr class="table_content overview_row">
@@ -699,7 +682,7 @@
                   
                   <tr>
     <td class="document_detail_parameter">
-        <i>iUnit</i>
+        <i>compileUnit</i>
     </td>
     <td>
        CHARACTER
@@ -715,7 +698,7 @@
     </td>
 </tr><tr>
     <td class="document_detail_parameter">
-        <i>iFileName</i>
+        <i>sourceFile</i>
     </td>
     <td>
        CHARACTER
@@ -731,7 +714,7 @@
     </td>
 </tr><tr>
     <td class="document_detail_parameter">
-        <i>iLine</i>
+        <i>lineNumber</i>
     </td>
     <td>
        INTEGER
@@ -747,7 +730,7 @@
     </td>
 </tr><tr>
     <td class="document_detail_parameter">
-        <i>iComment</i>
+        <i>comment</i>
     </td>
     <td>
        CHARACTER
@@ -932,7 +915,7 @@
     <br>
     <br>
     
-    
+    <!--
     <div class="TableHeadingColor cell">
         <span id="event_detail" class="expand_arrow expandButtonShow HeightFixIE">
         </span>
@@ -944,154 +927,12 @@
     </div>
     <table border="0" class="table_content table_content_details event_detail">
         <tbody>
-            <tr class="table_content table_detail_row">
-    <th colspan="2" align="left" valign="top" class="cell">
-        <div class="table_detail_comment_div">
-            <font class="Code_Text">
-                <a name="0200104cSEvwjwaH29xz4wTqurdg==" href="#Top">Top</a>
-                <a name="  <a href='#0200104cSEvwjwaH29xz4wTqurdg=='> PublishRuleResult (character, character, character, integer, integer, character)</a>"></a>
-            </font>
-        </div>
-        <h3 class="Signature_Font">PUBLIC  <a href='#0200104cSEvwjwaH29xz4wTqurdg=='> PublishRuleResult (character, character, character, integer, integer, character)</a></h3>
-        <table>
-            <tr>
-                <td>
-                    <div class="img_" Title="Static">
-                    </div>
-                </td>
-                <td>
-                    <div class="img_" Title="Abstract">
-                    </div>
-                </td>
-                <td>
-                    <div class="img_" Title="Final">
-                    </div> 
-                </td>
-            </tr>
-        </table>
-        <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
-        <div>
-        <dl>
-          <dd class="detail_comment">
-            <table><tbody class='commment_formater_table'></tbody></table>
-            <dl>
-              <table class="parameter_table">
-                  
-                  <tr>
-                    <td colspan="2">
-                      <b>Parameters:</b>           
-                    </td>
-                  </tr>
-                  
-                  <tr>
-    <td class="document_detail_parameter">
-        <i>iRuleId</i>
-    </td>
-    <td>
-       CHARACTER
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr><tr>
-    <td class="document_detail_parameter">
-        <i>iUnit</i>
-    </td>
-    <td>
-       CHARACTER
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr><tr>
-    <td class="document_detail_parameter">
-        <i>iFileName</i>
-    </td>
-    <td>
-       CHARACTER
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr><tr>
-    <td class="document_detail_parameter">
-        <i>iLine</i>
-    </td>
-    <td>
-       INTEGER
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr><tr>
-    <td class="document_detail_parameter">
-        <i>iSeverity</i>
-    </td>
-    <td>
-       INTEGER
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr><tr>
-    <td class="document_detail_parameter">
-        <i>iComment</i>
-    </td>
-    <td>
-       CHARACTER
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr>
-              </table>
-            </dl>
-          </dd>
-        </dl>
-      </div>
-    </th>
-</tr>
+            
         </tbody>
     </table>
     <br>
     <br>
-    
+    -->
     
     <div class="TableHeadingColor cell">
         <span id="property_detail" class="expand_arrow table_content_details expandButtonShow HeightFixIE">
@@ -1112,7 +953,7 @@
                 <a name=" <a href='Prolint.ILintUnit.html'>Prolint.ILintUnit</a> <a href='#020010kSg90bJbNJIJt+lKw+FvrQ=='> LintUnit</a>"></a>
             </font>
         </div>
-        <h3 class="Signature_Font">PUBLIC <a href='Prolint.ILintUnit.html'>Prolint.ILintUnit</a> <a href='#020010kSg90bJbNJIJt+lKw+FvrQ=='> LintUnit</a></h3>
+        <h3 class="Signature_Font">PROTECTED <a href='Prolint.ILintUnit.html'>Prolint.ILintUnit</a> <a href='#020010kSg90bJbNJIJt+lKw+FvrQ=='> LintUnit</a></h3>
         <table>
             <tr>
                 <td>
@@ -1129,7 +970,7 @@
                 </td>
             </tr>
         </table>
-        <i>  </i>
+        <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
         <div>
         <dl>
           <dd class="detail_comment">
@@ -1358,6 +1199,6 @@
     <br>
     <br>
     
-    <font class="footer_timestamp">01.07.2019 19:59:43</font>
+    <font class="footer_timestamp">01.12.2019 15:15:34</font>
     </BODY>
 </HTML>

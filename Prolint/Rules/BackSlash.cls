@@ -43,6 +43,8 @@ class Prolint.Rules.BackSlash inherits AbstractRule final serializable:
             
         define variable tempString as character no-undo.
         
+        super:Visit(currentUnit, input dataset dsProparse, input dataset dsXref).
+        
         for each ttNode where ttNode.NodeType = ProParserTokenTypes:QSTRING:
             tempString = replace(ttNode.NodeText, "~~~\":u, "").
             tempString = replace(tempString, "~\~\":u, "").

@@ -14,35 +14,46 @@
      Purpose: Accepts IRule visitor&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="currentRule" dataType="Prolint.Rules.IRule" position="0" mode="INPUT"/>
+        <parameter name="currentRule" dataType="Prolint.Rules.IRule" position="7" mode="INPUT"/>
     </method>
     <method methodName="Accept" signature="Accept(INPUT:Proparse.IParser)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Accepts IParser visitor&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="currentParser" dataType="Proparse.IParser" position="1" mode="INPUT"/>
+        <parameter name="currentParser" dataType="Proparse.IParser" position="8" mode="INPUT"/>
     </method>
     <method methodName="Accept" signature="Accept(INPUT:Prolint.IUnitWorker)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Accepts IUnitWorker visitor&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="currentWorker" dataType="Prolint.IUnitWorker" position="2" mode="INPUT"/>
+        <parameter name="currentWorker" dataType="Prolint.IUnitWorker" position="9" mode="INPUT"/>
+    </method>
+    <method methodName="AddResult" signature="AddResult(INPUT:character,INPUT:character,INPUT:integer,INPUT:integer,INPUT:character)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="ruleId" dataType="CHARACTER" position="10" mode="INPUT"/>
+        <parameter name="sourceFile" dataType="CHARACTER" position="11" mode="INPUT"/>
+        <parameter name="lineNumber" dataType="INTEGER" position="12" mode="INPUT"/>
+        <parameter name="severity" dataType="INTEGER" position="13" mode="INPUT"/>
+        <parameter name="comment" dataType="CHARACTER" position="14" mode="INPUT"/>
     </method>
     <method methodName="GetParentNum" returnType="INTEGER" signature="GetParentNum(INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Return node's parent num&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="nodeNum" dataType="INTEGER" position="3" mode="INPUT"/>
+        <parameter name="nodeNum" dataType="INTEGER" position="15" mode="INPUT"/>
     </method>
     <method methodName="GetParentType" returnType="INTEGER" signature="GetParentType(INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Return node's parent type&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="nodeNum" dataType="INTEGER" position="4" mode="INPUT"/>
+        <parameter name="nodeNum" dataType="INTEGER" position="16" mode="INPUT"/>
     </method>
     <method methodName="NextSequenceId" returnType="INTEGER" signature="NextSequenceId():INTEGER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
@@ -55,18 +66,30 @@
      Purpose: Returns NodeNum that is a statement head for given node&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="iNodeNum" dataType="INTEGER" position="5" mode="INPUT"/>
+        <parameter name="iNodeNum" dataType="INTEGER" position="17" mode="INPUT"/>
     </method>
     <method methodName="GetStateHeadType" returnType="INTEGER" signature="GetStateHeadType(INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Returns NodeType for node that is a statement head for given node&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="iNodeNum" dataType="INTEGER" position="6" mode="INPUT"/>
+        <parameter name="iNodeNum" dataType="INTEGER" position="18" mode="INPUT"/>
     </method>
     <property name="CompileUnit" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <property name="IsCompiled" dataType="LOGICAL" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <property name="IsDebug" dataType="LOGICAL" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="isResultsPublished" dataType="LOGICAL" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="NONE"/>
+    <property name="LintStatus" dataType="LintResult" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <property name="TopNode" dataType="org.prorefactor.core.JPNode" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <event eventName="PublishResult" signature="PublishResult(INPUT:character,INPUT:character,INPUT:character,INPUT:character,INPUT:integer,INPUT:integer,INPUT:character)" modifier="PUBLIC" isStatic="false" isAbstract="false">
+        <parameter name="ruleId" dataType="CHARACTER" position="0" mode="INPUT"/>
+        <parameter name="attrs" dataType="CHARACTER" position="1" mode="INPUT"/>
+        <parameter name="compileUnit" dataType="CHARACTER" position="2" mode="INPUT"/>
+        <parameter name="sourceFile" dataType="CHARACTER" position="3" mode="INPUT"/>
+        <parameter name="lineNumber" dataType="INTEGER" position="4" mode="INPUT"/>
+        <parameter name="severity" dataType="INTEGER" position="5" mode="INPUT"/>
+        <parameter name="comment" dataType="CHARACTER" position="6" mode="INPUT"/>
+    </event>
     <using name="org.prorefactor.core.JPNode" type="NONE"/>
+    <using name="Prolint.LintResult" type="NONE"/>
 </unit>

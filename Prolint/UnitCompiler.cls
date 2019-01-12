@@ -75,7 +75,8 @@ class Prolint.UnitCompiler implements IUnitWorker:
         
         define variable XrefFile        as character no-undo.
         define variable cnt             as integer   no-undo.
-        define variable messageSeverity as integer   no-undo.                
+        define variable messageSeverity as integer   no-undo.       
+        define variable hasErrors       as logical   no-undo.                 
 
         /* We can't compile it, so return TRUE */
         if lookup(Utils.IO:GetFileExt(CurrentUnit:CompileUnit), "p,w,cls":U) = 0 then
@@ -91,28 +92,13 @@ class Prolint.UnitCompiler implements IUnitWorker:
         xref-xml value(XrefFile) no-error.         
      
         do cnt = 1 to compiler:num-messages:
-            create ttCompileMessage.
             assign
-                ttCompileMessage.SourceFile   = IO:MakePath(compiler:get-file-name(cnt))                
-                ttCompileMessage.ErrorLine    = compiler:get-row(cnt)
-                ttCompileMessage.ErrorCode    = compiler:get-number(cnt)
-                ttCompileMessage.Severity     = GetMessageSeverity(ttCompileMessage.ErrorCode)
-                ttCompileMessage.ErrorMessage = compiler:get-message(cnt).          
+                messageSeverity = GetMessageSeverity(compiler:get-number(cnt))
+                hasErrors = hasErrors or (messageSeverity = CompileErrorSeverity).            
+            currentUnit:AddResult("Compile":U, compiler:get-file-name(cnt), compiler:get-row(cnt), messageSeverity, compiler:get-message(cnt)).                      
         end.
         
-        for each ttCompileMessage:
-            messageSeverity = (if ttCompileMessage.Severity = 0 then CompileWarningSeverity else CompileErrorSeverity).
-            PublishRuleResult:Publish("Compile":U, CurrentUnit:CompileUnit, ttCompileMessage.SourceFile, ttCompileMessage.ErrorLine, messageSeverity, ttCompileMessage.ErrorMessage).
-        end.
-        
-        if currentUnit:IsDebug then
-        do:
-            if temp-table ttCompileMessage:has-records then
-                temp-table ttCompileMessage:write-xml("FILE":U, substitute("&1/messages.xml":U, TempDir), true, "utf-8":U) no-error.            
-        end.
-        
-        find first ttCompileMessage where ttCompileMessage.Severity > 0 no-error.
-        if available(ttCompileMessage) then
+        if hasErrors then
             return.
         
         if search(XrefFile) <> ? then
@@ -149,10 +135,10 @@ class Prolint.UnitCompiler implements IUnitWorker:
         
         do cnt = 1 to extent(warnings):
             if messageCode = warnings[cnt] then
-                return 0.
+                return CompileWarningSeverity.
         end.
 
-        return 1.
+        return CompileErrorSeverity.
 
     end method.
 
