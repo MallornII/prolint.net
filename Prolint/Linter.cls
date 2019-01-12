@@ -221,7 +221,9 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         for each ttRule where ttRule.ProfileName = CurrentProfile:          
             LintRules:Add(Prolint.Rules.Factory:GetInstance(CurrentProfile, ttRule.RuleClass)).
           
-            catch e as Progress.Lang.Error:                
+            catch e as Progress.Lang.Error:
+                log-manager:write-message(e:CallStack).
+                log-manager:write-message(e:GetMessage(1)).                
                 ErrorList:Add(e). 
             end catch.                                    
         end.              
@@ -311,7 +313,9 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         CurrentUnit:LintStatus = Prolint.LintResult:LINT_OK.
         return CurrentUnit.
 		
-        catch e as Progress.Lang.Error :            
+        catch e as Progress.Lang.Error:
+            log-manager:write-message(e:CallStack).
+            log-manager:write-message(e:GetMessage(1)).            
             ErrorList:Add(e).
             CurrentUnit:LintStatus = Prolint.LintResult:UNKNOWN_ERROR.
             return CurrentUnit.               

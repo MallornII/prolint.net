@@ -169,7 +169,9 @@ class Proparse.Wrapper use-widget-pool final:
                         
         return true.
 		
-        catch e as Progress.Lang.Error :            
+        catch e as Progress.Lang.Error :
+            log-manager:write-message(e:CallStack).
+            log-manager:write-message(e:GetMessage(1)).            
             ErrorList:Add(e).
             return false.                
         end catch.
@@ -194,8 +196,10 @@ class Proparse.Wrapper use-widget-pool final:
         ParseSchema:loadSchema(vSchemaFile).
 		
         return.
-        catch eErr as Progress.Lang.Error :
-            ErrorList:Add(eErr).        		
+        catch e as Progress.Lang.Error :
+            log-manager:write-message(e:CallStack).
+            log-manager:write-message(e:GetMessage(1)).
+            ErrorList:Add(e).        		
         end catch.
 
     end method.    
@@ -223,7 +227,9 @@ class Proparse.Wrapper use-widget-pool final:
         
         return.
         
-        catch e as Progress.Lang.Error :            
+        catch e as Progress.Lang.Error :
+            log-manager:write-message(e:CallStack).
+            log-manager:write-message(e:GetMessage(1)).            
             ErrorList:Add(e).
             return.                
         end catch.

@@ -165,7 +165,9 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
         
         return ttNode.NodeNum.
         
-        catch eErr as Progress.Lang.Error :            
+        catch e as Progress.Lang.Error:
+            log-manager:write-message(e:CallStack).
+            log-manager:write-message(e:GetMessage(1)).            
             return ?.                
         end catch.
 
@@ -190,7 +192,9 @@ class Prolint.SimpleLintUnit implements Prolint.ILintUnit:
             return ttNode.NodeType.
         end.
         
-        catch eErr as Progress.Lang.Error :            
+        catch e as Progress.Lang.Error :
+            log-manager:write-message(e:CallStack).
+            log-manager:write-message(e:GetMessage(1)).            
             return ProParserTokenTypes:Program_root.                
         end catch. 
 

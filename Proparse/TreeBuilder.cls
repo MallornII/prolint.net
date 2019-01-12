@@ -32,7 +32,7 @@ class Proparse.TreeBuilder implements Proparse.IParser final:
     method public void Visit
     (
        input currentUnit as Prolint.ILintUnit,
-       input dataset dsproparse              
+       input dataset dsProParse              
     ):
         
         define variable cnt        as integer                     no-undo.
