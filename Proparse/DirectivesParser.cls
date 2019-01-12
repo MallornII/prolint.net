@@ -10,6 +10,7 @@
   ----------------------------------------------------------------------*/
 using com.joanju.proparse.ProParserTokenTypes.
 using Proparse.IParser.
+using Utils.Strings.
 
 block-level on error undo, throw.
 
@@ -36,17 +37,19 @@ class Proparse.DirectivesParser implements IParser final:
         define variable labelNum  as integer   no-undo.
         
         BLK_NODE:
-        for each ttNode where ttNode.NodeType = ProParserTokenTypes:PROPARSEDIRECTIVE:
-            find first bttNode where bttNode.NodeNum = ttNode.NextSibling no-error.
+        for each ttNode where ttNode.NodeType = ProParserTokenTypes:ANNOTATION
+            and ttNode.NodeText = "@ProparseIgnore":               
+            find first bttNode where bttNode.ParentNum = ttNode.ParentNum
+                and bttNode.PrevSibling = ttNode.NodeNum no-error.            
             if not available(bttNode) then
-                next BLK_NODE.
+                next BLK_NODE.            
             if bttNode.NodeType = ProParserTokenTypes:BLOCK_LABEL then
             do:
                 labelNum = bttNode.NodeNum.
                 find first bttNode where bttNode.ParentNum = labelNum
                     and bttNode.IsStateHead.    
             end.
-            rulesList = ParseDirective(ttNode.NodeText).       
+            rulesList = ParseDirective(ttNode.NodeNum).                   
             bttNode.IngroneRules = rulesList. 
             PopulateDirectives(bttNode.NodeNum, rulesList).             
         end. 
@@ -62,15 +65,15 @@ class Proparse.DirectivesParser implements IParser final:
     
     method private void PopulateDirectives       
         (
-        input iNodeNum as integer,
-        input iRulesList as character
+        input nodeNum as integer,
+        input rulesList as character
         ):
         
         define buffer bttNode for ttNode.
             
-        for each bttNode where bttNode.ParentNum = iNodeNum:
-            bttNode.IngroneRules = iRulesList.
-            PopulateDirectives(bttNode.NodeNum, iRulesList).
+        for each bttNode where bttNode.ParentNum = nodeNum:
+            bttNode.IngroneRules = rulesList.
+            PopulateDirectives(bttNode.NodeNum, rulesList).
         end.
         return.
 
@@ -81,22 +84,23 @@ class Proparse.DirectivesParser implements IParser final:
      Notes:
     ------------------------------------------------------------------------------*/
     
-    method private character ParseDirective( input iDirective as character ):
+    method private character ParseDirective( input parentNum as integer ):
         
-        define variable leftParen  as integer no-undo.
-        define variable rightParen as integer no-undo.
+        define variable rulesList as character no-undo.
         
-        iDirective = substitute(iDirective, " ":U, "").
-        if not iDirective begins "prolint-nowarn":U then
-            return "".
-        assign
-            leftParen  = index(iDirective, "(":U)
-            rightParen = index(iDirective, ")":U).
-        if leftParen = 0 or rightParen = 0 then
-            return "".
-        iDirective = trim(substring(iDirective, leftParen + 1, rightParen - leftParen - 1), ",":U).
-
-        return iDirective.
+        define buffer ttEqNode for ttNode.
+        define buffer ttLeftNode for ttNode.
+        define buffer ttRightNode for ttNode.
+        
+        for each ttEqNode where ttEqNode.ParentNum = parentNum
+            and ttEqNode.NodeType = ProParserTokenTypes:EQUAL,
+            first ttLeftNode where ttLeftNode.NodeNum = ttEqNode.PrevSibling
+            and ttLeftNode.NodeText = "ruleId",
+            first ttRightNode where ttRightNode.NodeNum = ttEqNode.NextSibling:        
+            rulesList = Strings:AppendUniqueEntry(rulesList, trim(ttRightNode.NodeText, chr(34))).            
+        end.
+        
+        return rulesList.
 
     end method.
    

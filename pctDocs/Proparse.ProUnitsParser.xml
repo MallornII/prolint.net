@@ -55,9 +55,9 @@
     </method>
     <method methodName="ParseProcedures" signature="ParseProcedures(INPUT:integer,INPUT:UnitType,INPUT:character)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
- Purpose:&#xD;
- Notes:&#xD;
-------------------------------------------------------------------------------*/</methodComment>
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="tokenType" dataType="INTEGER" position="7" mode="INPUT"/>
         <parameter name="proUnitType" dataType="UnitType" position="8" mode="INPUT"/>
         <parameter name="abstractBlock" dataType="CHARACTER" position="9" mode="INPUT"/>

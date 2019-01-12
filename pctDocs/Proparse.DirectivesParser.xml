@@ -23,18 +23,19 @@
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="iNodeNum" dataType="INTEGER" position="2" mode="INPUT"/>
-        <parameter name="iRulesList" dataType="CHARACTER" position="3" mode="INPUT"/>
+        <parameter name="nodeNum" dataType="INTEGER" position="2" mode="INPUT"/>
+        <parameter name="rulesList" dataType="CHARACTER" position="3" mode="INPUT"/>
     </method>
-    <method methodName="ParseDirective" returnType="CHARACTER" signature="ParseDirective(INPUT:character):CHARACTER" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ParseDirective" returnType="CHARACTER" signature="ParseDirective(INPUT:integer):CHARACTER" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="iDirective" dataType="CHARACTER" position="4" mode="INPUT"/>
+        <parameter name="parentNum" dataType="INTEGER" position="4" mode="INPUT"/>
     </method>
     <using name="com.joanju.proparse.ProParserTokenTypes" type="NONE"/>
     <using name="Proparse.IParser" type="NONE"/>
+    <using name="Utils.Strings" type="NONE"/>
     <temp-table name="ttNode" definition="jpnodes.i" noUndo="true">
         <text>DEFINE TEMP-TABLE ttNode NO-UNDO 
   FIELD NodeNum AS INTEGER

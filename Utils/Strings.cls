@@ -52,9 +52,10 @@ class Utils.Strings final:
         input delimString as character
     ):  
         if HasEntry(firstString, SecondString, delimString) then
-            return AppendEntry(firstString, SecondString, delimString).
-        else
             return firstString.
+        else
+            return AppendEntry(firstString, SecondString, delimString).
+            
     end method.
     
     /*------------------------------------------------------------------------------
@@ -94,7 +95,7 @@ class Utils.Strings final:
         input targetString as character,
         input delimString as character        
     ):
-        return (lookup(targetString, SourceString, delimString) > 0).
+        return (lookup(targetString, sourceString, delimString) > 0).
     end method.    
 
     /*------------------------------------------------------------------------------

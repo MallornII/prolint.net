@@ -16,7 +16,7 @@
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="currentUnit" dataType="Prolint.ILintUnit" position="0" mode="INPUT"/>
-        <parameter name="dsproparse" dataType="DATASET" position="1" mode="INPUT"/>
+        <parameter name="dsProParse" dataType="DATASET" position="1" mode="INPUT"/>
     </method>
     <using name="Proparse.IParser" type="NONE"/>
     <using name="com.joanju.proparse.ProToken" type="NONE"/>

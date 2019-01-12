@@ -13,4 +13,4 @@ for /f "tokens=3" %%a in ('reg query "%ProKey%"  /v installPath ^| findstr /ri "
 
 set PROPATH=%cd%,%cd%\Prolint.pl
 
-start %DLC%\bin\prowin.exe -p Prolint/launch.r -pf %cd%\prolint.pf -param %1
+start %DLC%\bin\prowin.exe -p Prolint/launch.r -pf %cd%\prolint.pf -param "%1"
