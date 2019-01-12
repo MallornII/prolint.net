@@ -66,11 +66,11 @@ class Proparse.DirectivesParser implements IParser final:
         input iRulesList as character
         ):
         
-        define buffer ttNode for ttNode.
+        define buffer bttNode for ttNode.
             
-        for each ttNode where ttNode.ParentNum = iNodeNum:
-            ttNode.IngroneRules = iRulesList.
-            PopulateDirectives(ttNode.NodeNum, iRulesList).
+        for each bttNode where bttNode.ParentNum = iNodeNum:
+            bttNode.IngroneRules = iRulesList.
+            PopulateDirectives(bttNode.NodeNum, iRulesList).
         end.
         return.
 

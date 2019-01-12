@@ -61,11 +61,12 @@ class Proparse.CodeBlocksParser implements IParser final:
         input iNodeNum as integer,
         input iBlockText as character
         ):
-        define buffer tNode for ttNode.
+            
+        define buffer bttNode for ttNode.
         
-        for each ttNode where ttNode.ParentNum = iNodeNum:
-            ttNode.CodeBlock = Strings:AppendEntry(ttNode.CodeBlock, iBlockText).
-            PopulateCodeBlocks(ttNode.NodeNum, iBlockText).
+        for each bttNode where bttNode.ParentNum = iNodeNum:
+            bttNode.CodeBlock = Strings:AppendEntry(bttNode.CodeBlock, iBlockText).
+            PopulateCodeBlocks(bttNode.NodeNum, iBlockText).
         end.
         return.
 
