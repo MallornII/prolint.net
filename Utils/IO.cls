@@ -22,9 +22,15 @@ class Utils.IO final:
 
     method public static character GetDirectory( input sourcePath as character ):
         
+        define variable len as integer no-undo.
+        
+        len = length(sourcePath).
         sourcePath = MakePath(sourcePath).
         
-        return substring(sourcePath, 1, max(r-index(sourcePath, "/":u) - 1, 0)).
+        if length(sourcePath) < len then
+            return sourcePath.
+        else
+            return substring(sourcePath, 1, max(r-index(sourcePath, "/":u) - 1, 0)).
 
     end method.
 
@@ -82,15 +88,9 @@ class Utils.IO final:
 
     method public static logical PathExists( input sourcePath as character ):
         
-        define variable inStream as Progress.IO.FileInputStream no-undo.
+        file-info:file-name = sourcePath.        
+        return file-info:full-pathname <> ?.
         
-        inStream = new FileInputStream(sourcePath) no-error.
-
-        return not error-status:error.
-        finally:
-            if valid-object(inStream) then
-                delete object inStream.    
-        end finally.
     end method.
     
     /*------------------------------------------------------------------------------

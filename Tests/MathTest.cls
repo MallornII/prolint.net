@@ -1,112 +1,32 @@
  
  /*------------------------------------------------------------------------
-    File        : LintTest
+    File        : MathTest
     Purpose     : 
     Syntax      : 
     Description : 
     Author(s)   : niand
-    Created     : Fri Dec 28 22:02:22 ALMT 2018
+    Created     : Sun Jan 13 17:51:15 ALMT 2019
     Notes       : 
   ----------------------------------------------------------------------*/
 
 using OpenEdge.Core.Assert.
+using Utils.Math.
 
 block-level on error undo, throw.
 
-class Tests.LintTest:
-    
-    define private variable lintInstance as Prolint.Linter.
-    
-       /*------------------------------------------------------------------------------
-            Purpose:                                                                        
-            Notes:                                                                        
-    ------------------------------------------------------------------------------*/
-
-    @Before.
-    method public void setUpBeforeClass(  ):
-        
-        return.
-
-    end method.
-    
-    /*------------------------------------------------------------------------------
-            Purpose:                                                                        
-            Notes:                                                                        
-    ------------------------------------------------------------------------------*/
-   
-    @Setup.
-    method public void setUp(  ):        
-        
-        return.
-
-    end method.
-    
-    /*------------------------------------------------------------------------------
-            Purpose:                                                                        
-            Notes:                                                                        
-    ------------------------------------------------------------------------------*/
-
-    @TearDown.
-    method public void tearDown(  ):
-        
-        return.
-
-    end method.
-     
-       /*------------------------------------------------------------------------------
-            Purpose:                                                                        
-            Notes:                                                                        
-    ------------------------------------------------------------------------------*/
-   
-    @After.
-    method public void tearDownAfterClass(  ):
-        
-        return.
-
-    end method.
+class Tests.MathTest:
+      
     
     /*------------------------------------------------------------------------------
             Purpose:                                                                        
             Notes:                                                                        
     ------------------------------------------------------------------------------*/
     @Test. 
-    method public void testLoadProfiles(  ):
+    method public void testbin_xor(  ):
         
-        lintInstance = new Prolint.Linter("asdfasd":u, ?) no-error.
-        Assert:IsTrue(error-status:error).
-        lintInstance = new Prolint.Linter("default":u, ?) no-error.
-        Assert:NotNull(lintInstance).
-        return.
-
-    end method.  
-    
-    
-    /*------------------------------------------------------------------------------
-            Purpose:                                                                        
-            Notes:                                                                        
-    ------------------------------------------------------------------------------*/
-    @Test. 
-    method public void testLint(  ):
-        
-        Assert:Equals("default":u, lintInstance:CurrentProfile).
-        //Assert:Equals(Prolint.LintResult:LINT_OK, lintInstance:Lint("Tests/LintDummy.p":u)).
-        return.
-
-    end method.
-    
-    /*------------------------------------------------------------------------------
-            Purpose:                                                                        
-            Notes:                                                                        
-    ------------------------------------------------------------------------------*/
-    @Test. 
-    method public void testGetErrors(  ):
-        
-        define variable it as OpenEdge.Core.Collections.IIterator no-undo.
-        it = lintInstance:GetErrors().
-        do while it:HasNext():
-            Assert:Equals("fake", cast(it:Next(), Progress.Lang.Error):GetMessage(1)).
-        end.
-        Assert:IsFalse(lintInstance:ErrorStatus()).
+        Assert:Equals(1, Math:bin_xor(0, 1)).
+        Assert:Equals(0, Math:bin_xor(1, 1)).
+        Assert:Equals(3, Math:bin_xor(1, 2)).
         return.
 
     end method.
@@ -117,13 +37,89 @@ class Tests.LintTest:
             Notes:                                                                        
     ------------------------------------------------------------------------------*/
     @Test. 
-    method public void testLintCollection(  ):
+    method public void testbin_or(  ):
+        
+        Assert:Equals(1, Math:bin_or(0, 1)).
+        Assert:Equals(1, Math:bin_or(1, 1)).
+        Assert:Equals(3, Math:bin_or(1, 2)).
+        Assert:Equals(3, Math:bin_or(1, 3)).
+        return.
+
+    end method.
+    
+    
+    /*------------------------------------------------------------------------------
+            Purpose:                                                                        
+            Notes:                                                                        
+    ------------------------------------------------------------------------------*/
+    @Test. 
+    method public void testbin_and(  ):
+        
+        Assert:Equals(0, Math:bin_and(0, 1)).
+        Assert:Equals(1, Math:bin_and(1, 1)).
+        Assert:Equals(0, Math:bin_and(1, 2)).
+        Assert:Equals(1, Math:bin_and(1, 3)).
+        return.
+
+    end method.
+    
+    
+    /*------------------------------------------------------------------------------
+            Purpose:                                                                        
+            Notes:                                                                        
+    ------------------------------------------------------------------------------*/
+    @Test. 
+    method public void testbin_lshift(  ):
+        
+        Assert:Equals(2, Math:bin_lshift(1, 1)).
+        Assert:Equals(8, Math:bin_lshift(1, 3)).
+        Assert:Equals(20, Math:bin_lshift(5, 2)).
+        return.
+
+    end method.
+    
+    
+    /*------------------------------------------------------------------------------
+            Purpose:                                                                        
+            Notes:                                                                        
+    ------------------------------------------------------------------------------*/
+    @Test. 
+    method public void testbin_rshift(  ):
+        
+        Assert:Equals(0, Math:bin_rshift(1, 1)).
+        Assert:Equals(1, Math:bin_rshift(8, 3)).
+        Assert:Equals(4, Math:bin_rshift(17, 2)).
+        return.
+
+    end method.
+    
+    
+    /*------------------------------------------------------------------------------
+            Purpose:                                                                        
+            Notes:                                                                        
+    ------------------------------------------------------------------------------*/
+    @Test. 
+    method public void testcast_byte(  ):
+        
+        Assert:Equals(250, Math:cast_byte(250)).
+        Assert:Equals(1, Math:cast_byte(257)).
         
         return.
 
     end method.
     
     
+    /*------------------------------------------------------------------------------
+            Purpose:                                                                        
+            Notes:                                                                        
+    ------------------------------------------------------------------------------*/
+    @Test. 
+    method public void testcast_short(  ):
+        
+        Assert:Equals(65535, Math:cast_short(65535)).
+        Assert:Equals(1, Math:cast_short(65537)).
+        return.
 
+    end method.
     
 end class.
