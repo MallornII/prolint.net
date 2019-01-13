@@ -21,21 +21,6 @@ class Prolint.UnitCompiler implements IUnitWorker:
     
     {proparse/parsedata.i}
     {prolint/lintdata.i}
-    
-    /*------------------------------------------------------------------------------
-     Purpose: Publishes result of compiling
-     Notes:
-    ------------------------------------------------------------------------------*/
-    
-    define public event PublishRuleResult  signature void
-    (   
-        input iRuleId   as character,
-        input iUnit     as character,
-        input iFileName as character,
-        input iLine     as integer,
-        input iSeverity as integer,
-        input iComment  as character
-    ).  
 
     define private variable compilerOptions as character no-undo.
 

@@ -80,7 +80,7 @@
     <include name="assemblies.xml"/>
     <include name="profiles.xml"/>
     <include name="prolint.pf"/>
-    <include name="prolint.bat"/>
+    <include name="prolint.ps1"/>
   </fileset>
 </copy>
 
