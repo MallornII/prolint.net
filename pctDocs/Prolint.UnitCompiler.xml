@@ -15,29 +15,21 @@
      Purpose: Start method for visiting ILintUnit&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="currentUnit" dataType="Prolint.ILintUnit" position="7" mode="INPUT"/>
-        <parameter name="dsProparse" dataType="DATASET" position="8" mode="INPUT"/>
-        <parameter name="dsXref" dataType="DATASET" position="9" mode="INPUT"/>
+        <parameter name="currentUnit" dataType="Prolint.ILintUnit" position="1" mode="INPUT"/>
+        <parameter name="dsProparse" dataType="DATASET" position="2" mode="INPUT"/>
+        <parameter name="dsXref" dataType="DATASET" position="3" mode="INPUT"/>
     </method>
     <method methodName="GetMessageSeverity" returnType="INTEGER" signature="GetMessageSeverity(INPUT:integer):INTEGER" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="messageCode" dataType="INTEGER" position="10" mode="INPUT"/>
+        <parameter name="messageCode" dataType="INTEGER" position="4" mode="INPUT"/>
     </method>
     <property name="TempDir" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <property name="CompileWarningSeverity" dataType="INTEGER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <property name="CompileErrorSeverity" dataType="INTEGER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <property name="UseStrictOptions" dataType="LOGICAL" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <event eventName="PublishRuleResult" signature="PublishRuleResult(INPUT:character,INPUT:character,INPUT:character,INPUT:integer,INPUT:integer,INPUT:character)" modifier="PUBLIC" isStatic="false" isAbstract="false" eventComment="/*------------------------------------------------------------------------------&#xD;&#xA;     Purpose: Publishes result of compiling&#xD;&#xA;     Notes:&#xD;&#xA;    ------------------------------------------------------------------------------*/">
-        <parameter name="iRuleId" dataType="CHARACTER" position="0" mode="INPUT"/>
-        <parameter name="iUnit" dataType="CHARACTER" position="1" mode="INPUT"/>
-        <parameter name="iFileName" dataType="CHARACTER" position="2" mode="INPUT"/>
-        <parameter name="iLine" dataType="INTEGER" position="3" mode="INPUT"/>
-        <parameter name="iSeverity" dataType="INTEGER" position="4" mode="INPUT"/>
-        <parameter name="iComment" dataType="CHARACTER" position="5" mode="INPUT"/>
-    </event>
     <using name="Prolint.IUnitWorker" type="NONE"/>
     <using name="Utils.IO" type="NONE"/>
     <temp-table name="ttNode" definition="jpnodes.i" noUndo="true">
@@ -96,6 +88,7 @@
   FIELD AccessMode AS CHARACTER
   FIELD Direction AS CHARACTER
   FIELD DataType AS CHARACTER
+  FIELD ViewAs AS CHARACTER
   FIELD IsNoUndo AS LOGICAL
   FIELD IsStatic AS LOGICAL
   FIELD IsAbstract AS LOGICAL
@@ -111,6 +104,7 @@
         <field name="AccessMode" dataType="CHARACTER"/>
         <field name="Direction" dataType="CHARACTER"/>
         <field name="DataType" dataType="CHARACTER"/>
+        <field name="ViewAs" dataType="CHARACTER"/>
         <field name="IsNoUndo" dataType="LOGICAL"/>
         <field name="IsStatic" dataType="LOGICAL"/>
         <field name="IsAbstract" dataType="LOGICAL"/>

@@ -14,3 +14,7 @@
 /BackSlash.r
 /BlockLabel.r
 /BuffDb.r
+/DefaultName.r
+/DbTrigger.r
+/DotComment.r
+/IfElseDo.r

@@ -96,7 +96,7 @@ class Prolint.Rules.AbbrevKwd inherits Prolint.Rules.AbstractRule serializable f
         else  
             return keyword-all(abbrevName).
 
-    end method.
+    end method.   
 
     method override public void Visit
         (

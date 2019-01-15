@@ -22,6 +22,8 @@
     <member name="U_SETTER"/>
     <member name="U_PROPERTY"/>
     <member name="U_VARIABLE"/>
+    <member name="U_FRAME"/>
+    <member name="U_BUTTON"/>
     <member name="U_PARAMETER"/>
     <member name="U_TEMPTABLE"/>
     <member name="U_BUFFER"/>

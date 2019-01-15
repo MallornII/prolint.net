@@ -25,5 +25,17 @@
     <Rule>
       <RuleClass>Prolint.Rules.BuffDb</RuleClass>
     </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.DbTrigger</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.DefaultName</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.DotComment</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.IfElseDo</RuleClass>
+    </Rule>
   </Profile>
 </LintProfiles>

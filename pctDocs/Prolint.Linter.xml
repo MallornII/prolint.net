@@ -109,7 +109,9 @@
     <property name="CurrentUnit" dataType="Prolint.ILintUnit" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <property name="ErrorList" dataType="OpenEdge.Core.Collections.List" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <property name="IsDebug" dataType="LOGICAL" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC">
-        <propertyComment>/* If set true will save temp-tables into TempDir in XML format and will not delete TempDir */</propertyComment>
+        <propertyComment>/*&#xD;
+        If set true will save temp-tables into TempDir in XML format and will not delete TempDir&#xD;
+    */</propertyComment>
     </property>
     <property name="LintCompiler" dataType="Prolint.UnitCompiler" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <property name="LintDataDebugger" dataType="Prolint.UnitDebugData" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
@@ -296,6 +298,7 @@
   FIELD AccessMode AS CHARACTER
   FIELD Direction AS CHARACTER
   FIELD DataType AS CHARACTER
+  FIELD ViewAs AS CHARACTER
   FIELD IsNoUndo AS LOGICAL
   FIELD IsStatic AS LOGICAL
   FIELD IsAbstract AS LOGICAL
@@ -311,6 +314,7 @@
         <field name="AccessMode" dataType="CHARACTER"/>
         <field name="Direction" dataType="CHARACTER"/>
         <field name="DataType" dataType="CHARACTER"/>
+        <field name="ViewAs" dataType="CHARACTER"/>
         <field name="IsNoUndo" dataType="LOGICAL"/>
         <field name="IsStatic" dataType="LOGICAL"/>
         <field name="IsAbstract" dataType="LOGICAL"/>

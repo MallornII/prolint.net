@@ -47,9 +47,11 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
 
     define private property ErrorList as OpenEdge.Core.Collections.List no-undo 
         get.
-        set. 
-        
-    /* If set true will save temp-tables into TempDir in XML format and will not delete TempDir */ 
+        set.
+   
+    /*
+        If set true will save temp-tables into TempDir in XML format and will not delete TempDir
+    */ 
     define public property IsDebug as logical no-undo 
         get.
         set. 

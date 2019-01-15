@@ -9,6 +9,7 @@ define {&ACCESS_MOD} {&STAT_MOD} temp-table ttProUnit no-undo
     field AccessMode as character
     field Direction  as character
     field DataType   as character
+    field ViewAs     as character
     field IsNoUndo   as logical
     field IsStatic   as logical
     field IsAbstract as logical

@@ -126,7 +126,7 @@ class Proparse.ProUnitsParser implements IParser final:
                 ttProUnit.AccessMode = "PUBLIC":u
                 when tokenType = ProParserTokenTypes:PROPERTY
                 ttProUnit.AccessMode = "PRIVATE":u
-                when tokenType = ProParserTokenTypes:VARIABLE.                
+                when tokenType = ProParserTokenTypes:VARIABLE.
                         
             BLK_NEXT:
             for each ttChildNode where ttChildNode.ParentNum = ttHeadNode.NodeNum:    
@@ -163,6 +163,12 @@ class Proparse.ProUnitsParser implements IParser final:
                             if available(ttTypeNode) then
                                 ttProUnit.DataType = ttTypeNode.NodeText.
                         end.
+                    when ProParserTokenTypes:VIEWAS then
+                    do:
+                        find first ttTypeNode where ttTypeNode.NodeNum = ttChildNode.FirstChild no-error.
+                        if available(ttTypeNode) then
+                            ttProUnit.ViewAs = ttTypeNode.NodeText.
+                    end.
                     when ProParserTokenTypes:ID then
                         ttProUnit.UnitName = ttChildNode.NodeText.                                            
                 end case.
@@ -338,6 +344,8 @@ class Proparse.ProUnitsParser implements IParser final:
         ParseAccessors(ProParserTokenTypes:Property_getter, Proparse.UnitType:U_GETTER).                
         ParseAccessors(ProParserTokenTypes:Property_setter, Proparse.UnitType:U_SETTER).                
         ParseDefines(ProParserTokenTypes:VARIABLE, Proparse.UnitType:U_VARIABLE).        
+        ParseDefines(ProParserTokenTypes:FRAME, Proparse.UnitType:U_FRAME).
+        ParseDefines(ProParserTokenTypes:BUTTON, Proparse.UnitType:U_BUTTON).
         ParseDefines(ProParserTokenTypes:PARAMETER, Proparse.UnitType:U_PARAMETER).        
         ParseParameterList().        
         ParseTempTables().
