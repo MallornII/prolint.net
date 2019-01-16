@@ -27,8 +27,7 @@ enum proparse.UnitType:
         U_SETTER
         U_PROPERTY
         U_VARIABLE
-        U_FRAME
-        U_BUTTON
+        U_WIDGET        
         U_PARAMETER
         U_TEMPTABLE
         U_BUFFER.

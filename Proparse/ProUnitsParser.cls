@@ -127,6 +127,21 @@ class Proparse.ProUnitsParser implements IParser final:
                 when tokenType = ProParserTokenTypes:PROPERTY
                 ttProUnit.AccessMode = "PRIVATE":u
                 when tokenType = ProParserTokenTypes:VARIABLE.
+                
+            case tokenType:
+                when ProParserTokenTypes:FRAME then
+                    ttProUnit.DataType = "FRAME":u.
+                when ProParserTokenTypes:BUTTON then
+                    ttProUnit.DataType = "BUTTON":u.
+                when ProParserTokenTypes:BROWSE then
+                    ttProUnit.DataType = "BROWSE":u.
+                when ProParserTokenTypes:MENU then
+                    ttProUnit.DataType = "MENU":u.
+                when ProParserTokenTypes:IMAGE then
+                    ttProUnit.DataType = "IMAGE":u.
+                when ProParserTokenTypes:RECTANGLE then
+                    ttProUnit.DataType = "RECTANGLE":u.                
+            end case.
                         
             BLK_NEXT:
             for each ttChildNode where ttChildNode.ParentNum = ttHeadNode.NodeNum:    
@@ -344,8 +359,12 @@ class Proparse.ProUnitsParser implements IParser final:
         ParseAccessors(ProParserTokenTypes:Property_getter, Proparse.UnitType:U_GETTER).                
         ParseAccessors(ProParserTokenTypes:Property_setter, Proparse.UnitType:U_SETTER).                
         ParseDefines(ProParserTokenTypes:VARIABLE, Proparse.UnitType:U_VARIABLE).        
-        ParseDefines(ProParserTokenTypes:FRAME, Proparse.UnitType:U_FRAME).
-        ParseDefines(ProParserTokenTypes:BUTTON, Proparse.UnitType:U_BUTTON).
+        ParseDefines(ProParserTokenTypes:FRAME, Proparse.UnitType:U_WIDGET).
+        ParseDefines(ProParserTokenTypes:BUTTON, Proparse.UnitType:U_WIDGET).
+        ParseDefines(ProParserTokenTypes:BROWSE, Proparse.UnitType:U_WIDGET).
+        ParseDefines(ProParserTokenTypes:MENU, Proparse.UnitType:U_WIDGET).
+        ParseDefines(ProParserTokenTypes:IMAGE, Proparse.UnitType:U_WIDGET).
+        ParseDefines(ProParserTokenTypes:RECTANGLE, Proparse.UnitType:U_WIDGET).
         ParseDefines(ProParserTokenTypes:PARAMETER, Proparse.UnitType:U_PARAMETER).        
         ParseParameterList().        
         ParseTempTables().

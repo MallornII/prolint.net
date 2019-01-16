@@ -67,32 +67,24 @@ class Prolint.Rules.DefaultName inherits AbstractRule serializable final:
                 testInt = integer(substring(ttProUnit.UnitName, length(defaultPrefix) + 1)) no-error.
                 if testInt <> ? then
                     PublishResult(currentUnit:CompileUnit, ttNode.NodeFile, ttNode.NodeLine, 
-                                  substitute("&1 is not a meaningfull widget name":t, ttProUnit.UnitName)).
+                                  substitute("&1 is not a meaningful widget name":t, ttProUnit.UnitName)).
             end.
         end.
         
-        defaultPrefix = "FRAME-":u.
-        for each ttProUnit where ttProUnit.UnitType = Proparse.UnitType:U_FRAME:GetValue()
-            and ttProUnit.UnitName begins defaultPrefix,
-            first ttNode where ttNode.nodeNum = ttProUnit.StartNode:            
-            testInt = ?.
-            testInt = integer(substring(ttProUnit.UnitName, length(defaultPrefix) + 1)) no-error.
-            if testInt <> ? then
-                PublishResult(currentUnit:CompileUnit, ttNode.NodeFile, ttNode.NodeLine, 
-                              substitute("&1 is not a meaningfull widget name":t, ttProUnit.UnitName)).
-            
-        end.
         
-        defaultPrefix = "BUTTON-":u.
-        for each ttProUnit where ttProUnit.UnitType = Proparse.UnitType:U_BUTTON:GetValue()
-            and ttProUnit.UnitName begins defaultPrefix,
+        for each ttProUnit where ttProUnit.UnitType = Proparse.UnitType:U_WIDGET:GetValue(),
             first ttNode where ttNode.nodeNum = ttProUnit.StartNode:
-            testInt = ?.
-            testInt = integer(substring(ttProUnit.UnitName, length(defaultPrefix) + 1)) no-error.
-            if testInt <> ? then
-                PublishResult(currentUnit:CompileUnit, ttNode.NodeFile, ttNode.NodeLine, 
-                              substitute("&1 is not a meaningfull widget name":t, ttProUnit.UnitName)).
-        end.
+            defaultPrefix = substitute("&1-", ttProUnit.DataType).
+            if ttProUnit.UnitName begins defaultPrefix then
+            do:  
+                testInt = ?.
+                testInt = integer(substring(ttProUnit.UnitName, length(defaultPrefix) + 1)) no-error.
+                if testInt <> ? then
+                    PublishResult(currentUnit:CompileUnit, ttNode.NodeFile, ttNode.NodeLine, 
+                                  substitute("&1 is not a meaningful widget name":t, ttProUnit.UnitName)).
+            end.            
+        end.        
+        
 
     end method.
 end class.
