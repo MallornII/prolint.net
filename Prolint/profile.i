@@ -15,7 +15,8 @@
 /* ***************************  Definitions  ************************** */
 define {&ACCESS_MOD} {&STAT_MOD} temp-table ttProfile no-undo
     xml-node-name "Profile"
-    field ProfileName as character xml-node-type "ATTRIBUTE".
+    field ProfileName as character xml-node-type "ATTRIBUTE"
+    field ParsePropath as character.
     
 define {&ACCESS_MOD} {&STAT_MOD} temp-table ttRule no-undo
     xml-node-name "Rule"

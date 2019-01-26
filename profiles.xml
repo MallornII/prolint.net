@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LintProfiles xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Profile ProfileName="default">
+    <ParsePropath>.,Prolint.net</ParsePropath>
     <Rule>
       <RuleClass>Prolint.Rules.AbbrevKwd</RuleClass>
     </Rule>

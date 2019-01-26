@@ -121,7 +121,8 @@ class Prolint.Linter use-widget-pool final implements Prolint.IDisposable:
         find first ttProfile where ttProfile.ProfileName = CurrentProfile no-error.
         if not available(ttProfile) then
             undo, throw new Progress.Lang.AppError(substitute("Profile <&1> doesn't exist":t, CurrentProfile), 0).
-        LoadRules().     
+        LoadRules().
+        Proparse.Wrapper:SetPropath(ttProfile.ParsePropath).     
 		
     end constructor.
     

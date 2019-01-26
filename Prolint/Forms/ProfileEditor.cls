@@ -18,6 +18,7 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
     
     {Prolint/profile.i &ACCESS_MOD="PRIVATE"} 
     
+    define private variable btnPropath as System.Windows.Forms.Button no-undo.
     define private variable btnSaveProfile                     as System.Windows.Forms.Button                    no-undo.
     define private variable btnRemoveRule                      as System.Windows.Forms.Button                    no-undo.
     define private variable btnRemoveProfile                   as System.Windows.Forms.Button                    no-undo.
@@ -61,7 +62,9 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         if not available(ttProfile) then
         do:
             create ttProfile.
-            ttProfile.ProfileName = "default":U.
+            assign
+                ttProfile.ProfileName = "default":u
+                ttProfile.ParsePropath = ".,Prolint.net":u.
         end.
         
         for each ttRule:
@@ -188,6 +191,37 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         return.
 
     end method.
+
+	/*------------------------------------------------------------------------------
+	 Purpose:
+	 Notes:
+	------------------------------------------------------------------------------*/
+	@VisualDesigner.
+	method private void btnPropath_Click( input sender as System.Object, input e as System.EventArgs ):
+		
+		define variable propathDialog as Prolint.Forms.PropathEditor no-undo.
+       
+        propathDialog = new Prolint.Forms.PropathEditor().
+        find first ttProfile where ttProfile.ProfileName = comboProfiles:SelectedValue:ToString().
+        
+        propathDialog:LocalPropath = ttProfile.ParsePropath.        
+        propathDialog:ShowModalDialog().
+       
+        if propathDialog:DialogResult = System.Windows.Forms.DialogResult:OK then        
+            ttProfile.ParsePropath = propathDialog:LocalPropath.                
+        
+        propathDialog:Dispose().
+        return.
+        
+        catch err as Progress.Lang.Error:
+            message err:GetMessage(1)
+            view-as alert-box error.
+            log-manager:write-message(err:CallStack).
+            log-manager:write-message(err:GetMessage(1)).
+            undo, throw err.
+        end catch.
+
+	end method.
 
     /*------------------------------------------------------------------------------
      Purpose:
@@ -348,6 +382,7 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         this-object:comboProfiles = new System.Windows.Forms.ComboBox().
         this-object:BSProfiles = new Progress.Data.BindingSource(this-object:components).
         this-object:groupProfile = new System.Windows.Forms.GroupBox().
+        this-object:btnPropath = new System.Windows.Forms.Button().
         this-object:btnSaveProfile = new System.Windows.Forms.Button().
         this-object:btnRemoveProfile = new System.Windows.Forms.Button().
         this-object:btnAddProfile = new System.Windows.Forms.Button().
@@ -461,17 +496,29 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         /*  */
         /* groupProfile */
         /*  */
+        this-object:groupProfile:Controls:Add(this-object:btnPropath).
         this-object:groupProfile:Controls:Add(this-object:btnSaveProfile).
         this-object:groupProfile:Controls:Add(this-object:btnRemoveProfile).
         this-object:groupProfile:Controls:Add(this-object:btnAddProfile).
         this-object:groupProfile:Controls:Add(this-object:comboProfiles).
         this-object:groupProfile:Location = new System.Drawing.Point(12, 12).
         this-object:groupProfile:Name = "groupProfile":U.
-        this-object:groupProfile:Size = new System.Drawing.Size(407, 53).
+        this-object:groupProfile:Size = new System.Drawing.Size(452, 53).
         this-object:groupProfile:TabIndex = 2.
         this-object:groupProfile:TabStop = false.
         this-object:groupProfile:Text = "Profile":U.
         this-object:groupProfile:UseCompatibleTextRendering = true.
+        /*  */
+        /* btnPropath */
+        /*  */
+        this-object:btnPropath:Image = cast(resources:GetObject("btnPropath.Image":U), System.Drawing.Image).
+        this-object:btnPropath:Location = new System.Drawing.Point(407, 9).
+        this-object:btnPropath:Name = "btnPropath":U.
+        this-object:btnPropath:Size = new System.Drawing.Size(38, 38).
+        this-object:btnPropath:TabIndex = 5.
+        this-object:btnPropath:UseCompatibleTextRendering = true.
+        this-object:btnPropath:UseVisualStyleBackColor = true.
+        this-object:btnPropath:Click:Subscribe(this-object:btnPropath_Click).
         /*  */
         /* btnSaveProfile */
         /*  */
@@ -561,10 +608,6 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         this-object:groupProfile:ResumeLayout(false).
         this-object:ResumeLayout(false).
         catch e as Progress.Lang.Error:
-            message e:GetMessage(1)
-            view-as alert-box error.
-            log-manager:write-message(e:CallStack).
-            log-manager:write-message(e:GetMessage(1)).
             undo, throw e.
         end catch.
     end method.

@@ -17,3 +17,5 @@
 /Release/
 /prolint.net.log
 /prolint.p
+.scannerwork/
+.sonarlint/

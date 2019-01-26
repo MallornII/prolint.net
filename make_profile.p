@@ -25,7 +25,10 @@ define variable rulePath as character no-undo.
 
 /* ***************************  Main Block  *************************** */
 create ttProfile.
-ttProfile.ProfileName = "default":u.
+assign
+    ttProfile.ProfileName = "default":u
+    ttProfile.ParsePropath = ".,Prolint.net":u.
+    
 input stream sRules from os-dir("Prolint/Rules":u) no-attr-list.
 BLK_RULE:
 repeat:

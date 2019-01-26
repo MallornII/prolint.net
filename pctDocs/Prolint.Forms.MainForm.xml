@@ -56,8 +56,10 @@
     <temp-table name="ttProfile" definition="prolint/profile.i" noUndo="true" xmlNodeName="Profile">
         <text>DEFINE TEMP-TABLE ttProfile NO-UNDO XML-NODE-NAME 'Profile' 
   FIELD ProfileName AS CHARACTER
+  FIELD ParsePropath AS CHARACTER
 </text>
         <field name="ProfileName" dataType="CHARACTER"/>
+        <field name="ParsePropath" dataType="CHARACTER"/>
     </temp-table>
     <temp-table name="ttRule" definition="prolint/profile.i" noUndo="true" xmlNodeName="Rule">
         <text>DEFINE TEMP-TABLE ttRule NO-UNDO XML-NODE-NAME 'Rule' 

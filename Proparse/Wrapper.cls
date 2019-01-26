@@ -80,11 +80,11 @@ class Proparse.Wrapper use-widget-pool final:
         ParseEnv = com.joanju.proparse.Environment:instance().
         ParseSession = org.prorefactor.refactor.RefactorSession:getInstance().     
         
-        ParseEnv:configSet("batch-mode", string(session:batch-mode, "true/false":U)).
-        ParseEnv:configSet("opsys":U, opsys).
-        ParseEnv:configSet("propath":U, propath).
-        ParseEnv:configSet("proversion":U, proversion).
-        ParseEnv:configSet("window-system":U, session:window-system).
+        ParseEnv:configSet("batch-mode", string(session:batch-mode, "true/false":u)).
+        ParseEnv:configSet("opsys":u, opsys).
+        ParseEnv:configSet("propath":u, propath).
+        ParseEnv:configSet("proversion":u, proversion).
+        ParseEnv:configSet("window-system":u, session:window-system).
         
         ParserCollection = new OpenEdge.Core.Collections.Collection().
         ParserCollection:Add(new Proparse.TreeBuilder()).
@@ -190,7 +190,7 @@ class Proparse.Wrapper use-widget-pool final:
         if not valid-object(DbSchema) then
             DbSchema = new Proparse.ProDbSchema().
             
-        vSchemaFile = session:temp-directory + "proparse.schema":U.
+        vSchemaFile = session:temp-directory + "proparse.schema":u.
         DbSchema:ToFile(vSchemaFile).
         ParseSchema:clear().
         ParseSchema:loadSchema(vSchemaFile).
@@ -214,7 +214,7 @@ class Proparse.Wrapper use-widget-pool final:
         define variable dummyFile as character no-undo.
         
         CleanUp().
-        dummyFile = IO:MakePath(TempDir, "parse_dummy.p":U).
+        dummyFile = IO:MakePath(TempDir, "parse_dummy.p":u).
         output stream sParse to value(dummyFile).
         output stream sParse close.        
 
@@ -238,6 +238,18 @@ class Proparse.Wrapper use-widget-pool final:
         end finally.
 
     end method.    
+
+    /*------------------------------------------------------------------------------
+     Purpose:
+     Notes:
+    ------------------------------------------------------------------------------*/
+
+    method public static void SetPropath( input userPropath as character ):
+        
+        ParseEnv:configSet("propath":u, userPropath).
+        return.
+
+    end method.
 
     destructor public Wrapper ( ):
        
