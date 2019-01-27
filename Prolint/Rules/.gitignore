@@ -18,3 +18,9 @@
 /DbTrigger.r
 /DotComment.r
 /IfElseDo.r
+/EmptyBlock.r
+/FindState.r
+/EndType.r
+/ErrorText.r
+/FindStateDb.r
+/FindStateTT.r

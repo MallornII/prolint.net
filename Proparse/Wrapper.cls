@@ -245,7 +245,7 @@ class Proparse.Wrapper use-widget-pool final:
     ------------------------------------------------------------------------------*/
 
     method public static void SetPropath( input userPropath as character ):
-        
+                
         ParseEnv:configSet("propath":u, userPropath).
         return.
 

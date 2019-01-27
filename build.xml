@@ -2,7 +2,7 @@
 <project default="main" basedir=".">
 
  <property environment="env" />
- <property name="version" value="0.2.0" />
+ <property name="version" value="0.3.0" />
  <taskdef resource="PCT.properties" />
  <taskdef resource="extras115.properties" />
  <typedef resource="types.properties" />
@@ -54,6 +54,26 @@
 </ABLUnit> 
 </target>  
 
+<target name="PL">
+<DlcHome value="c:/progress/openedge" />
+<path id="compilation.propath">
+  <pathelement path="." />
+  <pathelement path="Proparse" />
+  <pathelement path="Prolint" />
+  <pathelement path="Utils" />
+</path>
+
+<echo message="creating profile"/>
+<PCTRun procedure="make_profile.p"/>
+<echo message="building Procedure Library"/>
+<PCTLibrary destfile="Release/Prolint.pl" encoding="utf-8" cpStream="utf-8" cpinternal="utf-8">
+    <fileset dir="bin">
+        <include name="**/*.r" />
+        <exclude name="Prolint.pl" />
+    </fileset>
+</PCTLibrary>
+</target>
+
 <target name="release">
 <DlcHome value="c:/progress/openedge" />
 <path id="compilation.propath">
@@ -70,8 +90,7 @@
 </ClassDocumentation>
 <HTMLDocumentation sourceDir="pctDocs" destDir="docs" title="Prolint.Net documentation"/>
 
-<echo message="creating profile"/>
-<PCTRun procedure="make_profile.p"/>
+
 
 <echo message="copying files"/>
 <copy todir="Release">
@@ -99,14 +118,6 @@
 </copy>
 <mkdir dir="Release/Profiles"/>
 <mkdir dir="Release/Profiles/default"/>
-
-<echo message="building Procedure Library"/>
-<PCTLibrary destfile="Release/Prolint.pl" encoding="utf-8" cpStream="utf-8" cpinternal="utf-8">
-    <fileset dir="bin">
-        <include name="**/*.r" />
-        <exclude name="Prolint.pl" />
-    </fileset>
-</PCTLibrary>
 
 <zip destfile="Release/Prolint_${version}.zip" basedir="Release" excludes="*.zip"/>
 </target>

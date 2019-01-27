@@ -1,32 +1,33 @@
  
  /*------------------------------------------------------------------------
-    File        : DotComment
-    Purpose     : Finds dot comments (<PERIOD> symbol before statement)
+    File        : EmptyBlock
+    Purpose     : Finds empty blocks
     Syntax      : 
     Description : 
     Author(s)   : Andrew Ni
-    Created     : 14.01.2019 22:14:45
+    Created     : 26.01.2019 18:31:04 ALMT 2019
     Notes       : 
   ----------------------------------------------------------------------*/
 
 using com.joanju.proparse.ProParserTokenTypes.
+using Proparse.UnitType.
 using Prolint.Rules.AbstractRule.
 
 block-level on error undo, throw.
 
-class Prolint.Rules.DotComment inherits AbstractRule serializable final: 
+class Prolint.Rules.EmptyBlock inherits AbstractRule serializable final: 
     /*------------------------------------------------------------------------------
      Purpose:
      Notes:
     ------------------------------------------------------------------------------*/
         
-    constructor public DotComment (  ):
+    constructor public EmptyBlock (  ):
         super ().
         
         assign
-            RuleDescription = "Finds dot comments (<PERIOD> symbol before statement)":t
-            RuleId          = "DotComment":U
-            Severity        = 9.
+            RuleDescription = "Finds empty blocks":t
+            RuleId          = "EmptyBlock":U
+            Severity        = 4.
         
     end constructor.
 
@@ -42,13 +43,22 @@ class Prolint.Rules.DotComment inherits AbstractRule serializable final:
         input dataset dsProparse,
         input dataset dsXref
         ):
+           
+        define buffer ttChildNode for ttNode.
+        define buffer ttParentNode for ttNode.
         
         super:Visit(currentUnit, input dataset dsProparse, input dataset dsXref).
-        
+         
         BLK_NODE:
-        for each ttNode where ttNode.NodeType = ProParserTokenTypes:DOT_COMMENT:
-            PublishResult(currentUnit:CompileUnit, ttNode.NodeFile, ttNode.NodeLine, "<PERIOD> comments a statement":t).                              
+        for each ttNode where ttNode.NodeType = ProParserTokenTypes:Code_block,
+            first ttParentNode where ttParentNode.NodeNum = ttNode.ParentNum:
+            if can-find(first ttChildNode where ttChildNode.ParentNum = ttNode.NodeNum) then
+                next BLK_NODE.
+            if can-find(first ttProUnit where ttProUnit.StartNode = ttNode.ParentNum
+                and ttProUnit.IsAbstract) then
+                next BLK_NODE.
+            PublishResult(currentUnit:CompileUnit, ttNode.NodeFile, ttNode.NodeLine, 
+                                  substitute("Empty &1 block":t, ttParentNode.NodeText)).
         end.
-
     end method.
 end class.

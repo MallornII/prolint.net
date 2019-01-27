@@ -1,11 +1,11 @@
  
 /*------------------------------------------------------------------------
    File        : DbTrigger
-   Purpose     : 
+   Purpose     : Finds disable triggers statements
    Syntax      : 
    Description : 
-   Author(s)   : niand
-   Created     : Mon Jan 14 21:34:41 ALMT 2019
+   Author(s)   : Andrew Ni
+   Created     : 14.01.2019 21:34:41
    Notes       : 
  ----------------------------------------------------------------------*/
 

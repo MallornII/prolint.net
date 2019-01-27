@@ -2,11 +2,11 @@
 <unit packageName="Prolint.Rules" className="DefaultName" inherits="AbstractRule" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="true" useWidgetPool="false">
     <classComment>/*------------------------------------------------------------------------&#xD;
     File        : DefaultName&#xD;
-    Purpose     : &#xD;
+    Purpose     : Finds widgets with default names&#xD;
     Syntax      : &#xD;
     Description : &#xD;
-    Author(s)   : niand&#xD;
-    Created     : Mon Jan 14 21:49:34 ALMT 2019&#xD;
+    Author(s)   : Andrew Ni&#xD;
+    Created     : 14.01.2019 21:49:34&#xD;
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
     <constructor signature="DefaultName()" modifier="PUBLIC">

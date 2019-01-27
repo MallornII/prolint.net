@@ -1,11 +1,11 @@
  
  /*------------------------------------------------------------------------
     File        : DefaultName
-    Purpose     : 
+    Purpose     : Finds widgets with default names
     Syntax      : 
     Description : 
-    Author(s)   : niand
-    Created     : Mon Jan 14 21:49:34 ALMT 2019
+    Author(s)   : Andrew Ni
+    Created     : 14.01.2019 21:49:34
     Notes       : 
   ----------------------------------------------------------------------*/
 

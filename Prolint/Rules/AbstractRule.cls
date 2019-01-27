@@ -76,8 +76,7 @@ class Prolint.Rules.AbstractRule  implements Prolint.Rules.IRule serializable ab
         input comment     as character
         ):
 		
-		LintUnit:AddResult(RuleId, sourceFile, lineNumber, Severity, comment).        
-        process events.
+		LintUnit:AddResult(RuleId, sourceFile, lineNumber, Severity, comment).	
         return.
 
     end method.	

@@ -2,11 +2,11 @@
 <unit packageName="Prolint.Rules" className="DotComment" inherits="AbstractRule" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="true" useWidgetPool="false">
     <classComment>/*------------------------------------------------------------------------&#xD;
     File        : DotComment&#xD;
-    Purpose     : &#xD;
+    Purpose     : Finds dot comments (&lt;PERIOD&gt; symbol before statement)&#xD;
     Syntax      : &#xD;
     Description : &#xD;
-    Author(s)   : niand&#xD;
-    Created     : Mon Jan 14 22:14:45 ALMT 2019&#xD;
+    Author(s)   : Andrew Ni&#xD;
+    Created     : 14.01.2019 22:14:45&#xD;
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
     <constructor signature="DotComment()" modifier="PUBLIC">

@@ -36,6 +36,21 @@
       <RuleClass>Prolint.Rules.DotComment</RuleClass>
     </Rule>
     <Rule>
+      <RuleClass>Prolint.Rules.EmptyBlock</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.EndType</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.ErrorText</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.FindStateDb</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.FindStateTT</RuleClass>
+    </Rule>
+    <Rule>
       <RuleClass>Prolint.Rules.IfElseDo</RuleClass>
     </Rule>
   </Profile>

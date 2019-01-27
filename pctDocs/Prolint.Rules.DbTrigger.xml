@@ -2,11 +2,11 @@
 <unit packageName="Prolint.Rules" className="DbTrigger" inherits="AbstractRule" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="true" useWidgetPool="false">
     <classComment>/*------------------------------------------------------------------------&#xD;
    File        : DbTrigger&#xD;
-   Purpose     : &#xD;
+   Purpose     : Finds disable triggers statements&#xD;
    Syntax      : &#xD;
    Description : &#xD;
-   Author(s)   : niand&#xD;
-   Created     : Mon Jan 14 21:34:41 ALMT 2019&#xD;
+   Author(s)   : Andrew Ni&#xD;
+   Created     : 14.01.2019 21:34:41&#xD;
    Notes       : &#xD;
  ----------------------------------------------------------------------*/</classComment>
     <constructor signature="DbTrigger()" modifier="PUBLIC">
