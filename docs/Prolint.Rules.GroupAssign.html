@@ -38,7 +38,7 @@
                 	                <span class="span_namespace">Namespace:</span>   
                 	            </td>
                 	            <td>
-                	                <span class="span_packagename"><a href="Prolint.package.html">Prolint<a></span>
+                	                <span class="span_packagename"><a href="Prolint.Rules.package.html">Prolint.Rules<a></span>
                 	            </td>
                             </tr>
                             <tr>
@@ -49,7 +49,7 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <span class="span_classname">UnitCompiler</span>
+                                                <span class="span_classname">GroupAssign</span>
                                             </td>
                                         </tr>
                                     </table>
@@ -60,7 +60,7 @@
                                     <span class="span_parentclass">Parent classes:</span>   
                                 </td>
                                 <td class="span_parentclass">
-                                    <div class='parentclasses'><div style='padding-left:0em; height:12px' class='parentclassesitem'>                                                            <table style='border-spacing:0px'>                                                                <tr>                                                                    <td>                                                                    Progress.Lang.Object                                                                    </td>                                                                </tr>                                                            </table>                                                       </div><div style='padding-left:2em; height:16px' class='parentclassesitem'>                                                                <table>                                                                    <tr>                                                                        <td>                                                                            <div class='parentclassnode'></div>                                                                        </td>                                                                        <td>                                                                        <a href='Prolint.UnitCompiler.html'>Prolint.UnitCompiler</a>                                                                        </td>                                                                    </tr>                                                                </table>                                                           </div></div><br>
+                                    <div class='parentclasses'><div style='padding-left:0em; height:12px' class='parentclassesitem'>                                                            <table style='border-spacing:0px'>                                                                <tr>                                                                    <td>                                                                    Progress.Lang.Object                                                                    </td>                                                                </tr>                                                            </table>                                                       </div><div style='padding-left:1em; height:16px' class='parentclassesitem'>                                                            <table>                                                                <tr>                                                                    <td>                                                                        <div class='parentclassnode'></div>                                                                    </td>                                                                    <td>                                                                    <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a>                                                                    </td>                                                                </tr>                                                            </table>                                                       </div><div style='padding-left:3em; height:16px' class='parentclassesitem'>                                                                <table>                                                                    <tr>                                                                        <td>                                                                            <div class='parentclassnode'></div>                                                                        </td>                                                                        <td>                                                                        <a href='Prolint.Rules.GroupAssign.html'>Prolint.Rules.GroupAssign</a>                                                                        </td>                                                                    </tr>                                                                </table>                                                           </div></div><br>
                                 </td>
                             </tr>
                             
@@ -69,23 +69,23 @@
                                     <span class="span_inherits">Inherits:</span>
                                 </td>
                                 <td class="unit_inherits">
-                                    <span class="span_inherits">Progress.Lang.Object</span>
+                                    <span class="span_inherits"><a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a></span>
                                 </td>
                             </tr>
                             
-                            
+                            <!--
                             <tr>
                                 <td>
                                     <span class="span_implements">Implements:</span> 
                                 </td>
                                 <td class="unit_interface">
-                                    <span class="span_implements"> <a href='Prolint.IUnitWorker.html'>Prolint.IUnitWorker</a></span> 
+                                    <span class="span_implements"></span> 
                                 </td>
                             </tr>
-                            
+                            -->
                             <tr>
                                 <td>
-                                    <span class="span_inherits"></span>
+                                    <span class="span_inherits">FINAL</span>
                                 </td>
                                 <td>
                                 </td>
@@ -101,7 +101,7 @@
                     </table>
                 	<br>
                 	<span class="unit_comment">
-                	<table><tbody class='unit_commment_table'><tr><td class='unitcommentparam'>File:</td><td class='unitcommentdesc'>UnitCompiler </td></tr><tr><td class='unitcommentparam'>Purpose:</td><td class='unitcommentdesc'>Class for cimpiling procedures and classes </td></tr><tr><td class='unitcommentparam'>Author(s):</td><td class='unitcommentdesc'>Andrew Ni </td></tr><tr><td class='unitcommentparam'>Created:</td><td class='unitcommentdesc'>22.12.2018 21:22:44 </td></tr></tbody></table>
+                	<table><tbody class='unit_commment_table'><tr><td class='unitcommentparam'>File:</td><td class='unitcommentdesc'>GroupAssign </td></tr><tr><td class='unitcommentparam'>Purpose:</td><td class='unitcommentdesc'>Find consecutive &lt;ASSIGN&gt; statements </td></tr><tr><td class='unitcommentparam'>Author(s):</td><td class='unitcommentdesc'>Andrew Ni </td></tr><tr><td class='unitcommentparam'>Created:</td><td class='unitcommentdesc'>02.02.2019 15:15:08 </td></tr></tbody></table>
                 	</span>
                 	<br>
                 </div>
@@ -144,11 +144,28 @@
   </td>
   <td class="signature_col cell">
     <font>
-         INTEGER <a href='#0200103k91wM/Ec0amjgh9n8qyiQ=='> GetMessageSeverity (integer)</a>
+          <a href='#0200101XAWEQxYOxfVoZCknnSVXg=='> InspectBlock (integer)</a>
     </font>
   </td>
   <td class="cell">
       <br> <i>  </i>
+  </td>
+</tr>
+<tr class="table_content overview_row">
+  <td align="left" valign="top" class="img_col cell cellleft ">
+  </td>
+  <td align="left" valign="top" class="option_col cell">
+    <font>#</font>
+    <font></font>
+    <font></font>
+  </td>
+  <td class="signature_col cell">
+    <font>
+          <a href='#020010GkqDy2bMnYa8VChjQChyEg=='> PublishResult (character, character, integer, character)</a>
+    </font>
+  </td>
+  <td class="cell">
+     Publish current's rule result <br> <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
   </td>
 </tr>
 <tr class="table_content overview_row">
@@ -165,14 +182,14 @@
     </font>
   </td>
   <td class="cell">
-     Start method for visiting ILintUnit <br> <i>  </i>
+     Start method for visiting ILintUnit <br> <i> Overrides <a href='Prolint.Rules.AbstractRule.html#Visit (ILintUnit, dataset, dataset)'>Prolint.Rules.AbstractRule:Visit (ILintUnit, dataset, dataset)</a> </i>
   </td>
 </tr>
     
         </tbody>
     </table>
     
-    <!--
+    
     <br>
     <div class="TableHeadingColor">
         <span id="constructor_summary" class="expand_arrow expandButtonShow HeightFixIE">
@@ -191,10 +208,27 @@
                 <th align="left">Name</th>
                 <th align="left">Purpose</th>
             </tr>
-                
+            <tr class="table_content overview_row">
+  <td align="left" valign="top" class="img_col cell cellleft ">
+  </td>
+  <td align="left" valign="top" class="option_col cell">
+    <font>+</font>
+    <font></font>
+    <font></font>
+  </td>
+  <td class="signature_col cell">
+    <font>
+          <a href='#020010IpTUVDRU4UqbkKhrVpD5HQ=='> GroupAssign ()</a>
+    </font>
+  </td>
+  <td class="cell">
+      <br> <i>  </i>
+  </td>
+</tr>
+    
         </tbody>
     </table>
-    -->
+    
     <!--
     <br>
     <div class="TableHeadingColor">
@@ -241,17 +275,17 @@
   <td align="left" valign="top" class="img_col cell cellleft ">
   </td>
   <td align="left" valign="top" class="option_col cell">
-    <font>+</font>
+    <font>#</font>
     <font></font>
     <font></font>
   </td>
   <td class="signature_col cell">
     <font>
-         INTEGER <a href='#020010sLYncLwlHflETbMahha4ag=='> CompileErrorSeverity</a>
+         Prolint.ILintUnit <a href='#020010kSg90bJbNJIJt+lKw+FvrQ=='> LintUnit</a>
     </font>
   </td>
   <td class="cell">
-      <br> <i>  </i>
+      <br> <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
   </td>
 </tr>
 <tr class="table_content overview_row">
@@ -264,11 +298,11 @@
   </td>
   <td class="signature_col cell">
     <font>
-         INTEGER <a href='#020010EnXl6YdnR419AFo1QGQ/zA=='> CompileWarningSeverity</a>
+         CHARACTER <a href='#0200102Mm5jyPGfOL9EF3K1noUyQ=='> RuleDescription</a>
     </font>
   </td>
   <td class="cell">
-      <br> <i>  </i>
+      <br> <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
   </td>
 </tr>
 <tr class="table_content overview_row">
@@ -281,11 +315,11 @@
   </td>
   <td class="signature_col cell">
     <font>
-         CHARACTER <a href='#020010ejGN+q0849PlzOlFaJTAVQ=='> TempDir</a>
+         CHARACTER <a href='#020010tlxCzumgmEaySDD/W4zkLg=='> RuleId</a>
     </font>
   </td>
   <td class="cell">
-      <br> <i>  </i>
+      <br> <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
   </td>
 </tr>
 <tr class="table_content overview_row">
@@ -298,11 +332,11 @@
   </td>
   <td class="signature_col cell">
     <font>
-         LOGICAL <a href='#020010UhrZZjNnXtJkKq7vPOyUOQ=='> UseStrictOptions</a>
+         INTEGER <a href='#020010Geu78boJj72PQZd+mbDX3w=='> Severity</a>
     </font>
   </td>
   <td class="cell">
-      <br> <i>  </i>
+      <br> <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
   </td>
 </tr>
     
@@ -327,11 +361,11 @@
     <th colspan="2" align="left" valign="top" class="cell">
         <div class="table_detail_comment_div">
             <font class="Code_Text">
-                <a name="0200103k91wM/Ec0amjgh9n8qyiQ==" href="#Top">Top</a>
-                <a name=" INTEGER <a href='#0200103k91wM/Ec0amjgh9n8qyiQ=='> GetMessageSeverity (integer)</a>"></a>
+                <a name="0200101XAWEQxYOxfVoZCknnSVXg==" href="#Top">Top</a>
+                <a name="  <a href='#0200101XAWEQxYOxfVoZCknnSVXg=='> InspectBlock (integer)</a>"></a>
             </font>
         </div>
-        <h3 class="Signature_Font">PRIVATE INTEGER <a href='#0200103k91wM/Ec0amjgh9n8qyiQ=='> GetMessageSeverity (integer)</a></h3>
+        <h3 class="Signature_Font">PRIVATE  <a href='#0200101XAWEQxYOxfVoZCknnSVXg=='> InspectBlock (integer)</a></h3>
         <table>
             <tr>
                 <td>
@@ -364,7 +398,101 @@
                   
                   <tr>
     <td class="document_detail_parameter">
-        <i>messageCode</i>
+        <i>nodeType</i>
+    </td>
+    <td>
+       INTEGER
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td class="document_detail_parameter">
+    </td>
+    <td>
+        
+    </td>
+</tr>
+              </table>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+    </th>
+</tr><tr class="table_content table_detail_row">
+    <th colspan="2" align="left" valign="top" class="cell">
+        <div class="table_detail_comment_div">
+            <font class="Code_Text">
+                <a name="020010GkqDy2bMnYa8VChjQChyEg==" href="#Top">Top</a>
+                <a name="  <a href='#020010GkqDy2bMnYa8VChjQChyEg=='> PublishResult (character, character, integer, character)</a>"></a>
+            </font>
+        </div>
+        <h3 class="Signature_Font">PROTECTED  <a href='#020010GkqDy2bMnYa8VChjQChyEg=='> PublishResult (character, character, integer, character)</a></h3>
+        <table>
+            <tr>
+                <td>
+                    <div class="img_" Title="Static">
+                    </div>
+                </td>
+                <td>
+                    <div class="img_" Title="Abstract">
+                    </div>
+                </td>
+                <td>
+                    <div class="img_" Title="Final">
+                    </div> 
+                </td>
+            </tr>
+        </table>
+        <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
+        <div>
+        <dl>
+          <dd class="detail_comment">
+            <table><tbody class='commment_formater_table'><tr><td class='paramname'>Purpose: </td><td class='paramdesc'>Publish current's rule result </td></tr><tr><td class='paramname'>Notes: </td><td class='paramdesc'> </td></tr></tbody></table>
+            <dl>
+              <table class="parameter_table">
+                  
+                  <tr>
+                    <td colspan="2">
+                      <b>Parameters:</b>           
+                    </td>
+                  </tr>
+                  
+                  <tr>
+    <td class="document_detail_parameter">
+        <i>compileUnit</i>
+    </td>
+    <td>
+       CHARACTER
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td class="document_detail_parameter">
+    </td>
+    <td>
+        
+    </td>
+</tr><tr>
+    <td class="document_detail_parameter">
+        <i>sourceFile</i>
+    </td>
+    <td>
+       CHARACTER
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td class="document_detail_parameter">
+    </td>
+    <td>
+        
+    </td>
+</tr><tr>
+    <td class="document_detail_parameter">
+        <i>lineNumber</i>
     </td>
     <td>
        INTEGER
@@ -380,10 +508,10 @@
     </td>
 </tr><tr>
     <td class="document_detail_parameter">
-        <i><b>Returns</b></i>
+        <i>comment</i>
     </td>
     <td>
-      INTEGER 
+       CHARACTER
     </td>
     <td>
     </td>
@@ -426,7 +554,7 @@
                 </td>
             </tr>
         </table>
-        <i>  </i>
+        <i> Overrides <a href='Prolint.Rules.AbstractRule.html#Visit (ILintUnit, dataset, dataset)'>Prolint.Rules.AbstractRule:Visit (ILintUnit, dataset, dataset)</a> </i>
         <div>
         <dl>
           <dd class="detail_comment">
@@ -501,7 +629,7 @@
     <br>
     <br>
     
-    <!--
+    
     <div class="TableHeadingColor cell">
         <span id="constructor_detail" class="expand_arrow expandButtonShow HeightFixIE">
         </span>
@@ -513,12 +641,58 @@
     </div>
     <table border="0" class="table_content table_content_details constructor_detail">
         <tbody>
-            
+            <tr class="table_content table_detail_row">
+    <th colspan="2" align="left" valign="top" class="cell">
+        <div class="table_detail_comment_div">
+            <font class="Code_Text">
+                <a name="020010IpTUVDRU4UqbkKhrVpD5HQ==" href="#Top">Top</a>
+                <a name="  <a href='#020010IpTUVDRU4UqbkKhrVpD5HQ=='> GroupAssign ()</a>"></a>
+            </font>
+        </div>
+        <h3 class="Signature_Font">PUBLIC  <a href='#020010IpTUVDRU4UqbkKhrVpD5HQ=='> GroupAssign ()</a></h3>
+        <table>
+            <tr>
+                <td>
+                    <div class="img_" Title="Static">
+                    </div>
+                </td>
+                <td>
+                    <div class="img_" Title="Abstract">
+                    </div>
+                </td>
+                <td>
+                    <div class="img_" Title="Final">
+                    </div> 
+                </td>
+            </tr>
+        </table>
+        <i>  </i>
+        <div>
+        <dl>
+          <dd class="detail_comment">
+            <table><tbody class='commment_formater_table'><tr><td class='paramname'>Purpose: </td><td class='paramdesc'> </td></tr><tr><td class='paramname'>Notes: </td><td class='paramdesc'> </td></tr></tbody></table>
+            <dl>
+              <table class="parameter_table">
+                  <!--
+                  <tr>
+                    <td colspan="2">
+                      <b>Parameters:</b>           
+                    </td>
+                  </tr>
+                  -->
+                  
+              </table>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+    </th>
+</tr>
         </tbody>
     </table>
     <br>
     <br>
-    -->
+    
     <!--
     <div class="TableHeadingColor cell">
         <span id="event_detail" class="expand_arrow expandButtonShow HeightFixIE">
@@ -553,11 +727,11 @@
     <th colspan="2" align="left" valign="top" class="cell">
         <div class="table_detail_comment_div">
             <font class="Code_Text">
-                <a name="020010sLYncLwlHflETbMahha4ag==" href="#Top">Top</a>
-                <a name=" INTEGER <a href='#020010sLYncLwlHflETbMahha4ag=='> CompileErrorSeverity</a>"></a>
+                <a name="020010kSg90bJbNJIJt+lKw+FvrQ==" href="#Top">Top</a>
+                <a name=" <a href='Prolint.ILintUnit.html'>Prolint.ILintUnit</a> <a href='#020010kSg90bJbNJIJt+lKw+FvrQ=='> LintUnit</a>"></a>
             </font>
         </div>
-        <h3 class="Signature_Font">PUBLIC INTEGER <a href='#020010sLYncLwlHflETbMahha4ag=='> CompileErrorSeverity</a></h3>
+        <h3 class="Signature_Font">PROTECTED <a href='Prolint.ILintUnit.html'>Prolint.ILintUnit</a> <a href='#020010kSg90bJbNJIJt+lKw+FvrQ=='> LintUnit</a></h3>
         <table>
             <tr>
                 <td>
@@ -574,7 +748,7 @@
                 </td>
             </tr>
         </table>
-        <i>  </i>
+        <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
         <div>
         <dl>
           <dd class="detail_comment">
@@ -593,7 +767,7 @@
         <i><b>Returns</b></i>
     </td>
     <td>
-      INTEGER 
+      <a href='Prolint.ILintUnit.html'>Prolint.ILintUnit</a> 
     </td>
     <td>
     </td>
@@ -615,11 +789,11 @@
     <th colspan="2" align="left" valign="top" class="cell">
         <div class="table_detail_comment_div">
             <font class="Code_Text">
-                <a name="020010EnXl6YdnR419AFo1QGQ/zA==" href="#Top">Top</a>
-                <a name=" INTEGER <a href='#020010EnXl6YdnR419AFo1QGQ/zA=='> CompileWarningSeverity</a>"></a>
+                <a name="0200102Mm5jyPGfOL9EF3K1noUyQ==" href="#Top">Top</a>
+                <a name=" CHARACTER <a href='#0200102Mm5jyPGfOL9EF3K1noUyQ=='> RuleDescription</a>"></a>
             </font>
         </div>
-        <h3 class="Signature_Font">PUBLIC INTEGER <a href='#020010EnXl6YdnR419AFo1QGQ/zA=='> CompileWarningSeverity</a></h3>
+        <h3 class="Signature_Font">PUBLIC CHARACTER <a href='#0200102Mm5jyPGfOL9EF3K1noUyQ=='> RuleDescription</a></h3>
         <table>
             <tr>
                 <td>
@@ -636,69 +810,7 @@
                 </td>
             </tr>
         </table>
-        <i>  </i>
-        <div>
-        <dl>
-          <dd class="detail_comment">
-            <table><tbody class='commment_formater_table'></tbody></table>
-            <dl>
-              <table class="parameter_table">
-                  <!--
-                  <tr>
-                    <td colspan="2">
-                      <b>Parameters:</b>           
-                    </td>
-                  </tr>
-                  -->
-                  <tr>
-    <td class="document_detail_parameter">
-        <i><b>Returns</b></i>
-    </td>
-    <td>
-      INTEGER 
-    </td>
-    <td>
-    </td>
-</tr>
-<tr>
-    <td class="document_detail_parameter">
-    </td>
-    <td>
-        
-    </td>
-</tr>
-              </table>
-            </dl>
-          </dd>
-        </dl>
-      </div>
-    </th>
-</tr><tr class="table_content table_detail_row">
-    <th colspan="2" align="left" valign="top" class="cell">
-        <div class="table_detail_comment_div">
-            <font class="Code_Text">
-                <a name="020010ejGN+q0849PlzOlFaJTAVQ==" href="#Top">Top</a>
-                <a name=" CHARACTER <a href='#020010ejGN+q0849PlzOlFaJTAVQ=='> TempDir</a>"></a>
-            </font>
-        </div>
-        <h3 class="Signature_Font">PUBLIC CHARACTER <a href='#020010ejGN+q0849PlzOlFaJTAVQ=='> TempDir</a></h3>
-        <table>
-            <tr>
-                <td>
-                    <div class="img_" Title="Static">
-                    </div>
-                </td>
-                <td>
-                    <div class="img_" Title="Abstract">
-                    </div>
-                </td>
-                <td>
-                    <div class="img_" Title="Final">
-                    </div> 
-                </td>
-            </tr>
-        </table>
-        <i>  </i>
+        <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
         <div>
         <dl>
           <dd class="detail_comment">
@@ -739,11 +851,11 @@
     <th colspan="2" align="left" valign="top" class="cell">
         <div class="table_detail_comment_div">
             <font class="Code_Text">
-                <a name="020010UhrZZjNnXtJkKq7vPOyUOQ==" href="#Top">Top</a>
-                <a name=" LOGICAL <a href='#020010UhrZZjNnXtJkKq7vPOyUOQ=='> UseStrictOptions</a>"></a>
+                <a name="020010tlxCzumgmEaySDD/W4zkLg==" href="#Top">Top</a>
+                <a name=" CHARACTER <a href='#020010tlxCzumgmEaySDD/W4zkLg=='> RuleId</a>"></a>
             </font>
         </div>
-        <h3 class="Signature_Font">PUBLIC LOGICAL <a href='#020010UhrZZjNnXtJkKq7vPOyUOQ=='> UseStrictOptions</a></h3>
+        <h3 class="Signature_Font">PUBLIC CHARACTER <a href='#020010tlxCzumgmEaySDD/W4zkLg=='> RuleId</a></h3>
         <table>
             <tr>
                 <td>
@@ -760,7 +872,7 @@
                 </td>
             </tr>
         </table>
-        <i>  </i>
+        <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
         <div>
         <dl>
           <dd class="detail_comment">
@@ -779,7 +891,69 @@
         <i><b>Returns</b></i>
     </td>
     <td>
-      LOGICAL 
+      CHARACTER 
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td class="document_detail_parameter">
+    </td>
+    <td>
+        
+    </td>
+</tr>
+              </table>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+    </th>
+</tr><tr class="table_content table_detail_row">
+    <th colspan="2" align="left" valign="top" class="cell">
+        <div class="table_detail_comment_div">
+            <font class="Code_Text">
+                <a name="020010Geu78boJj72PQZd+mbDX3w==" href="#Top">Top</a>
+                <a name=" INTEGER <a href='#020010Geu78boJj72PQZd+mbDX3w=='> Severity</a>"></a>
+            </font>
+        </div>
+        <h3 class="Signature_Font">PUBLIC INTEGER <a href='#020010Geu78boJj72PQZd+mbDX3w=='> Severity</a></h3>
+        <table>
+            <tr>
+                <td>
+                    <div class="img_" Title="Static">
+                    </div>
+                </td>
+                <td>
+                    <div class="img_" Title="Abstract">
+                    </div>
+                </td>
+                <td>
+                    <div class="img_" Title="Final">
+                    </div> 
+                </td>
+            </tr>
+        </table>
+        <i> Inherited from <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a> </i>
+        <div>
+        <dl>
+          <dd class="detail_comment">
+            <table><tbody class='commment_formater_table'></tbody></table>
+            <dl>
+              <table class="parameter_table">
+                  <!--
+                  <tr>
+                    <td colspan="2">
+                      <b>Parameters:</b>           
+                    </td>
+                  </tr>
+                  -->
+                  <tr>
+    <td class="document_detail_parameter">
+        <i><b>Returns</b></i>
+    </td>
+    <td>
+      INTEGER 
     </td>
     <td>
     </td>
@@ -803,6 +977,6 @@
     <br>
     <br>
     
-    <font class="footer_timestamp">02.02.2019 15:46:53</font>
+    <font class="footer_timestamp">02.02.2019 15:46:52</font>
     </BODY>
 </HTML>

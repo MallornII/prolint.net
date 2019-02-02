@@ -51,6 +51,12 @@
       <RuleClass>Prolint.Rules.FindStateTT</RuleClass>
     </Rule>
     <Rule>
+      <RuleClass>Prolint.Rules.FnUsage</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.GroupAssign</RuleClass>
+    </Rule>
+    <Rule>
       <RuleClass>Prolint.Rules.IfElseDo</RuleClass>
     </Rule>
   </Profile>
