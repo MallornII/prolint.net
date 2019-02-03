@@ -57,7 +57,16 @@
       <RuleClass>Prolint.Rules.GroupAssign</RuleClass>
     </Rule>
     <Rule>
+      <RuleClass>Prolint.Rules.IdIsKeyword</RuleClass>
+    </Rule>
+    <Rule>
       <RuleClass>Prolint.Rules.IfElseDo</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.IncLowerCase</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.IncSlash</RuleClass>
     </Rule>
   </Profile>
 </LintProfiles>

@@ -26,3 +26,6 @@
 /FindStateTT.r
 /FnUsage.r
 /GroupAssign.r
+/IdIsKeyword.r
+/IncLowerCase.r
+/IncSlash.r

@@ -16,7 +16,7 @@ using Prolint.Rules.AbstractRule.
 block-level on error undo, throw.
 
 class Prolint.Rules.GroupAssign inherits AbstractRule final serializable: 
-/*------------------------------------------------------------------------------
+    /*------------------------------------------------------------------------------
      Purpose:
      Notes:
     ------------------------------------------------------------------------------*/
