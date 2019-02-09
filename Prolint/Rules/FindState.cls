@@ -151,10 +151,8 @@ class Prolint.Rules.FindState inherits AbstractRule serializable abstract:
 
         find first ttRecordNode where ttRecordNode.ParentNum = findNodeNum
             and ttRecordNode.NodeType = ProParserTokenTypes:RECORD_NAME.
-        ExtractIndexes(ttRecordNode.NodeText).    
-        
-        buffer ttIndex:write-xml("file", substitute("index_&1", ttRecordNode.NodeLine), true).
-        buffer ttIndexField:write-xml("file", substitute("index_field_&1", ttRecordNode.NodeLine), true).        
+        ExtractIndexes(ttRecordNode.NodeText).
+                
         find first ttOfNode where ttOfNode.ParentNum = ttRecordNode.NodeNum
             and ttOfNode.NodeType = ProParserTokenTypes:OF no-error.
         if available(ttOfNode) then
@@ -163,8 +161,7 @@ class Prolint.Rules.FindState inherits AbstractRule serializable abstract:
                 and ttOfRecordNode.NodeType = ProParserTokenTypes:RECORD_NAME no-error.            
             if available(ttOfRecordNode) then
             do:            
-                ExtractBufferFields(ttOfRecordNode.NodeText).
-                buffer ttBufferField:write-xml("file", substitute("of_field_&1", ttRecordNode.NodeLine), true).
+                ExtractBufferFields(ttOfRecordNode.NodeText).                
                 for each ttIndex:
                     isUnique = true.
                     for each ttIndexField where ttIndexField.IndexName = ttIndex.IndexName:

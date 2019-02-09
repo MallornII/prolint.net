@@ -68,5 +68,14 @@
     <Rule>
       <RuleClass>Prolint.Rules.IncSlash</RuleClass>
     </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.LeaveModal</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.LexColon</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.NestedFunc</RuleClass>
+    </Rule>
   </Profile>
 </LintProfiles>

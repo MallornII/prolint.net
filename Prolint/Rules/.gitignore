@@ -29,3 +29,7 @@
 /IdIsKeyword.r
 /IncLowerCase.r
 /IncSlash.r
+/LeaveModal.r
+/LexColon.r
+/NestedFunc.r
+/NoBrackets.r
