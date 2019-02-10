@@ -17,7 +17,7 @@ interface Prolint.Rules.IRule:
     {prolint/lintdata.i}
 
     define public property RuleDescription as character no-undo 
-    get.     
+    get.
 
     define public property RuleId as character no-undo 
     get.

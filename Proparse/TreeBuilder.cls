@@ -65,7 +65,8 @@ class Proparse.TreeBuilder implements Proparse.IParser final:
                 ttNode.NodeText    = curNode:attrGetS("proparsedirective":U)
                 when ttNode.NodeType = ProParserTokenTypes:PROPARSEDIRECTIVE                
                 ttNode.IsStateHead = curNode:isStateHead()
-                ttNode.StoreType   = curNode:attrGetS("storetype":U)                        
+                ttNode.StoreType   = curNode:attrGetS("storetype":U)
+                ttNode.State2      = curNode:getState2()                        
                 ttNode.ParentNum   = parentNode:getNodeNum()                 
                 when valid-object(parentNode)
                 ttNode.FirstChild  = childNode:getNodeNum()                 

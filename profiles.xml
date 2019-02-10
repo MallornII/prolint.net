@@ -77,5 +77,14 @@
     <Rule>
       <RuleClass>Prolint.Rules.NestedFunc</RuleClass>
     </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.NoError</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.NoGlobalDefines</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.NoLongLines</RuleClass>
+    </Rule>
   </Profile>
 </LintProfiles>

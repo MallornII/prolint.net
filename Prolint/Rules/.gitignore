@@ -33,3 +33,6 @@
 /LexColon.r
 /NestedFunc.r
 /NoBrackets.r
+/NoError.r
+/NoGlobalDefines.r
+/NoLongLines.r

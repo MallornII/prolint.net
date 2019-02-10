@@ -111,6 +111,7 @@
   FIELD NodeColumn AS INTEGER
   FIELD IngroneRules AS CHARACTER
   FIELD IsStateHead AS LOGICAL
+  FIELD State2 AS INTEGER
   FIELD StoreType AS CHARACTER
   FIELD CodeBlock AS CHARACTER
   INDEX iMain PRIMARY UNIQUE NodeNum
@@ -129,6 +130,7 @@
         <field name="NodeColumn" dataType="INTEGER"/>
         <field name="IngroneRules" dataType="CHARACTER"/>
         <field name="IsStateHead" dataType="LOGICAL"/>
+        <field name="State2" dataType="INTEGER"/>
         <field name="StoreType" dataType="CHARACTER"/>
         <field name="CodeBlock" dataType="CHARACTER"/>
         <index name="iMain" primary="true" unique="true" wordIndex="false">

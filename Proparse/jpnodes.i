@@ -12,6 +12,7 @@ define {&ACCESS_MOD} {&STAT_MOD} temp-table ttNode no-undo
     field NodeColumn   as integer
     field IngroneRules as character
     field IsStateHead  as logical
+    field State2       as integer
     field StoreType    as character
     field CodeBlock    as character    
     index iMain is unique primary NodeNum
