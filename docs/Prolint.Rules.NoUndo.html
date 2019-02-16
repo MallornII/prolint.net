@@ -49,7 +49,7 @@
                                     <table>
                                         <tr>
                                             <td>
-                                                <span class="span_classname">AndOrParens</span>
+                                                <span class="span_classname">NoUndo</span>
                                             </td>
                                         </tr>
                                     </table>
@@ -60,7 +60,7 @@
                                     <span class="span_parentclass">Parent classes:</span>   
                                 </td>
                                 <td class="span_parentclass">
-                                    <div class='parentclasses'><div style='padding-left:0em; height:12px' class='parentclassesitem'>                                                            <table style='border-spacing:0px'>                                                                <tr>                                                                    <td>                                                                    Progress.Lang.Object                                                                    </td>                                                                </tr>                                                            </table>                                                       </div><div style='padding-left:1em; height:16px' class='parentclassesitem'>                                                            <table>                                                                <tr>                                                                    <td>                                                                        <div class='parentclassnode'></div>                                                                    </td>                                                                    <td>                                                                    <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a>                                                                    </td>                                                                </tr>                                                            </table>                                                       </div><div style='padding-left:3em; height:16px' class='parentclassesitem'>                                                                <table>                                                                    <tr>                                                                        <td>                                                                            <div class='parentclassnode'></div>                                                                        </td>                                                                        <td>                                                                        <a href='Prolint.Rules.AndOrParens.html'>Prolint.Rules.AndOrParens</a>                                                                        </td>                                                                    </tr>                                                                </table>                                                           </div></div><br>
+                                    <div class='parentclasses'><div style='padding-left:0em; height:12px' class='parentclassesitem'>                                                            <table style='border-spacing:0px'>                                                                <tr>                                                                    <td>                                                                    Progress.Lang.Object                                                                    </td>                                                                </tr>                                                            </table>                                                       </div><div style='padding-left:1em; height:16px' class='parentclassesitem'>                                                            <table>                                                                <tr>                                                                    <td>                                                                        <div class='parentclassnode'></div>                                                                    </td>                                                                    <td>                                                                    <a href='Prolint.Rules.AbstractRule.html'>Prolint.Rules.AbstractRule</a>                                                                    </td>                                                                </tr>                                                            </table>                                                       </div><div style='padding-left:3em; height:16px' class='parentclassesitem'>                                                                <table>                                                                    <tr>                                                                        <td>                                                                            <div class='parentclassnode'></div>                                                                        </td>                                                                        <td>                                                                        <a href='Prolint.Rules.NoUndo.html'>Prolint.Rules.NoUndo</a>                                                                        </td>                                                                    </tr>                                                                </table>                                                           </div></div><br>
                                 </td>
                             </tr>
                             
@@ -101,7 +101,7 @@
                     </table>
                 	<br>
                 	<span class="unit_comment">
-                	<table><tbody class='unit_commment_table'><tr><td class='unitcommentparam'>File:</td><td class='unitcommentdesc'>AndOrParens </td></tr><tr><td class='unitcommentparam'>Purpose:</td><td class='unitcommentdesc'>Finds use 'or' and 'and' without parens </td></tr><tr><td class='unitcommentparam'>Author(s):</td><td class='unitcommentdesc'>Andrew Ni </td></tr><tr><td class='unitcommentparam'>Created:</td><td class='unitcommentdesc'>02.01.2019 13:31:01 </td></tr></tbody></table>
+                	<table><tbody class='unit_commment_table'><tr><td class='unitcommentparam'>File:</td><td class='unitcommentdesc'>NoUndo </td></tr><tr><td class='unitcommentparam'>Purpose:</td><td class='unitcommentdesc'>Finds variables, properties, parameters and temp-tables without &lt;NO-UNDO&gt; option </td></tr><tr><td class='unitcommentparam'>Author(s):</td><td class='unitcommentdesc'>Andrew Ni </td></tr><tr><td class='unitcommentparam'>Created:</td><td class='unitcommentdesc'>16.02.2019 14:39:06 </td></tr></tbody></table>
                 	</span>
                 	<br>
                 </div>
@@ -135,6 +135,23 @@
                 <th align="left">Purpose</th>
             </tr>
             <tr class="table_content overview_row">
+  <td align="left" valign="top" class="img_col cell cellleft ">
+  </td>
+  <td align="left" valign="top" class="option_col cell">
+    <font>-</font>
+    <font></font>
+    <font></font>
+  </td>
+  <td class="signature_col cell">
+    <font>
+          <a href='#020010KRHTZCxLIWkmOhimwvgEXQ=='> FindUndoUnits (int64)</a>
+    </font>
+  </td>
+  <td class="cell">
+      <br> <i>  </i>
+  </td>
+</tr>
+<tr class="table_content overview_row">
   <td align="left" valign="top" class="img_col cell cellleft ">
   </td>
   <td align="left" valign="top" class="option_col cell">
@@ -201,11 +218,11 @@
   </td>
   <td class="signature_col cell">
     <font>
-          <a href='#020010jQedzcQxhAseQ18bAkXshw=='> AndOrParens ()</a>
+          <a href='#020010ixbjoYxYAHLvyXvRWiHnbw=='> NoUndo ()</a>
     </font>
   </td>
   <td class="cell">
-     Default constructor <br> <i>  </i>
+      <br> <i>  </i>
   </td>
 </tr>
     
@@ -341,6 +358,68 @@
     <table border="0" class="table_content table_content_details method_detail">
         <tbody>
             <tr class="table_content table_detail_row">
+    <th colspan="2" align="left" valign="top" class="cell">
+        <div class="table_detail_comment_div">
+            <font class="Code_Text">
+                <a name="020010KRHTZCxLIWkmOhimwvgEXQ==" href="#Top">Top</a>
+                <a name="  <a href='#020010KRHTZCxLIWkmOhimwvgEXQ=='> FindUndoUnits (int64)</a>"></a>
+            </font>
+        </div>
+        <h3 class="Signature_Font">PRIVATE  <a href='#020010KRHTZCxLIWkmOhimwvgEXQ=='> FindUndoUnits (int64)</a></h3>
+        <table>
+            <tr>
+                <td>
+                    <div class="img_" Title="Static">
+                    </div>
+                </td>
+                <td>
+                    <div class="img_" Title="Abstract">
+                    </div>
+                </td>
+                <td>
+                    <div class="img_" Title="Final">
+                    </div> 
+                </td>
+            </tr>
+        </table>
+        <i>  </i>
+        <div>
+        <dl>
+          <dd class="detail_comment">
+            <table><tbody class='commment_formater_table'><tr><td class='paramname'>Purpose: </td><td class='paramdesc'> </td></tr><tr><td class='paramname'>Notes: </td><td class='paramdesc'> </td></tr></tbody></table>
+            <dl>
+              <table class="parameter_table">
+                  
+                  <tr>
+                    <td colspan="2">
+                      <b>Parameters:</b>           
+                    </td>
+                  </tr>
+                  
+                  <tr>
+    <td class="document_detail_parameter">
+        <i>unitType</i>
+    </td>
+    <td>
+       INT64
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td class="document_detail_parameter">
+    </td>
+    <td>
+        
+    </td>
+</tr>
+              </table>
+            </dl>
+          </dd>
+        </dl>
+      </div>
+    </th>
+</tr><tr class="table_content table_detail_row">
     <th colspan="2" align="left" valign="top" class="cell">
         <div class="table_detail_comment_div">
             <font class="Code_Text">
@@ -566,11 +645,11 @@
     <th colspan="2" align="left" valign="top" class="cell">
         <div class="table_detail_comment_div">
             <font class="Code_Text">
-                <a name="020010jQedzcQxhAseQ18bAkXshw==" href="#Top">Top</a>
-                <a name="  <a href='#020010jQedzcQxhAseQ18bAkXshw=='> AndOrParens ()</a>"></a>
+                <a name="020010ixbjoYxYAHLvyXvRWiHnbw==" href="#Top">Top</a>
+                <a name="  <a href='#020010ixbjoYxYAHLvyXvRWiHnbw=='> NoUndo ()</a>"></a>
             </font>
         </div>
-        <h3 class="Signature_Font">PUBLIC  <a href='#020010jQedzcQxhAseQ18bAkXshw=='> AndOrParens ()</a></h3>
+        <h3 class="Signature_Font">PUBLIC  <a href='#020010ixbjoYxYAHLvyXvRWiHnbw=='> NoUndo ()</a></h3>
         <table>
             <tr>
                 <td>
@@ -591,7 +670,7 @@
         <div>
         <dl>
           <dd class="detail_comment">
-            <table><tbody class='commment_formater_table'><tr><td class='paramname'>Purpose: </td><td class='paramdesc'>Default constructor </td></tr><tr><td class='paramname'>Notes: </td><td class='paramdesc'> </td></tr></tbody></table>
+            <table><tbody class='commment_formater_table'><tr><td class='paramname'>Purpose: </td><td class='paramdesc'> </td></tr><tr><td class='paramname'>Notes: </td><td class='paramdesc'> </td></tr></tbody></table>
             <dl>
               <table class="parameter_table">
                   <!--
@@ -898,6 +977,6 @@
     <br>
     <br>
     
-    <font class="footer_timestamp">02.16.2019 18:56:31</font>
+    <font class="footer_timestamp">02.16.2019 18:56:34</font>
     </BODY>
 </HTML>

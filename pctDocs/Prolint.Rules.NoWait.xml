@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Prolint.Rules" className="NoWait" inherits="AbstractRule" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="true" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+   File        : NoWait&#xD;
+   Purpose     : Finds &lt;FIND&gt; and &lt;GET&gt; with &lt;EXCLUSIVE-LOCK&gt; but without &lt;NO-WAIT&gt;&#xD;
+   Syntax      : &#xD;
+   Description : &#xD;
+   Author(s)   : Andrew Ni&#xD;
+   Created     : 16.02.2019 18:03:41&#xD;
+   Notes       : &#xD;
+ ----------------------------------------------------------------------*/</classComment>
+    <constructor signature="NoWait()" modifier="PUBLIC">
+        <constrComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</constrComment>
+    </constructor>
+    <method methodName="FindExclusive" signature="FindExclusive(INPUT:integer,INPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="parentType" dataType="INTEGER" position="0" mode="INPUT"/>
+        <parameter name="childType" dataType="INTEGER" position="1" mode="INPUT"/>
+    </method>
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Start method for visiting ILintUnit&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="currentUnit" dataType="Prolint.ILintUnit" position="2" mode="INPUT"/>
+        <parameter name="dsProparse" dataType="DATASET" position="3" mode="INPUT"/>
+        <parameter name="dsXref" dataType="DATASET" position="4" mode="INPUT"/>
+    </method>
+    <using name="com.joanju.proparse.ProParserTokenTypes" type="NONE"/>
+    <using name="Proparse.UnitType" type="NONE"/>
+    <using name="Prolint.Rules.AbstractRule" type="NONE"/>
+</unit>

@@ -179,11 +179,11 @@ class Proparse.ProUnitsParser implements IParser final:
                                 ttProUnit.DataType = ttTypeNode.NodeText.
                         end.
                     when ProParserTokenTypes:VIEWAS then
-                    do:
-                        find first ttTypeNode where ttTypeNode.NodeNum = ttChildNode.FirstChild no-error.
-                        if available(ttTypeNode) then
-                            ttProUnit.ViewAs = ttTypeNode.NodeText.
-                    end.
+                        do:
+                            find first ttTypeNode where ttTypeNode.NodeNum = ttChildNode.FirstChild no-error.
+                            if available(ttTypeNode) then
+                                ttProUnit.ViewAs = ttTypeNode.NodeText.
+                        end.
                     when ProParserTokenTypes:ID then
                         ttProUnit.UnitName = ttChildNode.NodeText.                                            
                 end case.
@@ -203,6 +203,7 @@ class Proparse.ProUnitsParser implements IParser final:
         define buffer ttMainNode      for ttNode.
         define buffer ttParameterNode for ttNode.
         define buffer ttChildNode     for ttNode.
+        define buffer ttParentNode    for ttNode.
         
         define variable nextNum    as integer no-undo.
         define variable isDataType as logical no-undo.        
@@ -214,6 +215,10 @@ class Proparse.ProUnitsParser implements IParser final:
             or ttParameterNode.NodeType = ProParserTokenTypes:INPUTOUTPUT
             or ttParameterNode.NodeType = ProParserTokenTypes:OUTPUT
             or ttParameterNode.NodeType = ProParserTokenTypes:BUFFER):
+            if not can-find(first ttParentNode where ttParentNode.NodeNum = ttMainNode.ParentNum
+                and (ttParentNode.NodeType = ProParserTokenTypes:FUNCTION or ttParentNode.NodeType = ProParserTokenTypes:METHOD)) then
+                next BLK_NODE.
+                 
             create ttProUnit.            
             assign
                 ttProUnit.Id         = LintUnit:NextSequenceId()

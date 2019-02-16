@@ -86,5 +86,14 @@
     <Rule>
       <RuleClass>Prolint.Rules.NoLongLines</RuleClass>
     </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.NoUndo</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.NoWait</RuleClass>
+    </Rule>
+    <Rule>
+      <RuleClass>Prolint.Rules.OfLink</RuleClass>
+    </Rule>
   </Profile>
 </LintProfiles>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<unit packageName="Prolint.Rules" className="NoUndo" inherits="AbstractRule" isAbstract="false" isFinal="true" isInterface="false" isEnum="false" isSerializable="true" useWidgetPool="false">
+    <classComment>/*------------------------------------------------------------------------&#xD;
+   File        : NoUndo&#xD;
+   Purpose     : Finds variables, properties, parameters and temp-tables without &lt;NO-UNDO&gt; option&#xD;
+   Syntax      : &#xD;
+   Description : &#xD;
+   Author(s)   : Andrew Ni&#xD;
+   Created     : 16.02.2019 14:39:06&#xD;
+   Notes       : &#xD;
+ ----------------------------------------------------------------------*/</classComment>
+    <constructor signature="NoUndo()" modifier="PUBLIC">
+        <constrComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</constrComment>
+    </constructor>
+    <method methodName="FindUndoUnits" signature="FindUndoUnits(INPUT:int64)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="unitType" dataType="INT64" position="0" mode="INPUT"/>
+    </method>
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Start method for visiting ILintUnit&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
+        <parameter name="currentUnit" dataType="Prolint.ILintUnit" position="1" mode="INPUT"/>
+        <parameter name="dsProparse" dataType="DATASET" position="2" mode="INPUT"/>
+        <parameter name="dsXref" dataType="DATASET" position="3" mode="INPUT"/>
+    </method>
+    <using name="com.joanju.proparse.ProParserTokenTypes" type="NONE"/>
+    <using name="Proparse.UnitType" type="NONE"/>
+    <using name="Prolint.Rules.AbstractRule" type="NONE"/>
+</unit>

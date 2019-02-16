@@ -36,3 +36,6 @@
 /NoError.r
 /NoGlobalDefines.r
 /NoLongLines.r
+/NoUndo.r
+/NoWait.r
+/OfLink.r

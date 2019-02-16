@@ -365,11 +365,11 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         Modifying the contents of this method using a code editor will invalidate any support for this file. */
         this-object:components = new System.ComponentModel.Container().
         @VisualDesigner.FormMember (NeedsInitialize="true":U).
-        define variable tableDesc1 as Progress.Data.TableDesc no-undo.
-        tableDesc1 = new Progress.Data.TableDesc("ttRule":U).
+        define variable tableDesc3 as Progress.Data.TableDesc no-undo.
+        tableDesc3 = new Progress.Data.TableDesc("ttRule":U).
         @VisualDesigner.FormMember (NeedsInitialize="true":U).
-        define variable tableDesc2 as Progress.Data.TableDesc no-undo.
-        tableDesc2 = new Progress.Data.TableDesc("ttProfile":U).
+        define variable tableDesc4 as Progress.Data.TableDesc no-undo.
+        tableDesc4 = new Progress.Data.TableDesc("ttProfile":U).
         @VisualDesigner.FormMember (NeedsInitialize="true":U).
         define variable resources as Progress.Util.ResourceManager no-undo.
         resources = new Progress.Util.ResourceManager("Prolint.Forms.ProfileEditor":U).
@@ -404,15 +404,15 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         @VisualDesigner.FormMember (NeedsInitialize="false":U, InitializeArray="true":U).
         define variable arrayvar0 as "Progress.Data.TableDesc[]" no-undo.
         arrayvar0 = new "Progress.Data.TableDesc[]"(0).
-        tableDesc1:ChildTables = arrayvar0.
+        tableDesc3:ChildTables = arrayvar0.
         @VisualDesigner.FormMember (NeedsInitialize="false":U, InitializeArray="true":U).
         define variable arrayvar1 as Progress.Data.ColumnPropDesc extent 4 no-undo.
         arrayvar1[1] = new Progress.Data.ColumnPropDesc("RuleId":U, "Id":U, Progress.Data.DataType:CHARACTER).
         arrayvar1[2] = new Progress.Data.ColumnPropDesc("RuleClass":U, "Class":U, Progress.Data.DataType:CHARACTER).
         arrayvar1[3] = new Progress.Data.ColumnPropDesc("Severity":U, "Severity":U, Progress.Data.DataType:INTEGER).
         arrayvar1[4] = new Progress.Data.ColumnPropDesc("RuleDescription":U, "Description":U, Progress.Data.DataType:CHARACTER).
-        tableDesc1:Columns = arrayvar1.
-        this-object:BSRules:TableSchema = tableDesc1.
+        tableDesc3:Columns = arrayvar1.
+        this-object:BSRules:TableSchema = tableDesc3.
         /*  */
         /* RulesGrid */
         /*  */
@@ -431,7 +431,7 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         this-object:RulesGrid:Location = new System.Drawing.Point(12, 71).
         this-object:RulesGrid:Name = "RulesGrid":U.
         this-object:RulesGrid:ReadOnly = true.
-        this-object:RulesGrid:Size = new System.Drawing.Size(1147, 486).
+        this-object:RulesGrid:Size = new System.Drawing.Size(1164, 486).
         this-object:RulesGrid:TabIndex = 0.
         /*  */
         /* ruleIdDataGridViewTextBoxColumn */
@@ -487,12 +487,12 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         @VisualDesigner.FormMember (NeedsInitialize="false":U, InitializeArray="true":U).
         define variable arrayvar3 as "Progress.Data.TableDesc[]" no-undo.
         arrayvar3 = new "Progress.Data.TableDesc[]"(0).
-        tableDesc2:ChildTables = arrayvar3.
+        tableDesc4:ChildTables = arrayvar3.
         @VisualDesigner.FormMember (NeedsInitialize="false":U, InitializeArray="true":U).
         define variable arrayvar4 as Progress.Data.ColumnPropDesc extent 1 no-undo.
         arrayvar4[1] = new Progress.Data.ColumnPropDesc("ProfileName":U, "Name":U, Progress.Data.DataType:CHARACTER).
-        tableDesc2:Columns = arrayvar4.
-        this-object:BSProfiles:TableSchema = tableDesc2.
+        tableDesc4:Columns = arrayvar4.
+        this-object:BSProfiles:TableSchema = tableDesc4.
         /*  */
         /* groupProfile */
         /*  */
@@ -556,7 +556,7 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         /* btnAddRule */
         /*  */
         this-object:btnAddRule:Image = cast(resources:GetObject("btnAddRule.Image":U), System.Drawing.Image).
-        this-object:btnAddRule:Location = new System.Drawing.Point(1027, 21).
+        this-object:btnAddRule:Location = new System.Drawing.Point(1050, 21).
         this-object:btnAddRule:Name = "btnAddRule":U.
         this-object:btnAddRule:Size = new System.Drawing.Size(38, 38).
         this-object:btnAddRule:TabIndex = 3.
@@ -567,7 +567,7 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         /* btnEditRule */
         /*  */
         this-object:btnEditRule:Image = cast(resources:GetObject("btnEditRule.Image":U), System.Drawing.Image).
-        this-object:btnEditRule:Location = new System.Drawing.Point(1071, 21).
+        this-object:btnEditRule:Location = new System.Drawing.Point(1094, 21).
         this-object:btnEditRule:Name = "btnEditRule":U.
         this-object:btnEditRule:Size = new System.Drawing.Size(38, 38).
         this-object:btnEditRule:TabIndex = 4.
@@ -578,7 +578,7 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         /* btnRemoveRule */
         /*  */
         this-object:btnRemoveRule:Image = cast(resources:GetObject("btnRemoveRule.Image":U), System.Drawing.Image).
-        this-object:btnRemoveRule:Location = new System.Drawing.Point(1115, 21).
+        this-object:btnRemoveRule:Location = new System.Drawing.Point(1138, 21).
         this-object:btnRemoveRule:Name = "btnRemoveRule":U.
         this-object:btnRemoveRule:Size = new System.Drawing.Size(38, 38).
         this-object:btnRemoveRule:TabIndex = 5.
@@ -593,12 +593,13 @@ class Prolint.Forms.ProfileEditor inherits Form use-widget-pool final:
         /*  */
         /* ProfileEditor */
         /*  */
-        this-object:ClientSize = new System.Drawing.Size(1165, 569).
+        this-object:ClientSize = new System.Drawing.Size(1188, 569).
         this-object:Controls:Add(this-object:btnRemoveRule).
         this-object:Controls:Add(this-object:btnEditRule).
         this-object:Controls:Add(this-object:btnAddRule).
         this-object:Controls:Add(this-object:groupProfile).
         this-object:Controls:Add(this-object:RulesGrid).
+        this-object:FormBorderStyle = System.Windows.Forms.FormBorderStyle:FixedSingle.
         this-object:Name = "ProfileEditor":U.
         this-object:StartPosition = System.Windows.Forms.FormStartPosition:CenterScreen.
         this-object:Text = "prolint.net profile editor":U.
