@@ -15,28 +15,28 @@
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</constrComment>
     </constructor>
-    <method methodName="ExtractBufferFields" signature="ExtractBufferFields(INPUT:character)" modifier="PROTECTED" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ExtractBufferFields" signature="ExtractBufferFields(INPUT:character)" modifier="PROTECTED" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="bufferName" dataType="CHARACTER" position="0" mode="INPUT"/>
     </method>
-    <method methodName="ExtractIndexes" signature="ExtractIndexes(INPUT:character)" modifier="PROTECTED" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ExtractIndexes" signature="ExtractIndexes(INPUT:character)" modifier="PROTECTED" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="bufferName" dataType="CHARACTER" position="1" mode="INPUT"/>
     </method>
-    <method methodName="IsUniqueClause" returnType="LOGICAL" signature="IsUniqueClause(INPUT:integer):LOGICAL" modifier="PROTECTED" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="IsUniqueClause" returnType="LOGICAL" signature="IsUniqueClause(INPUT:integer):LOGICAL" modifier="PROTECTED" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="findNodeNum" dataType="INTEGER" position="2" mode="INPUT"/>
     </method>
-    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="true">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Start method for visiting ILintUnit&#xD;
      Notes:&#xD;
@@ -45,17 +45,17 @@
         <parameter name="dsProparse" dataType="DATASET" position="5" mode="INPUT"/>
         <parameter name="dsXref" dataType="DATASET" position="6" mode="INPUT"/>
     </method>
-    <property name="TableType" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PROTECTED" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="TableType" dataType="CHARACTER" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PROTECTED" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <using name="com.joanju.proparse.ProParserTokenTypes" type="NONE"/>
     <using name="Proparse.UnitType" type="NONE"/>
     <using name="Prolint.Rules.AbstractRule" type="NONE"/>
-    <temp-table name="ttIndex" definition="" noUndo="true">
+    <temp-table name="ttIndex" definition="" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PROTECTED">
         <text>DEFINE TEMP-TABLE ttIndex NO-UNDO 
   FIELD IndexName AS CHARACTER
 </text>
         <field name="IndexName" dataType="CHARACTER"/>
     </temp-table>
-    <temp-table name="ttIndexField" definition="" noUndo="true">
+    <temp-table name="ttIndexField" definition="" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PROTECTED">
         <text>DEFINE TEMP-TABLE ttIndexField NO-UNDO 
   FIELD IndexName AS CHARACTER
   FIELD FieldName AS CHARACTER
@@ -63,7 +63,7 @@
         <field name="IndexName" dataType="CHARACTER"/>
         <field name="FieldName" dataType="CHARACTER"/>
     </temp-table>
-    <temp-table name="ttBufferField" definition="" noUndo="true">
+    <temp-table name="ttBufferField" definition="" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PROTECTED">
         <text>DEFINE TEMP-TABLE ttBufferField NO-UNDO 
   FIELD FieldName AS CHARACTER
 </text>

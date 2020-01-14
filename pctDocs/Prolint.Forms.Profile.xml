@@ -10,16 +10,24 @@
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
     <constructor signature="Profile()" modifier="PUBLIC"/>
-    <method methodName="okButton_Click" signature="okButton_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <destructor/>
+    <method methodName="okButton_Click" signature="okButton_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <parameter name="sender" dataType="System.Object" position="1" mode="INPUT"/>
         <parameter name="e" dataType="System.EventArgs" position="2" mode="INPUT"/>
     </method>
-    <method methodName="cancelButton_Click" signature="cancelButton_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="cancelButton_Click" signature="cancelButton_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <parameter name="sender" dataType="System.Object" position="3" mode="INPUT"/>
         <parameter name="e" dataType="System.EventArgs" position="4" mode="INPUT"/>
     </method>
-    <method methodName="InitializeComponent" signature="InitializeComponent()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false"/>
-    <method methodName="ShowModalDialog" signature="ShowModalDialog()" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false"/>
-    <property name="profileName" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PRIVATE"/>
+    <method methodName="InitializeComponent" signature="InitializeComponent()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
+        <methodComment>/* NOTE: The following method is automatically generated.&#xD;
+           &#xD;
+           We strongly suggest that the contents of this method only be modified using the &#xD;
+           Visual Designer to avoid any incompatible modifications.&#xD;
+           &#xD;
+           Modifying the contents of this method using a code editor will invalidate any support for this file. */</methodComment>
+    </method>
+    <method methodName="ShowModalDialog" signature="ShowModalDialog()" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false"/>
+    <property name="profileName" dataType="CHARACTER" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PRIVATE"/>
     <using name="Progress.Windows.Form" type="NONE"/>
 </unit>

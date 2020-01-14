@@ -16,68 +16,69 @@
      Notes: &#xD;
     ------------------------------------------------------------------------------*/</constrComment>
     </constructor>
-    <method methodName="AddParser" signature="AddParser(INPUT:Proparse.IParser)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <destructor/>
+    <method methodName="AddParser" signature="AddParser(INPUT:Proparse.IParser)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Adds new parser. All parsers are called after the org.prorefactor.treeparser.ParseUnit call from Parse method&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="newParser" dataType="Proparse.IParser" position="1" mode="INPUT"/>
     </method>
-    <method methodName="CleanUp" signature="CleanUp()" modifier="PRIVATE" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="CleanUp" signature="CleanUp()" modifier="PRIVATE" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Cleans temp-tables, deletes old objects&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="ErrorStatus" returnType="LOGICAL" signature="ErrorStatus():LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="ErrorStatus" returnType="LOGICAL" signature="ErrorStatus():LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Return TRUE if there errors during class' work&#xD;
      Notes: &#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="GetErrors" returnType="OpenEdge.Core.Collections.IListIterator" signature="GetErrors():OpenEdge.Core.Collections.IListIterator" modifier="PUBLIC" isStatic="true" isFinal="true" isAbstract="false">
+    <method methodName="GetErrors" returnType="OpenEdge.Core.Collections.IListIterator" signature="GetErrors():OpenEdge.Core.Collections.IListIterator" modifier="PUBLIC" isStatic="true" isFinal="true" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Returns IIterator class with errors that were raised during class' work&#xD;
      Notes: Use ErrorStatus() method to determine whenever there were any errors&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="Parse" returnType="LOGICAL" signature="Parse(INPUT:Prolint.ILintUnit):LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="Parse" returnType="LOGICAL" signature="Parse(INPUT:Prolint.ILintUnit):LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Parses file, returns temp-tables for Nodes nd ProUnits (methods, functions e.t.c.) &#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="currentUnit" dataType="Prolint.ILintUnit" position="2" mode="INPUT"/>
     </method>
-    <method methodName="ReadDbSchema" signature="ReadDbSchema()" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="ReadDbSchema" signature="ReadDbSchema()" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Gets DB schema via SchemaLoader class and passes it to proparse.net.dll&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="ReleaseNodes" signature="ReleaseNodes()" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="ReleaseNodes" signature="ReleaseNodes()" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Releases recources used by proparse.net.dll (nodes and files)&#xD;
      Notes: As there is now way to free them directly it's just parses dummy file&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="SetPropath" signature="SetPropath(INPUT:character)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="SetPropath" signature="SetPropath(INPUT:character)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="userPropath" dataType="CHARACTER" position="6" mode="INPUT"/>
     </method>
-    <property name="ErrorList" dataType="OpenEdge.Core.Collections.List" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="JavaFile" dataType="java.io.File" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="ParserCollection" dataType="OpenEdge.Core.Collections.Collection" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="DbSchema" dataType="Proparse.IDbSchema" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC">
+    <property name="ErrorList" dataType="OpenEdge.Core.Collections.List" isAbstract="false" isStatic="true" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="JavaFile" dataType="java.io.File" isAbstract="false" isStatic="true" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="ParserCollection" dataType="OpenEdge.Core.Collections.Collection" isAbstract="false" isStatic="true" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="DbSchema" dataType="Proparse.IDbSchema" isAbstract="false" isStatic="true" isOverride="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC">
         <propertyComment>/* This class will be used to load DB schema */</propertyComment>
     </property>
-    <property name="ParseEnv" dataType="com.joanju.proparse.Environment" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="ParseSchema" dataType="org.prorefactor.core.schema.Schema" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="ParseSession" dataType="org.prorefactor.refactor.RefactorSession" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="ParseUnit" dataType="org.prorefactor.treeparser.ParseUnit" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="TempDir" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="ParseEnv" dataType="com.joanju.proparse.Environment" isAbstract="false" isStatic="true" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="ParseSchema" dataType="org.prorefactor.core.schema.Schema" isAbstract="false" isStatic="true" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="ParseSession" dataType="org.prorefactor.refactor.RefactorSession" isAbstract="false" isStatic="true" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="ParseUnit" dataType="org.prorefactor.treeparser.ParseUnit" isAbstract="false" isStatic="true" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="TempDir" dataType="CHARACTER" isAbstract="false" isStatic="true" isOverride="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <using name="com.joanju.proparse.ProToken" type="NONE"/>
     <using name="com.joanju.proparse.ProParserTokenTypes" type="NONE"/>
     <using name="org.prorefactor.core.JPNode" type="NONE"/>

@@ -11,16 +11,32 @@
    Notes       : &#xD;
  ----------------------------------------------------------------------*/</classComment>
     <constructor signature="MainForm()" modifier="PUBLIC"/>
-    <method methodName="btnLint_Click" signature="btnLint_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <destructor/>
+    <method methodName="btnLint_Click" signature="btnLint_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="sender" dataType="System.Object" position="1" mode="INPUT"/>
         <parameter name="e" dataType="System.EventArgs" position="2" mode="INPUT"/>
     </method>
-    <method methodName="btnProfiles_Click" signature="btnProfiles_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="btnProfiles_Click" signature="btnProfiles_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+	 Purpose:&#xD;
+	 Notes:&#xD;
+	------------------------------------------------------------------------------*/</methodComment>
         <parameter name="sender" dataType="System.Object" position="3" mode="INPUT"/>
         <parameter name="e" dataType="System.EventArgs" position="4" mode="INPUT"/>
     </method>
-    <method methodName="InitializeComponent" signature="InitializeComponent()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false"/>
-    <method methodName="ReceiveResult" signature="ReceiveResult(INPUT:character,INPUT:character,INPUT:character,INPUT:character,INPUT:integer,INPUT:integer,INPUT:character)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="InitializeComponent" signature="InitializeComponent()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
+        <methodComment>/* NOTE: The following method is automatically generated.&#xD;
+        &#xD;
+        We strongly suggest that the contents of this method only be modified using the&#xD;
+        Visual Designer to avoid any incompatible modifications.&#xD;
+        &#xD;
+        Modifying the contents of this method using a code editor will invalidate any support for this file. */</methodComment>
+    </method>
+    <method methodName="ReceiveResult" signature="ReceiveResult(INPUT:character,INPUT:character,INPUT:character,INPUT:character,INPUT:integer,INPUT:integer,INPUT:character)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Receive results published by ILintUnit&#xD;
      Notes:&#xD;
@@ -33,17 +49,21 @@
         <parameter name="severity" dataType="INTEGER" position="11" mode="INPUT"/>
         <parameter name="comment" dataType="CHARACTER" position="12" mode="INPUT"/>
     </method>
-    <method methodName="RefreshResults" signature="RefreshResults()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="RefreshResults" signature="RefreshResults()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="resultsView_Sorted" signature="resultsView_Sorted(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="resultsView_Sorted" signature="resultsView_Sorted(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="sender" dataType="System.Object" position="13" mode="INPUT"/>
         <parameter name="e" dataType="System.EventArgs" position="14" mode="INPUT"/>
     </method>
-    <method methodName="UpdateStatus" signature="UpdateStatus(INPUT:character,INPUT:character)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="UpdateStatus" signature="UpdateStatus(INPUT:character,INPUT:character)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
@@ -53,7 +73,7 @@
     </method>
     <using name="Progress.Windows.Form" type="NONE"/>
     <using name="Prolint.IResultAcceptor" type="NONE"/>
-    <temp-table name="ttProfile" definition="prolint/profile.i" noUndo="true" xmlNodeName="Profile">
+    <temp-table name="ttProfile" definition="prolint/profile.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Profile" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttProfile NO-UNDO XML-NODE-NAME 'Profile' 
   FIELD ProfileName AS CHARACTER
   FIELD ParsePropath AS CHARACTER
@@ -61,7 +81,7 @@
         <field name="ProfileName" dataType="CHARACTER"/>
         <field name="ParsePropath" dataType="CHARACTER"/>
     </temp-table>
-    <temp-table name="ttRule" definition="prolint/profile.i" noUndo="true" xmlNodeName="Rule">
+    <temp-table name="ttRule" definition="prolint/profile.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Rule" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttRule NO-UNDO XML-NODE-NAME 'Rule' 
   FIELD ProfileName AS CHARACTER
   FIELD RuleId AS CHARACTER
@@ -80,7 +100,7 @@
             <field>RuleClass</field>
         </index>
     </temp-table>
-    <temp-table name="ttResult" definition="prolint/results.i" noUndo="true">
+    <temp-table name="ttResult" definition="prolint/results.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttResult NO-UNDO 
   FIELD RuleId AS CHARACTER
   FIELD Attrs AS CHARACTER
@@ -98,7 +118,7 @@
         <field name="Severity" dataType="INTEGER"/>
         <field name="Comment" dataType="CHARACTER"/>
     </temp-table>
-    <dataset name="dsProfile" definition="prolint/profile.i">
+    <dataset name="dsProfile" definition="prolint/profile.i" isNew="false" isShared="false" modifier="PRIVATE">
         <text>DEFINE DATASET dsProfile FOR ttProfile, ttRule
 </text>
         <buffer>ttProfile</buffer>

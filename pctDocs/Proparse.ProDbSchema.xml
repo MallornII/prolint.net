@@ -9,20 +9,24 @@
    Created     : 06.12.2018 07:34:09&#xD;
    Notes       : &#xD;
  ----------------------------------------------------------------------*/</classComment>
+    <classComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Default constructor&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</classComment>
     <constructor signature="ProDbSchema()" modifier="PUBLIC">
         <constrComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Default constructor&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</constrComment>
     </constructor>
-    <method methodName="ParseDatabase" signature="ParseDatabase(INPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ParseDatabase" signature="ParseDatabase(INPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     -----------------------------------------------------------------------------*/</methodComment>
         <parameter name="dbNum" dataType="INTEGER" position="0" mode="INPUT"/>
     </method>
-    <method methodName="ParseFile" signature="ParseFile(INPUT:handle,INPUT:recid,INPUT:character,INPUT:character)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ParseFile" signature="ParseFile(INPUT:handle,INPUT:recid,INPUT:character,INPUT:character)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;

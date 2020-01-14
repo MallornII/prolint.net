@@ -34,101 +34,107 @@
         <parameter name="resultAcceptor" dataType="HANDLE" position="7" mode="INPUT"/>
         <parameter name="internalProcedureName" dataType="CHARACTER" position="8" mode="INPUT"/>
     </constructor>
-    <method methodName="Dispose" signature="Dispose()" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <destructor>
+        <destructorComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</destructorComment>
+    </destructor>
+    <method methodName="Dispose" signature="Dispose()" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Release Java resources&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="GetErrors" returnType="OpenEdge.Core.Collections.IListIterator" signature="GetErrors():OpenEdge.Core.Collections.IListIterator" modifier="PUBLIC" isStatic="false" isFinal="true" isAbstract="false">
+    <method methodName="GetErrors" returnType="OpenEdge.Core.Collections.IListIterator" signature="GetErrors():OpenEdge.Core.Collections.IListIterator" modifier="PUBLIC" isStatic="false" isFinal="true" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Returns IIterator class with errors that were raised during class' work&#xD;
      Notes: Use ErrorStatus() method to determine whenever there were any errors&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="ErrorStatus" returnType="LOGICAL" signature="ErrorStatus():LOGICAL" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ErrorStatus" returnType="LOGICAL" signature="ErrorStatus():LOGICAL" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Return TRUE if there errors during class' work&#xD;
      Notes: &#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="LoadProfiles" signature="LoadProfiles()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="LoadProfiles" signature="LoadProfiles()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="LoadRules" signature="LoadRules()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="LoadRules" signature="LoadRules()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="LintEx" returnType="Prolint.ILintUnit" signature="LintEx(INPUT:OpenEdge.Core.Collections.StringCollection):Prolint.ILintUnit[]" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="LintEx" returnType="Prolint.ILintUnit" signature="LintEx(INPUT:OpenEdge.Core.Collections.StringCollection):Prolint.ILintUnit[]" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Lints all files in collection&#xD;
      Notes: Calling routine is responsible for deleting all ILintUnit classes&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="fileList" dataType="OpenEdge.Core.Collections.StringCollection" position="10" mode="INPUT"/>
     </method>
-    <method methodName="LintEx" returnType="Prolint.ILintUnit" signature="LintEx(INPUT:character):Prolint.ILintUnit" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="LintEx" returnType="Prolint.ILintUnit" signature="LintEx(INPUT:character):Prolint.ILintUnit" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Lints one file&#xD;
      Notes: Calling routine is responsible for deleting ILintUnit class&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="lintFile" dataType="CHARACTER" position="11" mode="INPUT"/>
     </method>
-    <method methodName="Lint" returnType="Prolint.LintResult" signature="Lint(INPUT:OpenEdge.Core.Collections.StringCollection):Prolint.LintResult[]" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="Lint" returnType="Prolint.LintResult" signature="Lint(INPUT:OpenEdge.Core.Collections.StringCollection):Prolint.LintResult[]" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Lints all files in collection&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="fileList" dataType="OpenEdge.Core.Collections.StringCollection" position="13" mode="INPUT"/>
     </method>
-    <method methodName="Lint" returnType="Prolint.LintResult" signature="Lint(INPUT:character):Prolint.LintResult" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="Lint" returnType="Prolint.LintResult" signature="Lint(INPUT:character):Prolint.LintResult" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Lints one file&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="lintFile" dataType="CHARACTER" position="14" mode="INPUT"/>
     </method>
-    <method methodName="PullErrors" signature="PullErrors()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="PullErrors" signature="PullErrors()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="SetDbSchema" signature="SetDbSchema(INPUT:Proparse.IDbSchema)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="SetDbSchema" signature="SetDbSchema(INPUT:Proparse.IDbSchema)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Set's class for reading Db schema&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="dbSchema" dataType="Proparse.IDbSchema" position="15" mode="INPUT"/>
     </method>
-    <property name="CurrentProfile" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PRIVATE"/>
-    <property name="CurrentUnit" dataType="Prolint.ILintUnit" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="ErrorList" dataType="OpenEdge.Core.Collections.List" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="IsDebug" dataType="LOGICAL" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC">
+    <property name="CurrentProfile" dataType="CHARACTER" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PRIVATE"/>
+    <property name="CurrentUnit" dataType="Prolint.ILintUnit" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="ErrorList" dataType="OpenEdge.Core.Collections.List" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="IsDebug" dataType="LOGICAL" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC">
         <propertyComment>/*&#xD;
         If set true will save temp-tables into TempDir in XML format and will not delete TempDir&#xD;
     */</propertyComment>
     </property>
-    <property name="LintCompiler" dataType="Prolint.UnitCompiler" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="LintDataDebugger" dataType="Prolint.UnitDebugData" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="LintRules" dataType="OpenEdge.Core.Collections.List" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="ResultAcceptorClass" dataType="IResultAcceptor" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="ResultAcceptorName" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="ResultAcceptorProcedure" dataType="HANDLE" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="TempDir" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <property name="UnitClass" dataType="Progress.Lang.Class" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
-    <event eventName="PublishStatus" signature="PublishStatus(INPUT:character,INPUT:character)" modifier="PUBLIC" isStatic="false" isAbstract="false" eventComment="/*------------------------------------------------------------------------------&#xD;&#xA;     Purpose: Publishes current job status&#xD;&#xA;     Notes:&#xD;&#xA;    ------------------------------------------------------------------------------*/">
+    <property name="LintCompiler" dataType="Prolint.UnitCompiler" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="LintDataDebugger" dataType="Prolint.UnitDebugData" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="LintRules" dataType="OpenEdge.Core.Collections.List" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="ResultAcceptorClass" dataType="IResultAcceptor" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="ResultAcceptorName" dataType="CHARACTER" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="ResultAcceptorProcedure" dataType="HANDLE" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="TempDir" dataType="CHARACTER" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PRIVATE" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="UnitClass" dataType="Progress.Lang.Class" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <event eventName="PublishStatus" signature="PublishStatus(INPUT:character,INPUT:character)" modifier="PUBLIC" isStatic="false" isAbstract="false" isOverride="false" eventComment="/*------------------------------------------------------------------------------&#xD;&#xA;     Purpose: Publishes current job status&#xD;&#xA;     Notes:&#xD;&#xA;    ------------------------------------------------------------------------------*/">
         <parameter name="iUnit" dataType="CHARACTER" position="0" mode="INPUT"/>
         <parameter name="iStatus" dataType="CHARACTER" position="1" mode="INPUT"/>
     </event>
     <using name="Utils.IO" type="NONE"/>
     <using name="Prolint.IResultAcceptor" type="NONE"/>
     <using name="Prolint.LintResult" type="NONE"/>
-    <temp-table name="ttSource" definition="prolint/xref.i" noUndo="true" xmlNodeName="Source">
+    <temp-table name="ttSource" definition="prolint/xref.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Source" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttSource NO-UNDO XML-NODE-NAME 'Source' 
   FIELD SourceFile AS CHARACTER
   FIELD SourceGUID AS CHARACTER
@@ -138,7 +144,7 @@
         <field name="SourceGUID" dataType="CHARACTER"/>
         <field name="FileNum" dataType="INTEGER"/>
     </temp-table>
-    <temp-table name="ttXRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="Reference">
+    <temp-table name="ttXRef" definition="prolint/xref.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Reference" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttXRef NO-UNDO XML-NODE-NAME 'Reference' 
   FIELD ReferenceType AS CHARACTER
   FIELD ObjectIdentifier AS CHARACTER
@@ -168,7 +174,7 @@
         <field name="IsStatic" dataType="LOGICAL"/>
         <field name="IsAbstract" dataType="LOGICAL"/>
     </temp-table>
-    <temp-table name="ttParameterRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="Parameter-ref">
+    <temp-table name="ttParameterRef" definition="prolint/xref.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Parameter-ref" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttParameterRef NO-UNDO XML-NODE-NAME 'Parameter-ref' 
   FIELD Order AS INTEGER
   FIELD ParameterMode AS CHARACTER
@@ -190,7 +196,7 @@
         <field name="IsAppend" dataType="LOGICAL"/>
         <field name="DatasetGUID" dataType="CHARACTER"/>
     </temp-table>
-    <temp-table name="ttClassRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="Class-ref">
+    <temp-table name="ttClassRef" definition="prolint/xref.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Class-ref" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttClassRef NO-UNDO XML-NODE-NAME 'Class-ref' 
   FIELD SourceGUID AS CHARACTER
   FIELD RefSeq AS INTEGER
@@ -208,7 +214,7 @@
         <field name="IsFinal" dataType="LOGICAL"/>
         <field name="IsSerializable" dataType="LOGICAL"/>
     </temp-table>
-    <temp-table name="ttStringRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="String-ref">
+    <temp-table name="ttStringRef" definition="prolint/xref.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="String-ref" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttStringRef NO-UNDO XML-NODE-NAME 'String-ref' 
   FIELD SourceGUID AS CHARACTER
   FIELD RefSeq AS INTEGER
@@ -222,7 +228,7 @@
         <field name="Justification" dataType="CHARACTER"/>
         <field name="Translatable" dataType="LOGICAL"/>
     </temp-table>
-    <temp-table name="ttDatasetRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="Dataset-ref">
+    <temp-table name="ttDatasetRef" definition="prolint/xref.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Dataset-ref" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttDatasetRef NO-UNDO XML-NODE-NAME 'Dataset-ref' 
   FIELD SourceGUID AS CHARACTER
   FIELD DatasetGUID AS CHARACTER
@@ -242,7 +248,7 @@
         <field name="BufferList" dataType="CHARACTER"/>
         <field name="DataLinks" dataType="INTEGER"/>
     </temp-table>
-    <temp-table name="ttNode" definition="proparse/jpnodes.i" noUndo="true">
+    <temp-table name="ttNode" definition="proparse/jpnodes.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttNode NO-UNDO 
   FIELD NodeNum AS INTEGER
   FIELD ParentNum AS INTEGER
@@ -289,7 +295,7 @@
             <field>NodeType</field>
         </index>
     </temp-table>
-    <temp-table name="ttProUnit" definition="proparse/prounit.i" noUndo="true">
+    <temp-table name="ttProUnit" definition="proparse/prounit.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttProUnit NO-UNDO 
   FIELD UnitType AS INT64
   FIELD Id AS INTEGER
@@ -323,7 +329,7 @@
         <field name="StartNode" dataType="INTEGER"/>
         <field name="EndNode" dataType="INTEGER"/>
     </temp-table>
-    <temp-table name="ttProfile" definition="prolint/profile.i" noUndo="true" xmlNodeName="Profile">
+    <temp-table name="ttProfile" definition="prolint/profile.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Profile" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttProfile NO-UNDO XML-NODE-NAME 'Profile' 
   FIELD ProfileName AS CHARACTER
   FIELD ParsePropath AS CHARACTER
@@ -331,7 +337,7 @@
         <field name="ProfileName" dataType="CHARACTER"/>
         <field name="ParsePropath" dataType="CHARACTER"/>
     </temp-table>
-    <temp-table name="ttRule" definition="prolint/profile.i" noUndo="true" xmlNodeName="Rule">
+    <temp-table name="ttRule" definition="prolint/profile.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Rule" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttRule NO-UNDO XML-NODE-NAME 'Rule' 
   FIELD ProfileName AS CHARACTER
   FIELD RuleId AS CHARACTER
@@ -350,7 +356,7 @@
             <field>RuleClass</field>
         </index>
     </temp-table>
-    <temp-table name="ttResult" definition="prolint/results.i" noUndo="true">
+    <temp-table name="ttResult" definition="prolint/results.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttResult NO-UNDO 
   FIELD RuleId AS CHARACTER
   FIELD Attrs AS CHARACTER
@@ -368,7 +374,7 @@
         <field name="Severity" dataType="INTEGER"/>
         <field name="Comment" dataType="CHARACTER"/>
     </temp-table>
-    <dataset name="dsProfile" definition="prolint/profile.i">
+    <dataset name="dsProfile" definition="prolint/profile.i" isNew="false" isShared="false" modifier="PRIVATE">
         <text>DEFINE DATASET dsProfile FOR ttProfile, ttRule
 </text>
         <buffer>ttProfile</buffer>

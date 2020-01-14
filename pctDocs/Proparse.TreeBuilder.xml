@@ -10,7 +10,7 @@
    Created     : 21.12.2018 23:21:12&#xD;
    Notes       : &#xD;
  ----------------------------------------------------------------------*/</classComment>
-    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Start method for visiting ILintUnit&#xD;
      Notes:&#xD;
@@ -23,7 +23,7 @@
     <using name="com.joanju.proparse.ProParserTokenTypes" type="NONE"/>
     <using name="org.prorefactor.core.JPNode" type="NONE"/>
     <using name="Utils.IO" type="NONE"/>
-    <temp-table name="ttNode" definition="jpnodes.i" noUndo="true">
+    <temp-table name="ttNode" definition="Proparse/jpnodes.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttNode NO-UNDO 
   FIELD NodeNum AS INTEGER
   FIELD ParentNum AS INTEGER
@@ -70,7 +70,7 @@
             <field>NodeType</field>
         </index>
     </temp-table>
-    <temp-table name="ttProUnit" definition="prounit.i" noUndo="true">
+    <temp-table name="ttProUnit" definition="Proparse/prounit.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttProUnit NO-UNDO 
   FIELD UnitType AS INT64
   FIELD Id AS INTEGER
@@ -104,7 +104,7 @@
         <field name="StartNode" dataType="INTEGER"/>
         <field name="EndNode" dataType="INTEGER"/>
     </temp-table>
-    <dataset name="dsProparse" definition="proparse/parsedata.i">
+    <dataset name="dsProparse" definition="proparse/parsedata.i" isNew="false" isShared="false" modifier="PRIVATE">
         <text>DEFINE DATASET dsProparse FOR ttNode, ttProUnit
 </text>
         <buffer>ttNode</buffer>

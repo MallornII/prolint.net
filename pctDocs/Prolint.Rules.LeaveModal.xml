@@ -9,13 +9,17 @@
     Created     : 09.02.2019 15:18:25&#xD;
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
+    <classComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</classComment>
     <constructor signature="LeaveModal()" modifier="PUBLIC">
         <constrComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</constrComment>
     </constructor>
-    <method methodName="InspectNode" signature="InspectNode(INPUT:integer,INPUT:integer,INPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="InspectNode" signature="InspectNode(INPUT:integer,INPUT:integer,INPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
@@ -24,7 +28,7 @@
         <parameter name="findType" dataType="INTEGER" position="1" mode="INPUT"/>
         <parameter name="findChildType" dataType="INTEGER" position="2" mode="INPUT"/>
     </method>
-    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="true">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Start method for visiting ILintUnit&#xD;
      Notes:&#xD;

@@ -9,7 +9,11 @@
     Created     : 04.01.2019 21:41:16&#xD;
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
-    <method methodName="bin_xor" returnType="INTEGER" signature="bin_xor(INPUT:integer,INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <classComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Bitwise XOR of two int32 values&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</classComment>
+    <method methodName="bin_xor" returnType="INTEGER" signature="bin_xor(INPUT:integer,INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Bitwise XOR of two int32 values&#xD;
      Notes:&#xD;
@@ -17,7 +21,7 @@
         <parameter name="a" dataType="INTEGER" position="0" mode="INPUT"/>
         <parameter name="b" dataType="INTEGER" position="1" mode="INPUT"/>
     </method>
-    <method methodName="bin_xor" returnType="INT64" signature="bin_xor(INPUT:int64,INPUT:int64):INT64" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="bin_xor" returnType="INT64" signature="bin_xor(INPUT:int64,INPUT:int64):INT64" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Bitwise XOR of two int64 values&#xD;
      Notes:&#xD;
@@ -25,7 +29,7 @@
         <parameter name="a" dataType="INT64" position="2" mode="INPUT"/>
         <parameter name="b" dataType="INT64" position="3" mode="INPUT"/>
     </method>
-    <method methodName="bin_or" returnType="INTEGER" signature="bin_or(INPUT:integer,INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="bin_or" returnType="INTEGER" signature="bin_or(INPUT:integer,INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Bitwise OR of two int32 values&#xD;
      Notes:&#xD;
@@ -33,7 +37,7 @@
         <parameter name="a" dataType="INTEGER" position="4" mode="INPUT"/>
         <parameter name="b" dataType="INTEGER" position="5" mode="INPUT"/>
     </method>
-    <method methodName="bin_or" returnType="INT64" signature="bin_or(INPUT:int64,INPUT:int64):INT64" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="bin_or" returnType="INT64" signature="bin_or(INPUT:int64,INPUT:int64):INT64" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Bitwise OR of two int64 values&#xD;
      Notes:&#xD;
@@ -41,7 +45,7 @@
         <parameter name="a" dataType="INT64" position="6" mode="INPUT"/>
         <parameter name="b" dataType="INT64" position="7" mode="INPUT"/>
     </method>
-    <method methodName="bin_and" returnType="INTEGER" signature="bin_and(INPUT:integer,INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="bin_and" returnType="INTEGER" signature="bin_and(INPUT:integer,INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Bitwise AND of two int32 values&#xD;
      Notes:&#xD;
@@ -49,7 +53,7 @@
         <parameter name="a" dataType="INTEGER" position="8" mode="INPUT"/>
         <parameter name="b" dataType="INTEGER" position="9" mode="INPUT"/>
     </method>
-    <method methodName="bin_and" returnType="INT64" signature="bin_and(INPUT:int64,INPUT:int64):INT64" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="bin_and" returnType="INT64" signature="bin_and(INPUT:int64,INPUT:int64):INT64" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Bitwise AND of two int64 values&#xD;
      Notes:&#xD;
@@ -57,7 +61,7 @@
         <parameter name="a" dataType="INT64" position="10" mode="INPUT"/>
         <parameter name="b" dataType="INT64" position="11" mode="INPUT"/>
     </method>
-    <method methodName="bin_lshift" returnType="INTEGER" signature="bin_lshift(INPUT:integer,INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="bin_lshift" returnType="INTEGER" signature="bin_lshift(INPUT:integer,INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Bitwise left shift (&lt;&lt;) of int32 value&#xD;
      Notes:&#xD;
@@ -65,7 +69,7 @@
         <parameter name="a" dataType="INTEGER" position="12" mode="INPUT"/>
         <parameter name="shift" dataType="INTEGER" position="13" mode="INPUT"/>
     </method>
-    <method methodName="bin_lshift" returnType="INT64" signature="bin_lshift(INPUT:int64,INPUT:integer):INT64" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="bin_lshift" returnType="INT64" signature="bin_lshift(INPUT:int64,INPUT:integer):INT64" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Bitwise left shift (&lt;&lt;) of int64 value&#xD;
      Notes:&#xD;
@@ -73,7 +77,7 @@
         <parameter name="a" dataType="INT64" position="14" mode="INPUT"/>
         <parameter name="shift" dataType="INTEGER" position="15" mode="INPUT"/>
     </method>
-    <method methodName="bin_rshift" returnType="INTEGER" signature="bin_rshift(INPUT:integer,INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="bin_rshift" returnType="INTEGER" signature="bin_rshift(INPUT:integer,INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Bitwise right shift (&gt;&gt;) of int32 value&#xD;
      Notes:&#xD;
@@ -81,7 +85,7 @@
         <parameter name="a" dataType="INTEGER" position="16" mode="INPUT"/>
         <parameter name="shift" dataType="INTEGER" position="17" mode="INPUT"/>
     </method>
-    <method methodName="bin_rshift" returnType="INT64" signature="bin_rshift(INPUT:int64,INPUT:integer):INT64" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="bin_rshift" returnType="INT64" signature="bin_rshift(INPUT:int64,INPUT:integer):INT64" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Bitwise right shift (&gt;&gt;) of int64 value&#xD;
      Notes:&#xD;
@@ -89,28 +93,28 @@
         <parameter name="a" dataType="INT64" position="18" mode="INPUT"/>
         <parameter name="shift" dataType="INTEGER" position="19" mode="INPUT"/>
     </method>
-    <method methodName="cast_byte" returnType="INTEGER" signature="cast_byte(INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="cast_byte" returnType="INTEGER" signature="cast_byte(INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Casts int32 value to Byte value&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="a" dataType="INTEGER" position="20" mode="INPUT"/>
     </method>
-    <method methodName="cast_byte" returnType="INTEGER" signature="cast_byte(INPUT:int64):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="cast_byte" returnType="INTEGER" signature="cast_byte(INPUT:int64):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Casts int64 value to Byte value&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="a" dataType="INT64" position="21" mode="INPUT"/>
     </method>
-    <method methodName="cast_short" returnType="INTEGER" signature="cast_short(INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="cast_short" returnType="INTEGER" signature="cast_short(INPUT:integer):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Casts int32 value to int16 value&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="a" dataType="INTEGER" position="22" mode="INPUT"/>
     </method>
-    <method methodName="cast_short" returnType="INTEGER" signature="cast_short(INPUT:int64):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="cast_short" returnType="INTEGER" signature="cast_short(INPUT:int64):INTEGER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Casts int64 value to int16 value&#xD;
      Notes:&#xD;

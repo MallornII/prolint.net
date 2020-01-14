@@ -9,13 +9,17 @@
    Created     : 16.02.2019 18:24:25&#xD;
    Notes       : &#xD;
  ----------------------------------------------------------------------*/</classComment>
+    <classComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</classComment>
     <constructor signature="OfLink()" modifier="PUBLIC">
         <constrComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</constrComment>
     </constructor>
-    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="true">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Start method for visiting ILintUnit&#xD;
      Notes:&#xD;

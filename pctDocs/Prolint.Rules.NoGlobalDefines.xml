@@ -15,15 +15,15 @@
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</constrComment>
     </constructor>
-    <method methodName="RemoveComment" signature="RemoveComment(INPUT-OUTPUT:character,INPUT-OUTPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="true" isAbstract="false">
+    <method methodName="RemoveComment" signature="RemoveComment(INPUT-OUTPUT:character,INPUT-OUTPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="true" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
-        <parameter name="lineString" dataType="CHARACTER" position="0" mode="INOUT"/>
-        <parameter name="commentLevel" dataType="INTEGER" position="1" mode="INOUT"/>
+        <parameter name="lineString" dataType="CHARACTER" position="0"/>
+        <parameter name="commentLevel" dataType="INTEGER" position="1"/>
     </method>
-    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="true">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Start method for visiting ILintUnit&#xD;
      Notes:&#xD;

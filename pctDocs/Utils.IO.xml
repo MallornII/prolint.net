@@ -9,21 +9,25 @@
     Created     : 05.01.2019 18:09:05&#xD;
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
-    <method methodName="GetDirectory" returnType="CHARACTER" signature="GetDirectory(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <classComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Gets Directory from FullPath&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</classComment>
+    <method methodName="GetDirectory" returnType="CHARACTER" signature="GetDirectory(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Gets Directory from FullPath&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="sourcePath" dataType="CHARACTER" position="0" mode="INPUT"/>
     </method>
-    <method methodName="GetFileName" returnType="CHARACTER" signature="GetFileName(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="GetFileName" returnType="CHARACTER" signature="GetFileName(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Gets FileName from FullPath&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="sourcePath" dataType="CHARACTER" position="1" mode="INPUT"/>
     </method>
-    <method methodName="MakePath" returnType="CHARACTER" signature="MakePath(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="MakePath" returnType="CHARACTER" signature="MakePath(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Creates FullPath from directory and file. Also changes all "\" to "/"&#xD;
      Notes: &#xD;
@@ -34,7 +38,7 @@
         <parameter name="sourcePath" dataType="CHARACTER" position="2" mode="INPUT"/>
         <parameter name="sourceName" dataType="CHARACTER" position="3" mode="INPUT"/>
     </method>
-    <method methodName="MakePath" returnType="CHARACTER" signature="MakePath(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="MakePath" returnType="CHARACTER" signature="MakePath(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Changes all "\" to "/"&#xD;
      Notes:&#xD;
@@ -42,7 +46,7 @@
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="sourcePath" dataType="CHARACTER" position="4" mode="INPUT"/>
     </method>
-    <method methodName="PathExists" returnType="LOGICAL" signature="PathExists(INPUT:character):LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="PathExists" returnType="LOGICAL" signature="PathExists(INPUT:character):LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Checks if Path provided exists&#xD;
      Notes:&#xD;
@@ -50,7 +54,7 @@
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="sourcePath" dataType="CHARACTER" position="5" mode="INPUT"/>
     </method>
-    <method methodName="GetFileExt" returnType="CHARACTER" signature="GetFileExt(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="GetFileExt" returnType="CHARACTER" signature="GetFileExt(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Get file extenstion&#xD;
      Notes:&#xD;

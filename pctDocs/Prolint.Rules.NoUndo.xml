@@ -9,20 +9,24 @@
    Created     : 16.02.2019 14:39:06&#xD;
    Notes       : &#xD;
  ----------------------------------------------------------------------*/</classComment>
+    <classComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</classComment>
     <constructor signature="NoUndo()" modifier="PUBLIC">
         <constrComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</constrComment>
     </constructor>
-    <method methodName="FindUndoUnits" signature="FindUndoUnits(INPUT:int64)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="FindUndoUnits" signature="FindUndoUnits(INPUT:int64)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="unitType" dataType="INT64" position="0" mode="INPUT"/>
     </method>
-    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="true">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Start method for visiting ILintUnit&#xD;
      Notes:&#xD;

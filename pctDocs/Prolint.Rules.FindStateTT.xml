@@ -9,13 +9,17 @@
     Created     : 27.01.2019 18:27:03&#xD;
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
+    <classComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose:&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</classComment>
     <constructor signature="FindStateTT()" modifier="PUBLIC">
         <constrComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</constrComment>
     </constructor>
-    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="true">
         <parameter name="currentUnit" dataType="Prolint.ILintUnit" position="0" mode="INPUT"/>
         <parameter name="dsProparse" dataType="DATASET" position="1" mode="INPUT"/>
         <parameter name="dsXref" dataType="DATASET" position="2" mode="INPUT"/>

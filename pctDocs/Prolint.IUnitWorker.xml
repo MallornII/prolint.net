@@ -9,7 +9,7 @@
     Created     : 22.12.2018 21:02:16&#xD;
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
-    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Start method for visiting ILintUnit&#xD;
      Notes:&#xD;
@@ -18,9 +18,9 @@
         <parameter name="dsProparse" dataType="DATASET" position="1" mode="INPUT"/>
         <parameter name="dsXref" dataType="DATASET" position="2" mode="INPUT"/>
     </method>
-    <property name="TempDir" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <property name="TempDir" dataType="CHARACTER" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <using name="Progress.Lang.*" type="NONE"/>
-    <temp-table name="ttNode" definition="jpnodes.i" noUndo="true">
+    <temp-table name="ttNode" definition="Proparse/jpnodes.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttNode NO-UNDO 
   FIELD NodeNum AS INTEGER
   FIELD ParentNum AS INTEGER
@@ -67,7 +67,7 @@
             <field>NodeType</field>
         </index>
     </temp-table>
-    <temp-table name="ttProUnit" definition="prounit.i" noUndo="true">
+    <temp-table name="ttProUnit" definition="Proparse/prounit.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttProUnit NO-UNDO 
   FIELD UnitType AS INT64
   FIELD Id AS INTEGER
@@ -101,7 +101,7 @@
         <field name="StartNode" dataType="INTEGER"/>
         <field name="EndNode" dataType="INTEGER"/>
     </temp-table>
-    <temp-table name="ttResult" definition="prolint/results.i" noUndo="true">
+    <temp-table name="ttResult" definition="prolint/results.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttResult NO-UNDO 
   FIELD RuleId AS CHARACTER
   FIELD Attrs AS CHARACTER
@@ -119,7 +119,7 @@
         <field name="Severity" dataType="INTEGER"/>
         <field name="Comment" dataType="CHARACTER"/>
     </temp-table>
-    <temp-table name="ttSource" definition="prolint/xref.i" noUndo="true" xmlNodeName="Source">
+    <temp-table name="ttSource" definition="prolint/xref.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Source" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttSource NO-UNDO XML-NODE-NAME 'Source' 
   FIELD SourceFile AS CHARACTER
   FIELD SourceGUID AS CHARACTER
@@ -129,7 +129,7 @@
         <field name="SourceGUID" dataType="CHARACTER"/>
         <field name="FileNum" dataType="INTEGER"/>
     </temp-table>
-    <temp-table name="ttXRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="Reference">
+    <temp-table name="ttXRef" definition="prolint/xref.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Reference" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttXRef NO-UNDO XML-NODE-NAME 'Reference' 
   FIELD ReferenceType AS CHARACTER
   FIELD ObjectIdentifier AS CHARACTER
@@ -159,7 +159,7 @@
         <field name="IsStatic" dataType="LOGICAL"/>
         <field name="IsAbstract" dataType="LOGICAL"/>
     </temp-table>
-    <temp-table name="ttParameterRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="Parameter-ref">
+    <temp-table name="ttParameterRef" definition="prolint/xref.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Parameter-ref" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttParameterRef NO-UNDO XML-NODE-NAME 'Parameter-ref' 
   FIELD Order AS INTEGER
   FIELD ParameterMode AS CHARACTER
@@ -181,7 +181,7 @@
         <field name="IsAppend" dataType="LOGICAL"/>
         <field name="DatasetGUID" dataType="CHARACTER"/>
     </temp-table>
-    <temp-table name="ttClassRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="Class-ref">
+    <temp-table name="ttClassRef" definition="prolint/xref.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Class-ref" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttClassRef NO-UNDO XML-NODE-NAME 'Class-ref' 
   FIELD SourceGUID AS CHARACTER
   FIELD RefSeq AS INTEGER
@@ -199,7 +199,7 @@
         <field name="IsFinal" dataType="LOGICAL"/>
         <field name="IsSerializable" dataType="LOGICAL"/>
     </temp-table>
-    <temp-table name="ttStringRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="String-ref">
+    <temp-table name="ttStringRef" definition="prolint/xref.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="String-ref" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttStringRef NO-UNDO XML-NODE-NAME 'String-ref' 
   FIELD SourceGUID AS CHARACTER
   FIELD RefSeq AS INTEGER
@@ -213,7 +213,7 @@
         <field name="Justification" dataType="CHARACTER"/>
         <field name="Translatable" dataType="LOGICAL"/>
     </temp-table>
-    <temp-table name="ttDatasetRef" definition="prolint/xref.i" noUndo="true" xmlNodeName="Dataset-ref">
+    <temp-table name="ttDatasetRef" definition="prolint/xref.i" noUndo="true" isNew="false" isGlobal="true" isShared="false" xmlNodeName="Dataset-ref" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttDatasetRef NO-UNDO XML-NODE-NAME 'Dataset-ref' 
   FIELD SourceGUID AS CHARACTER
   FIELD DatasetGUID AS CHARACTER
@@ -233,13 +233,13 @@
         <field name="BufferList" dataType="CHARACTER"/>
         <field name="DataLinks" dataType="INTEGER"/>
     </temp-table>
-    <dataset name="dsProparse" definition="proparse/parsedata.i">
+    <dataset name="dsProparse" definition="proparse/parsedata.i" isNew="false" isShared="false" modifier="PRIVATE">
         <text>DEFINE DATASET dsProparse FOR ttNode, ttProUnit
 </text>
         <buffer>ttNode</buffer>
         <buffer>ttProUnit</buffer>
     </dataset>
-    <dataset name="dsXRef" definition="prolint/lintdata.i">
+    <dataset name="dsXRef" definition="prolint/lintdata.i" isNew="false" isShared="false" modifier="PRIVATE">
         <text>DEFINE DATASET dsXRef FOR ttResult, ttSource, ttXRef, ttParameterRef, ttClassRef, ttStringRef, ttDatasetRef
 </text>
         <buffer>ttResult</buffer>

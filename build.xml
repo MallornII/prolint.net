@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Prolint.net" default="build" basedir="." xmlns:sonar="antlib:org.sonar.ant">
+
+  <property environment="env" />
+  <property name="version" value="0.3.0" />
+  <taskdef resource="PCT.properties" />
+  <taskdef resource="extras115.properties" />
+  <typedef resource="types.properties" />
+
+  <property name="sonar.host.url" value="http://localhost:9000" />
+  <property name="sonar.projectKey" value="Prolint.Net" />
+  <property name="sonar.projectName" value="Prolint.Net" />
+  <property name="sonar.projectVersion" value="1.0" />
+  <property name="sonar.sources" value="src/prolint.net" />
+  <property name="sonar.sourceEncoding" value="utf-8" />
+  <property name="sonar.oe.binaries" value="target/build" />
+  <property name="sonar.oe.propath" value="src/prolint.net,C:/Progress/OpenEdge/src/OpenEdge.Core.pl" />
+  <property name="sonar.oe.dlc" value="C:/Progress/OpenEdge" />
+  <property name="sonar.oe.propath.dlc" value="true" />  
+  <property name="sonar.login" value="b887de36e0dcd06ef14efd583f16ac4e7ef0afd7" />
+
+  <target name="clean">
+    <echo message="clean"/>
+    <delete includeemptydirs="true">
+      <fileset dir="Release" includes="**/*"/>
+      <fileset dir="target/build" includes="**/*"/>
+    </delete>
+  </target>
+
+  <target name="build">
+    <DlcHome value="c:/progress/openedge" />
+    <path id="compilation.propath">
+      <pathelement path="src/prolint.net" />  
+      <pathelement path="C:/Progress/OpenEdge/src/OpenEdge.Core.pl" />      
+    </path>
+        
+    <echo message="compiling"/>    
+    <PCTCompile destDir="target/build" relativePaths="true" inputChars="32000" token="5000">
+        <fileset dir="src/prolint.net" includes="**/*.cls" />
+        <propath refid="compilation.propath" />
+    </PCTCompile>
+
+    <ABLUnit haltOnFailure="true">
+      <fileset dir="Tests" includes="**/*.cls" />  
+      <propath>
+        <pathelement path="src/prolint.net" />  
+        <pathelement path="Tests" />
+      </propath>
+    </ABLUnit> 
+  </target>  
+
+  <target name="sonar">
+    <taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml"/>        
+ 
+    <!-- Execute SonarScanner for Ant Analysis -->
+    <sonar:sonar />
+  </target>
+
+  <target name="makepl">
+    <DlcHome value="c:/progress/openedge" />
+    <path id="compilation.propath">
+      <pathelement path="src/prolint.net" />
+      <pathelement path="C:/Progress/OpenEdge/src/OpenEdge.Core.pl" />
+    </path>
+
+    <echo message="creating profile"/>
+    <PCTRun procedure="make_profile.p"/>
+    <echo message="building Procedure Library"/>
+    <PCTLibrary destfile="Release/Prolint.pl" encoding="utf-8" cpStream="utf-8" cpinternal="utf-8">
+        <fileset dir="target/build">
+            <include name="**/*.r" />
+            <exclude name="Prolint.pl" />
+        </fileset>
+    </PCTLibrary>
+  </target>
+
+  <target name="release">
+    <DlcHome value="c:/progress/openedge" />
+    <path id="compilation.propath">
+      <pathelement path="src/prolint.net" />  
+    </path>
+    <ClassDocumentation destDir="pctDocs">
+      <fileset dir="src/prolint.net/Proparse" includes="**/*.cls" />
+      <fileset dir="src/prolint.net/Prolint" includes="**/*.cls" />
+      <fileset dir="src/prolint.net/Utils" includes="**/*.cls" />
+      <propath refid="compilation.propath" />
+    </ClassDocumentation>
+    <HTMLDocumentation sourceDir="pctDocs" destDir="docs" title="Prolint.Net documentation"/>
+
+    <echo message="copying files"/>
+    <copy todir="Release">
+      <fileset dir="">
+        <include name="*.dll"/>        
+        <include name="assemblies.xml"/>
+        <include name="profiles.xml"/>
+        <include name="prolint.pf"/>
+        <include name="prolint.ps1"/>
+      </fileset>
+    </copy>
+
+    <echo message="copying resources"/>
+    <copy todir="Release/Prolint/Forms">
+      <fileset dir="src/prolint.net/Prolint/Forms">
+        <include name="*.resx"/>    
+      </fileset>
+    </copy>
+
+    <echo message="copying docs"/>
+    <copy todir="Release/docs">
+      <fileset dir="docs">
+        <include name="**/*.*"/>    
+      </fileset>
+    </copy>
+    <mkdir dir="Release/Profiles"/>
+    <mkdir dir="Release/Profiles/default"/>
+
+    <zip destfile="Release/Prolint_${version}.zip" basedir="Release" excludes="*.zip"/>
+  </target>
+</project>

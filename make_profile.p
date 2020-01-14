@@ -19,7 +19,7 @@ define variable ruleName     as character           no-undo.
 define variable rulePath     as character           no-undo.
 define variable currentClass as Progress.Lang.Class no-undo.
 
-{prolint\profile.i}
+{src/prolint.net/Prolint/profile.i}
 
 /* ********************  Preprocessor Definitions  ******************** */
 
@@ -30,7 +30,7 @@ assign
     ttProfile.ProfileName  = "default":u
     ttProfile.ParsePropath = ".,Prolint.net":u.
     
-input stream sRules from os-dir("Prolint/Rules":u) no-attr-list.
+input stream sRules from os-dir("src/prolint.net/Prolint/Rules":u) no-attr-list.
 BLK_RULE:
 repeat:
     import stream sRules ruleName rulePath.

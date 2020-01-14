@@ -10,43 +10,67 @@
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
     <constructor signature="PropathEditor()" modifier="PUBLIC"/>
-    <method methodName="btnAdd_Click" signature="btnAdd_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <destructor/>
+    <method methodName="btnAdd_Click" signature="btnAdd_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+	 Purpose:&#xD;
+	 Notes:&#xD;
+	------------------------------------------------------------------------------*/</methodComment>
         <parameter name="sender" dataType="System.Object" position="1" mode="INPUT"/>
         <parameter name="e" dataType="System.EventArgs" position="2" mode="INPUT"/>
     </method>
-    <method methodName="btnDown_Click" signature="btnDown_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="btnDown_Click" signature="btnDown_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+	 Purpose:&#xD;
+	 Notes:&#xD;
+	------------------------------------------------------------------------------*/</methodComment>
         <parameter name="sender" dataType="System.Object" position="3" mode="INPUT"/>
         <parameter name="e" dataType="System.EventArgs" position="4" mode="INPUT"/>
     </method>
-    <method methodName="btnRemove_Click" signature="btnRemove_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="btnRemove_Click" signature="btnRemove_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+	 Purpose:&#xD;
+	 Notes:&#xD;
+	------------------------------------------------------------------------------*/</methodComment>
         <parameter name="sender" dataType="System.Object" position="5" mode="INPUT"/>
         <parameter name="e" dataType="System.EventArgs" position="6" mode="INPUT"/>
     </method>
-    <method methodName="btnUp_Click" signature="btnUp_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="btnUp_Click" signature="btnUp_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
+        <methodComment>/*------------------------------------------------------------------------------&#xD;
+	 Purpose:&#xD;
+	 Notes:&#xD;
+	------------------------------------------------------------------------------*/</methodComment>
         <parameter name="sender" dataType="System.Object" position="7" mode="INPUT"/>
         <parameter name="e" dataType="System.EventArgs" position="8" mode="INPUT"/>
     </method>
-    <method methodName="okButton_Click" signature="okButton_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="okButton_Click" signature="okButton_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <parameter name="sender" dataType="System.Object" position="9" mode="INPUT"/>
         <parameter name="e" dataType="System.EventArgs" position="10" mode="INPUT"/>
     </method>
-    <method methodName="cancelButton_Click" signature="cancelButton_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="cancelButton_Click" signature="cancelButton_Click(INPUT:System.Object,INPUT:System.EventArgs)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <parameter name="sender" dataType="System.Object" position="11" mode="INPUT"/>
         <parameter name="e" dataType="System.EventArgs" position="12" mode="INPUT"/>
     </method>
-    <method methodName="InitializeComponent" signature="InitializeComponent()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false"/>
-    <method methodName="RefreshPropath" signature="RefreshPropath()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="InitializeComponent" signature="InitializeComponent()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
+        <methodComment>/* NOTE: The following method is automatically generated.&#xD;
+           &#xD;
+           We strongly suggest that the contents of this method only be modified using the &#xD;
+           Visual Designer to avoid any incompatible modifications.&#xD;
+           &#xD;
+           Modifying the contents of this method using a code editor will invalidate any support for this file. */</methodComment>
+    </method>
+    <method methodName="RefreshPropath" signature="RefreshPropath()" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="ShowModalDialog" signature="ShowModalDialog()" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false"/>
-    <property name="LocalPropath" dataType="CHARACTER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
+    <method methodName="ShowModalDialog" signature="ShowModalDialog()" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false"/>
+    <property name="LocalPropath" dataType="CHARACTER" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PUBLIC"/>
     <using name="Progress.Windows.Form" type="NONE"/>
     <using name="Utils.Strings" type="NONE"/>
     <using name="Utils.IO" type="NONE"/>
-    <temp-table name="ttPropath" definition="" noUndo="true">
+    <temp-table name="ttPropath" definition="" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttPropath NO-UNDO 
   FIELD order AS INTEGER
   FIELD PathValue AS CHARACTER

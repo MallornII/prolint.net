@@ -15,7 +15,7 @@
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</constrComment>
     </constructor>
-    <method methodName="DropInstance" signature="DropInstance(INPUT:character,INPUT:character,INPUT:logical)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="DropInstance" signature="DropInstance(INPUT:character,INPUT:character,INPUT:logical)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Removes instance from cache and file system&#xD;
      Notes:&#xD;
@@ -24,7 +24,7 @@
         <parameter name="ruleClass" dataType="CHARACTER" position="1" mode="INPUT"/>
         <parameter name="isPermanent" dataType="LOGICAL" position="2" mode="INPUT"/>
     </method>
-    <method methodName="GetInfo" signature="GetInfo(INPUT:character,INPUT:character,OUTPUT:character,OUTPUT:integer,OUTPUT:character)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="GetInfo" signature="GetInfo(INPUT:character,INPUT:character,OUTPUT:character,OUTPUT:integer,OUTPUT:character)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Gets rule's severity, ID and description&#xD;
      Notes:&#xD;
@@ -35,7 +35,7 @@
         <parameter name="severity" dataType="INTEGER" position="6" mode="OUTPUT"/>
         <parameter name="ruleDescription" dataType="CHARACTER" position="7" mode="OUTPUT"/>
     </method>
-    <method methodName="GetInstance" returnType="Prolint.Rules.IRule" signature="GetInstance(INPUT:character,INPUT:character):Prolint.Rules.IRule" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="GetInstance" returnType="Prolint.Rules.IRule" signature="GetInstance(INPUT:character,INPUT:character):Prolint.Rules.IRule" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Gets instance from cache, file system or createa new one (in that specific order)&#xD;
      Notes:&#xD;
@@ -43,13 +43,13 @@
         <parameter name="profileName" dataType="CHARACTER" position="8" mode="INPUT"/>
         <parameter name="ruleClass" dataType="CHARACTER" position="9" mode="INPUT"/>
     </method>
-    <method methodName="SaveAllRules" signature="SaveAllRules()" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="SaveAllRules" signature="SaveAllRules()" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Saves all rules from cache to file system&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
     </method>
-    <method methodName="SaveRule" signature="SaveRule(INPUT:character,INPUT:character)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="SaveRule" signature="SaveRule(INPUT:character,INPUT:character)" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Saves specific ruile to file system&#xD;
      Notes:&#xD;

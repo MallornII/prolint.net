@@ -9,7 +9,11 @@
     Created     : 12.01.2019 14:00:21&#xD;
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
-    <method methodName="ReceiveResult" signature="ReceiveResult(INPUT:character,INPUT:character,INPUT:character,INPUT:character,INPUT:integer,INPUT:integer,INPUT:character)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <classComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Receive results published by ILintUnit&#xD;
+     Notes:&#xD;
+    ------------------------------------------------------------------------------*/</classComment>
+    <method methodName="ReceiveResult" signature="ReceiveResult(INPUT:character,INPUT:character,INPUT:character,INPUT:character,INPUT:integer,INPUT:integer,INPUT:character)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Receive results published by ILintUnit&#xD;
      Notes:&#xD;

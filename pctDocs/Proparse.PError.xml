@@ -28,6 +28,6 @@
         <parameter name="iCode" dataType="INTEGER" position="5" mode="INPUT"/>
         <parameter name="iSeverity" dataType="INTEGER" position="6" mode="INPUT"/>
     </constructor>
-    <property name="LineNumber" dataType="INTEGER" isAbstract="false" isStatic="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PRIVATE"/>
+    <property name="LineNumber" dataType="INTEGER" isAbstract="false" isStatic="false" isOverride="false" extent="0" modifier="PUBLIC" getModifier="PUBLIC" setModifier="PRIVATE"/>
     <using name="Progress.Lang.AppError" type="NONE"/>
 </unit>

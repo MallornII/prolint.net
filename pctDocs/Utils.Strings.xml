@@ -9,7 +9,11 @@
     Created     : 05.01.2019 18:15:35&#xD;
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
-    <method methodName="AppendEntry" returnType="CHARACTER" signature="AppendEntry(INPUT:character,INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <classComment>/*------------------------------------------------------------------------------&#xD;
+     Purpose: Adds entry to the list (empty or not)&#xD;
+     Notes: &#xD;
+    ------------------------------------------------------------------------------*/</classComment>
+    <method methodName="AppendEntry" returnType="CHARACTER" signature="AppendEntry(INPUT:character,INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Adds entry to the list (empty or not)&#xD;
      Notes: &#xD;
@@ -18,7 +22,7 @@
         <parameter name="secondString" dataType="CHARACTER" position="1" mode="INPUT"/>
         <parameter name="delimString" dataType="CHARACTER" position="2" mode="INPUT"/>
     </method>
-    <method methodName="AppendEntry" returnType="CHARACTER" signature="AppendEntry(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="AppendEntry" returnType="CHARACTER" signature="AppendEntry(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Adds entry to the list (empty or not)&#xD;
      Notes: &#xD;
@@ -26,7 +30,7 @@
         <parameter name="firstString" dataType="CHARACTER" position="3" mode="INPUT"/>
         <parameter name="secondString" dataType="CHARACTER" position="4" mode="INPUT"/>
     </method>
-    <method methodName="AppendUniqueEntry" returnType="CHARACTER" signature="AppendUniqueEntry(INPUT:character,INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="AppendUniqueEntry" returnType="CHARACTER" signature="AppendUniqueEntry(INPUT:character,INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Adds entry to the list (empty or not) if it is not already in the list&#xD;
      Notes:&#xD;
@@ -35,7 +39,7 @@
         <parameter name="secondString" dataType="CHARACTER" position="6" mode="INPUT"/>
         <parameter name="delimString" dataType="CHARACTER" position="7" mode="INPUT"/>
     </method>
-    <method methodName="AppendUniqueEntry" returnType="CHARACTER" signature="AppendUniqueEntry(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="AppendUniqueEntry" returnType="CHARACTER" signature="AppendUniqueEntry(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Adds entry to the list (empty or not) if it is not already in the list&#xD;
      Notes:&#xD;
@@ -43,7 +47,7 @@
         <parameter name="firstString" dataType="CHARACTER" position="8" mode="INPUT"/>
         <parameter name="secondString" dataType="CHARACTER" position="9" mode="INPUT"/>
     </method>
-    <method methodName="HasEntry" returnType="LOGICAL" signature="HasEntry(INPUT:character,INPUT:character):LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="HasEntry" returnType="LOGICAL" signature="HasEntry(INPUT:character,INPUT:character):LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Checks if the list contains specific entry&#xD;
      Notes:&#xD;
@@ -51,7 +55,7 @@
         <parameter name="sourceString" dataType="CHARACTER" position="10" mode="INPUT"/>
         <parameter name="targetString" dataType="CHARACTER" position="11" mode="INPUT"/>
     </method>
-    <method methodName="HasEntry" returnType="LOGICAL" signature="HasEntry(INPUT:character,INPUT:character,INPUT:character):LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="HasEntry" returnType="LOGICAL" signature="HasEntry(INPUT:character,INPUT:character,INPUT:character):LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Adds entry to the list (empty or not) if it is not already in the list&#xD;
      Notes:&#xD;
@@ -60,7 +64,7 @@
         <parameter name="targetString" dataType="CHARACTER" position="13" mode="INPUT"/>
         <parameter name="delimString" dataType="CHARACTER" position="14" mode="INPUT"/>
     </method>
-    <method methodName="IsEmptyOrNull" returnType="LOGICAL" signature="IsEmptyOrNull(INPUT:character):LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false">
+    <method methodName="IsEmptyOrNull" returnType="LOGICAL" signature="IsEmptyOrNull(INPUT:character):LOGICAL" modifier="PUBLIC" isStatic="true" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Checks if string is empty or of unknown value&#xD;
      Notes:&#xD;

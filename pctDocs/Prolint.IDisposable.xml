@@ -9,5 +9,5 @@
     Created     : 19.12.2018 22:54:02&#xD;
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
-    <method methodName="Dispose" signature="Dispose()" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false"/>
+    <method methodName="Dispose" signature="Dispose()" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false"/>
 </unit>

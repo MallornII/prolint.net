@@ -9,21 +9,21 @@
     Created     : 06.12.2018 07:31:34&#xD;
     Notes       : &#xD;
   ----------------------------------------------------------------------*/</classComment>
-    <method methodName="ResolveDatabase" returnType="CHARACTER" signature="ResolveDatabase(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ResolveDatabase" returnType="CHARACTER" signature="ResolveDatabase(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Returns full DB name by it's name or alias&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="databaseName" dataType="CHARACTER" position="0" mode="INPUT"/>
     </method>
-    <method methodName="ResolveFieldName" returnType="CHARACTER" signature="ResolveFieldName(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ResolveFieldName" returnType="CHARACTER" signature="ResolveFieldName(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Resolves full field name from a field_ref qualifier.&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="fieldName" dataType="CHARACTER" position="1" mode="INPUT"/>
     </method>
-    <method methodName="ResolveFieldName" returnType="CHARACTER" signature="ResolveFieldName(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ResolveFieldName" returnType="CHARACTER" signature="ResolveFieldName(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Resolves full field name from a table name and a field name qualifier.&#xD;
      Notes:&#xD;
@@ -31,7 +31,7 @@
         <parameter name="tableName" dataType="CHARACTER" position="2" mode="INPUT"/>
         <parameter name="fieldName" dataType="CHARACTER" position="3" mode="INPUT"/>
     </method>
-    <method methodName="ResolveFieldName" returnType="CHARACTER" signature="ResolveFieldName(INPUT:character,INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ResolveFieldName" returnType="CHARACTER" signature="ResolveFieldName(INPUT:character,INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Resolves full field name from a database name, a table name and a field name qualifier.&#xD;
      Notes:&#xD;
@@ -40,14 +40,14 @@
         <parameter name="tableName" dataType="CHARACTER" position="5" mode="INPUT"/>
         <parameter name="fieldName" dataType="CHARACTER" position="6" mode="INPUT"/>
     </method>
-    <method methodName="ResolveTableName" returnType="CHARACTER" signature="ResolveTableName(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ResolveTableName" returnType="CHARACTER" signature="ResolveTableName(INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Resolves full table name from a table name qualifier.&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="tableName" dataType="CHARACTER" position="7" mode="INPUT"/>
     </method>
-    <method methodName="ResolveTableName" returnType="CHARACTER" signature="ResolveTableName(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ResolveTableName" returnType="CHARACTER" signature="ResolveTableName(INPUT:character,INPUT:character):CHARACTER" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Resolves full table name from a database name and a table name qualifier.&#xD;
      Notes:&#xD;
@@ -55,7 +55,7 @@
         <parameter name="databaseName" dataType="CHARACTER" position="8" mode="INPUT"/>
         <parameter name="tableName" dataType="CHARACTER" position="9" mode="INPUT"/>
     </method>
-    <method methodName="ToFile" signature="ToFile(INPUT:character)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="ToFile" signature="ToFile(INPUT:character)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
 	 Purpose: Save current DB schema into file (proparse.net.dll can only get DB schema from file)&#xD;
 	 Notes:&#xD;

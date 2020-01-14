@@ -15,14 +15,14 @@
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</constrComment>
     </constructor>
-    <method methodName="AddInspectUnit" signature="AddInspectUnit(INPUT:Proparse.UnitType)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="AddInspectUnit" signature="AddInspectUnit(INPUT:Proparse.UnitType)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
     ------------------------------------------------------------------------------*/</methodComment>
         <parameter name="unitType" dataType="Proparse.UnitType" position="0" mode="INPUT"/>
     </method>
-    <method methodName="InspectFieldRefs" signature="InspectFieldRefs(INPUT:integer,INPUT:integer,INPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="InspectFieldRefs" signature="InspectFieldRefs(INPUT:integer,INPUT:integer,INPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
@@ -31,7 +31,7 @@
         <parameter name="startNode" dataType="INTEGER" position="2" mode="INPUT"/>
         <parameter name="endNode" dataType="INTEGER" position="3" mode="INPUT"/>
     </method>
-    <method methodName="InspectRecords" signature="InspectRecords(INPUT:integer,INPUT:integer,INPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="InspectRecords" signature="InspectRecords(INPUT:integer,INPUT:integer,INPUT:integer)" modifier="PRIVATE" isStatic="false" isFinal="false" isAbstract="false" isOverride="false">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose:&#xD;
      Notes:&#xD;
@@ -40,7 +40,7 @@
         <parameter name="startNode" dataType="INTEGER" position="5" mode="INPUT"/>
         <parameter name="endNode" dataType="INTEGER" position="6" mode="INPUT"/>
     </method>
-    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false">
+    <method methodName="Visit" signature="Visit(INPUT:Prolint.ILintUnit,INPUT:dataset,INPUT:dataset)" modifier="PUBLIC" isStatic="false" isFinal="false" isAbstract="false" isOverride="true">
         <methodComment>/*------------------------------------------------------------------------------&#xD;
      Purpose: Start method for visiting ILintUnit&#xD;
      Notes:&#xD;
@@ -51,7 +51,7 @@
     </method>
     <using name="com.joanju.proparse.ProParserTokenTypes" type="NONE"/>
     <using name="Prolint.Rules.AbstractRule" type="NONE"/>
-    <temp-table name="ttInspectUnit" definition="" noUndo="true">
+    <temp-table name="ttInspectUnit" definition="" noUndo="true" isNew="false" isGlobal="true" isShared="false" modifier="PRIVATE">
         <text>DEFINE TEMP-TABLE ttInspectUnit NO-UNDO 
   FIELD UnitType AS INTEGER
 </text>
