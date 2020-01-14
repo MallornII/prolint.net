@@ -1,0 +1,12 @@
+{
+    "workingDirectory": "${workspaceFolder}",
+    "proPath": [        
+        "${workspaceFolder}/src/prolint.net",
+        "C:/Progress/OpenEdge/src/OpenEdge.Core.pl"
+    ],
+    "dlc": "C:/Progress/OpenEdge", //optional override
+    "proPathMode": "append", // overwrite, prepend
+    "parameterFiles": [ // -pf
+        "C:/Progress/OpenEdge/startup.pf"
+    ]
+}
