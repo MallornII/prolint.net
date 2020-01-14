@@ -217,12 +217,7 @@ class Utils.XCode final:
     method public static void SetKey( input inKey as character ):
         
         define variable i as integer no-undo.
-        _keyData = GetKeyData(inKey).
-        output to value("c:/temp/keydata2.txt").
-        do i = 1 to extent(_keyData):
-            put unformatted _keyData[i] skip.
-        end.
-        output close.
+        _keyData = GetKeyData(inKey).   
         return.
 
     end method.
